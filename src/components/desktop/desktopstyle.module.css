@@ -1,0 +1,57 @@
+.mainDiv {
+
+    width: 95%;
+    margin: auto;
+    margin-top: 55px;
+    display: flex;
+
+
+}
+
+.leftPaper {
+
+    width: 60% !important;
+    margin-left: 5em !important;
+}
+
+.handPickedTypo{
+    
+                
+                width: 340px !important;
+                    margin-top: 28px !important;
+                    font-size: 19px !important;
+                    font-weight: 700 !important;
+                    margin-bottom: 17px !important;
+                    margin-left: 38px !important;
+            
+        
+}
+
+.divider{
+    
+                
+                margin-top: 15px !important; 
+                margin-bottom: 13.99px !important;
+            
+        
+}
+.typo{
+    
+                
+                font-size: 15px !important;
+                    font-weight: 500 !important;
+            
+        
+}
+
+@media screen and (max-width: 540px) {
+    .mainDiv {
+
+        width: 95%;
+        margin: auto;
+        margin-top: 55px;
+        display: grid;
+
+
+    }
+}

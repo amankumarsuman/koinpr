@@ -1,0 +1,20 @@
+function Filter() {
+  const location = useLocation();
+  const [filteredData, setFilteredData] = useState([]);
+
+  useEffect(() => {
+    const query = new URLSearchParams(location.search);
+    const filter = query.get('filter');
+
+    const filteredData = data.filter(item => item.type === filter);
+    setFilteredData(filteredData);
+  }, [location.search]);
+
+  return (
+    <div>
+      {filteredData.map(item => (
+        <div key={item.id}>{item.name}</div>
+      ))}
+    </div>
+  );
+}

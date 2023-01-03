@@ -1,0 +1,124 @@
+.Header{
+    height: 74px;
+    box-sizing: border-box;
+    background-color: black;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 44px;
+// width: 100% !important;
+    .left{
+        display: flex;
+        flex-direction: column;
+        cursor: pointer;
+
+        .heading{
+            font-size: 26px;
+            font-weight: 600;
+        }
+
+        .subHeading{
+            margin-left: 18px;
+            font-size: 13px;
+            font-weight: 400;
+        }
+    }
+    // .left:hover{
+    //     cu
+    // }
+
+    .right{
+        font-size: 16px;
+        font-weight: 600;
+        display: flex;
+        gap: 75px;
+        margin-top: 5px;
+        align-items: center;
+        
+        .myAccount{
+            position: relative;      
+            
+            .dropdown{
+                color: white;
+                background-color: black;
+                position: absolute;
+                top: 40px;
+                left: -48px;
+                display: flex;
+                flex-direction: column;
+                // gap: 5px;
+                width: 180px;
+                span{
+                    padding: 10px;
+                    text-align: end;
+                }
+                span:hover{
+                    background-color: white;
+                    color: black;
+                }
+            }
+        }
+        
+        span:hover{
+            cursor: pointer;
+        }
+    }
+}
+
+.popup {
+    // padding: 40px 60px;
+    padding: 0;
+
+    .content {
+        padding: 40px 60px;
+        // padding: 0;
+        background: #F9F9F9;
+        border-radius: 3px;
+
+        .title {
+            font-weight: 600;
+            font-size: 25px;
+        }
+
+        .input {
+            margin-top: 42px;
+            
+
+            .ip {
+                box-sizing: border-box;
+                padding: 11px 19px;
+                width: 251px;
+                height: 41px;
+                border-radius: 3px;
+                border: 1px solid #000000;
+            }
+
+            .ip1 {
+                margin-top: 20px;
+            }
+        }
+
+        .submit {
+            font-weight: 700;
+            font-size: 16px;
+            text-align: center;
+            width: 113px;
+            height: 43px;
+            background-color: black;
+            color: white;
+            border: none;
+            margin-top: 25px;
+            margin-bottom: 61px;
+        }
+
+        .bottom{
+            margin-top: 80px;
+
+            a{
+                text-decoration: none;
+                color: #108FB7;
+            }
+        }
+    }
+}

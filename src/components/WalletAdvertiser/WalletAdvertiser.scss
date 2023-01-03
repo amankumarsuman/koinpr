@@ -1,0 +1,160 @@
+.WalletAdvertiser {
+    padding: 82px;
+// border: 1px solid red;
+    .content {
+        background: #F9F9F9;
+        border-radius: 3px;
+// border: 1px solid red;
+
+
+        .heading{
+            padding: 35px 0 0 44px;
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        .table{
+            padding: 51px 110px;
+            // padding: 0;
+            width: 100%;
+            // border: 1px solid red;
+
+            .walletTable {
+                box-sizing: border-box;
+                width: 100%;
+                border-spacing: 0;
+                border: 0.5px solid black;
+                border-radius: 3px;
+                font-size: 16px;
+    
+                th {
+                    font-weight: 600;
+                }
+    
+                th,
+                td {
+                    padding: 17px 0;
+                    border: 0.5px solid black;
+                    text-align: center;
+                }
+            }
+        }
+    }
+}
+@media screen and (max-width: 540px) {
+    .WalletAdvertiser {
+            // padding: 64px 87px;
+            padding: 0;
+            width: 100%;
+            display: grid;
+    
+            .head {
+                display: flex;
+                justify-content: space-between;
+                background: #F9F9F9;
+                border-radius: 3px;
+                padding: 15px 37px;
+                border-bottom: 6px solid black;
+    
+                .left {
+                    font-size: 19px;
+                    font-weight: 600;
+                }
+    
+                .right {
+                    font-size: 14px;
+                    font-weight: 500;
+                }
+            }
+    
+            .content {
+                display: grid;
+                margin-top: 54px;
+                gap: 94px;
+    width:90%;
+    margin: auto;
+    // padding:50px;
+                .mainHeading {
+                    font-weight: 600;
+                    font-size: 18px;
+                        width: 100%;
+                }
+    
+                .cLeft {
+                    // padding: 45px 42px 90px 37px;
+                    background: #F9F9F9;
+                    border-radius: 3px;
+    
+                    .subHeading {
+                        font-weight: 700;
+                        font-size: 13px;
+                        margin-top: 15px;
+                        width: 100%;
+                    }
+    
+                    .wInput {
+                        font-size: 15px;
+                        height: 41px;
+                        width: 90%;
+                        margin-top: 28px;
+                        padding: 11px 18px;
+                        box-sizing: border-box;
+                        border: 1px solid black;
+                        border-radius: 3px;
+                        display: flex;
+                        justify-content: space-between;
+                    }
+                    input[name="method"] {
+                        accent-color: black;
+                    }
+    
+                    .sub1 {
+                        margin-top: 32px;
+                    }
+    
+    
+                    .method {
+                        margin-top: 19px;
+                    }
+    
+                    .proceed {
+                        margin-top: 31px;
+                        color: white;
+                        font-weight: 700;
+                        font-size: 16px;
+                        padding: 12px 16px;
+                        background: #000000;
+                        border: none;
+                        border-radius: 3px;
+                    }
+                }
+    
+                .cRight {
+                    padding: 45px 69px;
+                    background: #F9F9F9;
+                    border-radius: 3px;
+                    flex: 1;
+    
+                    .walletTable {
+                        width: 100%;
+                        border-spacing: 0;
+                        margin-top: 39px;
+                        border: 0.5px solid black;
+                        border-radius: 3px;
+                        font-size: 16px;
+    
+                        th {
+                            font-weight: 600;
+                        }
+    
+                        th,
+                        td {
+                            padding: 17px 0;
+                            border: 0.5px solid black;
+                            text-align: center;
+                        }
+                    }
+                }
+            }
+        }
+    }

@@ -1,0 +1,33 @@
+const addToCart = (itemId) =>{
+    return{
+        type: 'ADD_TO_CART',
+        payload: {
+            id: itemId
+        }
+    };
+};
+
+const removeFromCart = (itemId) =>{
+    return{
+        type: 'REMOVE_FROM_CART',
+        payload: {
+            id: itemId
+        }
+    };
+};
+
+const adjustQuantity = (itemId, value ) =>{
+    return{
+        type: 'ADJUST_QUANTITY',
+        payload: {
+            id: itemId,
+            value
+        }
+    };
+};
+
+export default {
+    addToCart,
+    removeFromCart,
+    adjustQuantity
+}

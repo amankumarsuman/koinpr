@@ -1,0 +1,124 @@
+.marketplace {
+    // padding: 76px 72px;
+    padding: 0;
+}
+
+.panels {
+
+    display: flex;
+    gap: 90px;
+
+    .mpLeft {
+        width: 304px;
+        background-color: #f8f8f8;
+        // padding: 40px 26px;
+        display: flex;
+        flex-direction: column;
+        gap: 39px;
+
+        .publishers {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+
+            span {
+                font-weight: 600;
+                font-size: 16px;
+            }
+
+            input {
+                height: 41px;
+                padding: 11px 18px;
+            }
+
+            .option {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                height: 41px;
+                padding: 28px 18px;
+                border: 1px solid black;
+                box-sizing: border-box;
+
+                input[name="category"] {
+                    accent-color: black;
+                }
+
+                input {
+                    width: 16.6px;
+                    height: 16.6px;
+                }
+            }
+        }
+    }
+
+    .mpRight{
+        display: grid;
+        grid-template-columns: auto auto auto;
+        gap: 30px;
+    }
+}
+
+@media screen and (max-width: 540px) {
+
+    .marketplace {
+        // padding: 76px 72px;
+        padding: 0;
+    }
+    
+    .panels {
+    
+        display: flex;
+        gap: 90px;
+    
+        .mpLeft {
+            width: 230px;
+            background-color: #f8f8f8;
+            // padding: 40px 26px;
+            display: flex;
+            flex-direction: column;
+            gap: 39px;
+    
+            .publishers {
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+    
+                span {
+                    font-weight: 600;
+                    font-size: 16px;
+                }
+    
+                input {
+                    height: 41px;
+                    padding: 11px 18px;
+                }
+    
+                .option {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    height: 41px;
+                    padding: 28px 18px;
+                    border: 1px solid black;
+                    box-sizing: border-box;
+    
+                    input[name="category"] {
+                        accent-color: black;
+                    }
+    
+                    input {
+                        width: 16.6px;
+                        height: 16.6px;
+                    }
+                }
+            }
+        }
+    
+        .mpRight{
+            display: grid;
+            grid-template-columns: auto auto auto;
+            gap: 30px;
+        }
+    }
+}

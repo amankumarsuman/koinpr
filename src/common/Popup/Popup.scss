@@ -1,0 +1,52 @@
+.popup {
+    padding: 168px 528px;
+
+    .content {
+        padding: 40px 60px;
+        background: #F9F9F9;
+        border-radius: 3px;
+
+        .title {
+            font-weight: 600;
+            font-size: 25px;
+        }
+
+        .input {
+            margin-top: 42px;
+
+            .ip {
+                box-sizing: border-box;
+                padding: 11px 19px;
+                width: 251px;
+                height: 41px;
+                border-radius: 3px;
+                border: 1px solid #000000;
+            }
+
+            .ip1 {
+                margin-top: 20px;
+            }
+        }
+
+        .submit {
+            font-weight: 700;
+            font-size: 16px;
+            text-align: center;
+            width: 113px;
+            height: 43px;
+            background-color: black;
+            color: white;
+            border: none;
+            margin-top: 25px;
+        }
+
+        .bottom{
+            margin-top: 80px;
+
+            a{
+                text-decoration: none;
+                color: #108FB7;
+            }
+        }
+    }
+}

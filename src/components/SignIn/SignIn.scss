@@ -1,0 +1,199 @@
+.signin{
+    // padding: 105px 540px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    // height: calc(100vh - 120px);
+    height: 85vh;
+
+    input:focus {
+        outline: 1px solid black;
+    }
+
+    p{
+        margin: 0;
+        padding: 0;
+    }
+
+    .content{
+        box-sizing: border-box;
+        background-color: #f9f9f9;
+        padding: 0 54px;
+        height: 463px;
+        width: 360px;
+        display: flex;
+        flex-direction: column;
+        border-bottom: 7px solid black;
+        border-radius: 3px;
+        margin-top: 80px;
+        justify-content: space-between;
+
+        .error{
+            color: red;
+            font-size: 13px;
+            margin-top: 5px;
+            margin-left: 5px;
+            width: 254px;
+            // accent-color: none;
+        }
+
+        .chead{
+            font-size: 25px;
+            font-weight: 600;
+            margin-top: 38px;
+        }
+
+        .signUp{
+            margin-top: 8px;
+            font-size: 14px;
+            a{
+                text-decoration: none;
+                color: #108FB7;
+            }
+        }
+
+        .email{
+            box-sizing: border-box;
+            padding: 11px 18px;
+            margin-top: 33px;
+            width: 251px;
+            height: 41px;
+        }
+
+        .password{
+            box-sizing: border-box;
+            padding: 11px 18px;
+            margin-top: 19px;
+            width: 251px;
+            height: 41px;
+        }
+
+        .submitButton{
+            margin-top: 26px;
+            height: 43px;
+            width: 113px;
+            background-color: black;
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            border: none;
+        }
+
+        .disabled{
+            color: black;
+            background-color: black;
+        }
+
+        .forgot{
+            // margin-top: 111px;
+            margin-bottom: 27px;
+            text-decoration: none;
+            color: black;
+            font-size: 14px;
+        }
+    }
+        .allRight {
+            // margin-top: 172px;
+            font-size: 15px;
+        }
+}
+
+@media screen and (max-width: 540px) {
+.signin {
+    padding:0;
+width: 90%;
+margin:auto;
+
+        input:focus {
+            outline: 1px solid black;
+        }
+
+        p {
+            margin: 0;
+            padding: 0;
+        }
+
+        .content {
+            box-sizing: border-box;
+            background-color: #f9f9f9;
+            // padding: 0 54px;
+            padding: 20px;
+            height: 463px;
+            width: 98%;
+            display: flex;
+            flex-direction: column;
+            border-bottom: 7px solid black;
+            border-radius: 3px;
+
+            .error {
+                color: red;
+                font-size: 13px;
+                margin-top: 5px;
+                margin-left: 5px;
+                width: 254px;
+                // accent-color: none;
+            }
+
+            .chead {
+                font-size: 25px;
+                font-weight: 600;
+                margin-top: 38px;
+            }
+
+            .signUp {
+                margin-top: 8px;
+                font-size: 14px;
+
+                a {
+                    text-decoration: none;
+                    color: #108FB7;
+                }
+            }
+
+            .email {
+                box-sizing: border-box;
+                padding: 11px 18px;
+                margin-top: 33px;
+                width: 100%;
+                height: 41px;
+            }
+
+            .password {
+                box-sizing: border-box;
+                padding: 11px 18px;
+                margin-top: 19px;
+                            width: 100%;
+                height: 41px;
+            }
+
+            .submitButton {
+                margin-top: 26px;
+                height: 43px;
+                width: 113px;
+                background-color: black;
+                color: white;
+                font-size: 16px;
+                font-weight: 700;
+                border: none;
+            }
+
+            .disabled {
+                color: black;
+                background-color: black;
+            }
+
+            .forgot {
+                margin-top: 30px;
+                text-decoration: none;
+                color: black;
+                font-size: 14px;
+            }
+
+        }
+                        .allRight {
+                            margin-top: 133px;
+                            font-size: 11px;
+                        }
+    }
+}

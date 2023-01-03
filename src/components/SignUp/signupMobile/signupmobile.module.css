@@ -1,0 +1,125 @@
+
+
+    .content {
+        width: 100%;
+        /* border: 1px solid red; */
+        padding: 30px;
+        background-color: #F9F9F9;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        border-bottom: 9px solid black;
+        border-radius: 3px;
+    }
+        .heading {
+            display: block;
+            font-size: 27px;
+            font-weight: 600;
+        }
+
+        .subHeading {
+            display: block;
+            margin-top: 10px;
+            font-size: 15px;
+
+        }
+     .subHeading a {
+            text-decoration: none;
+            color: #108FB7;
+        }
+
+        .textIp input:focus {
+                outline: 1px solid black;
+            }
+        
+
+         
+            .caard   p {
+                font-size: 15px;
+                font-weight: 700;
+            }
+
+            .m-t-23{
+                margin-top: 23px;
+            }
+
+           
+                /* display: flex; */
+           
+
+              .inputs  .col{
+                    display: flex;
+                    flex-direction: column;
+              }
+
+                    .error{
+                        color: red;
+                        font-size: 13px;
+                        margin-top: 5px;
+                        width: 254px;
+                        accent-color: none;
+                    }
+                
+
+                .input {
+
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    box-sizing: border-box;
+                    height: 43px;
+                    width: 254px;
+                    padding: 11px 18px;
+                    border: 1px solid black;
+                    border-radius: 3px;
+                    margin-bottom: 20px;
+                }
+                    input[name="account"] {
+                        accent-color: black;
+                    }
+
+                    .round {
+                        width: 1.3em;
+                        height: 1.3em;
+                        border: 1px solid black;
+                        cursor: pointer;
+                    }
+                
+
+                .input-text {
+                    box-sizing: border-box;
+                    height: 43px;
+                    width: 254px;
+                    padding: 11px 18px;
+                    border: 1px solid black;
+                    border-radius: 3px;
+                }
+
+                .err{
+                    border: 1px solid red;
+                }
+                .err:focus{
+                    outline: none;
+                }
+    
+    
+
+        .proceed{
+            margin-top: 15px;
+        }
+            .tNc{
+                font-size: 14px;
+            }
+    
+            .submit{
+                margin-top: 15px;
+                font-weight: 700;
+                font-size: 16px;
+                height: 43px;
+                width: 90px;
+                background-color: black;
+                color: white;
+                border: none;
+            }
+        
+    

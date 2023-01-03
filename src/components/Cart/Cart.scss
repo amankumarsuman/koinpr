@@ -1,0 +1,203 @@
+.Cart{
+    padding: 63px 70px;
+
+    .content{
+        display: flex;
+        margin-top: 38px;
+        gap: 50px;
+
+        .left{
+            display: flex;
+            flex-direction: column;
+            gap: 13px;
+            .item{
+                background: #F9F9F9;
+                border-radius: 3px;
+                height: 60px;
+                width: 927px;
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 20px;
+
+
+                .image{
+                    display: inline-block;
+                    width: 60px;
+                    background: rgba(0, 0, 0, 0.2);
+                    border-radius: 3px;
+                }
+
+                .title{
+                    display: inline-block;
+                    padding: 20px 35px;
+                    font-weight: 600;
+                }
+            }
+        }
+        .right{
+            padding: 21px 34px 55px;
+            background: #F9F9F9;
+            border-radius: 3px;
+            flex: 1;
+            border-bottom: 4px solid black;
+
+            .title{
+                font-weight: 600;
+                font-size: 20px;
+            }
+
+            .amount{
+                margin-top: 12px;
+                font-weight: 600;
+                font-size: 15px;
+                color: #3F3D3D;
+            }
+
+            .inputs{
+                margin-top: 38px;
+                font-weight: 500;
+                font-size: 15px;
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+
+                .input{
+                    padding: 11px 18px;
+                    display: flex;
+                    background: #FFFFFF;
+                    border: 1px solid #000000;
+                    border-radius: 3px;
+                    justify-content: space-between;
+                }
+                input[name="paymentMethod"] {
+                    accent-color: black;
+                }
+            }
+
+            .placeOrd{
+                margin-top: 40px;
+                background: #000000;
+                border-radius: 3px;
+                font-weight: 700;
+                font-size: 15px;
+                padding: 12px;
+                color: white;
+                border: none;
+            }
+        }
+    }
+}
+
+
+@media screen and (max-width: 540px) {
+    .Cart {
+            // padding: 63px 70px;
+    width: 100%;
+        display: grid;
+        // padding: 5;
+        padding: 0;
+        margin-top: 10px;
+        .cart{
+            // border: 1px solid red;
+            margin-left: 31px;
+            margin-bottom: 22px;
+            font-size: 15px;
+            font-weight: 600;
+        }
+            .content {
+                display: grid;
+                margin-top: 38px;
+                gap: 50px;
+    
+                .left {
+                    display: flex;
+                  
+                    
+                    // gap: 13px;
+    
+                    .item {
+                        background: #F9F9F9;
+                        border-radius: 3px;
+                        height: 60px;
+                        width: 90%;
+                        margin: auto;
+                       margin-bottom: 20px;
+                        // width: 927px;
+                        // display: flex;
+    
+                        .image {
+                            display: inline-block;
+                            width: 60px;
+                            background: rgba(0, 0, 0, 0.2);
+                            border-radius: 3px;
+                        }
+    
+                        .title {
+                            display: inline-block;
+                            padding: 20px 35px;
+                            font-weight: 600;
+                        }
+                        .price {
+                            // display: inline-block;
+                            padding: 20px 2px;
+                            font-weight: 600;
+                        }
+                    }
+                }
+    
+                .right {
+                    padding: 21px 34px 55px;
+                    background: #F9F9F9;
+                    border-radius: 3px;
+                    flex: 1;
+                    border-bottom: 4px solid black;
+    
+                    .title {
+                        font-weight: 600;
+                        font-size: 20px;
+                    }
+    
+                    .amount {
+                        margin-top: 12px;
+                        font-weight: 600;
+                        font-size: 15px;
+                        color: #3F3D3D;
+                    }
+    
+                    .inputs {
+                        margin-top: 38px;
+                        font-weight: 500;
+                        font-size: 15px;
+                        display: flex;
+                        flex-direction: column;
+                        gap: 20px;
+                        
+    
+                        .input {
+                            padding: 11px 18px;
+                            display: flex;
+                            background: #FFFFFF;
+                            border: 1px solid #000000;
+                            border-radius: 3px;
+                            
+                            justify-content: space-between;
+                        }
+                        input[name="paymentMethod"] {
+                            accent-color: black;
+                        }
+                    }
+    
+                    .placeOrd {
+                        margin-top: 40px;
+                        background: #000000;
+                        border-radius: 3px;
+                        font-weight: 700;
+                        font-size: 15px;
+                        padding: 12px;
+                        color: white;
+                        border: none;
+                    }
+                }
+            }
+        }
+}

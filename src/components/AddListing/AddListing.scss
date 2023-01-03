@@ -1,0 +1,149 @@
+.AddListing{
+    padding: 80px 260px;
+
+    .content{
+        background: #F9F9F9;
+        border-radius: 3px;
+        padding: 50px;
+
+        .mainHeading{
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        .subHeading{
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .inputs{
+            display: flex;
+            gap: 28px;
+            margin-top: 30px;
+            .wInput {
+                    font-size: 15px;
+                    width: 251px;
+                    padding: 11px 18px;
+                    box-sizing: border-box;
+                    border: 1px solid black;
+                    border-radius: 3px;
+                    display: flex;
+                    justify-content: space-between;
+            
+                    .chHeight {
+                        height: 13px;
+                    }
+                }
+
+            .input{
+                padding: 11px 18px;
+                font-weight: 500;
+                font-size: 15px;
+                border-radius: 3px;
+                border: 1px solid black;
+                width: 250px;
+                height: 40px;
+                box-sizing: border-box;
+                font-weight: 500;
+            }
+
+            .but{
+                width: 150px;
+                background-color: white;
+                visibility: hidden;
+            }
+        }
+
+        .subHeading{
+            margin-top: 40px;
+        }
+    }
+
+    .submit{
+        margin-top: 50px;
+        padding: 12px 16px;
+        font-weight: 700;
+        font-size: 16px;
+        color: white;
+        background-color: black;
+        border-radius: 10px;
+        border: none;
+    }
+}
+
+@media screen and (max-width: 540px) {
+.AddListing {
+        // padding: 80px 260px;
+width: 100%;
+    display: grid;
+    padding: 0;
+        .content {
+            background: #F9F9F9;
+            border-radius: 3px;
+            padding: 50px;
+
+            .mainHeading {
+                font-weight: 600;
+                font-size: 18px;
+            }
+
+            .subHeading {
+                font-weight: 600;
+                font-size: 14px;
+            }
+
+            .inputs {
+                display: grid;
+                gap: 28px;
+                margin-top: 30px;
+.wInput {
+        font-size: 15px;
+        width: 251px;
+        padding: 11px 18px;
+        box-sizing: border-box;
+        border: 1px solid black;
+        border-radius: 3px;
+        display: flex;
+        justify-content: space-between;
+
+        .chHeight {
+            height: 13px;
+        }
+    }
+                .input {
+                    padding: 11px 18px;
+                    font-weight: 500;
+                    font-size: 15px;
+                    border-radius: 3px;
+                    border: 1px solid black;
+                    width: 250px;
+                    height: 40px;
+                    box-sizing: border-box;
+                    font-weight: 500;
+                }
+
+                .but {
+                    width: 150px;
+                    background-color: white;
+                }
+                
+            }
+
+            .subHeading {
+                margin-top: 40px;
+            }
+        }
+
+        .submit {
+            margin-top: 50px;
+            padding: 12px 16px;
+            font-weight: 700;
+            font-size: 16px;
+            color: white;
+            background-color: black;
+            border: none;
+            border-radius: 10px;
+        }
+               
+    }
+}
