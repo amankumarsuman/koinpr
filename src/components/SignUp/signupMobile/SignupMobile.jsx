@@ -6,7 +6,8 @@ import styles from "./signupmobile.module.css";
 import axios from '../../../axios';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { Button, Divider } from '@mui/material';
-
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import Visibility from "@mui/icons-material/Visibility";
 const SignUpMobile = () => {
 
     const navigate = useNavigate();
@@ -17,6 +18,8 @@ const SignUpMobile = () => {
     const [password, setPassword] = useState('');
     const [cpassword, setCpassword] = useState('');
     const [errors, setErrors] = useState({});
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfPassword, setShowConfPassword] = useState(false);
 
     const cookies = new Cookies();
 
@@ -65,10 +68,10 @@ const SignUpMobile = () => {
         }
 
         // Confirm Password
-        if(cpassword.length===0){
+        if (cpassword.length === 0) {
             formIsValid = false;
             error.cpassword = "Confirm Password cannot be empty";
-        }else if(cpassword!==password){
+        } else if (cpassword !== password) {
             error.cpassword = "Password and Confirm Password do not match";
         }
 
@@ -79,12 +82,12 @@ const SignUpMobile = () => {
     const submitHandler = (e) => {
         e.preventDefault();
         const isValid = validateInput();
-        if(!isValid){
+        if (!isValid) {
             return;
         }
 
         const data = {
-            fullName:fullName,
+            fullName: fullName,
             email: email,
             password: password,
             confirmPassword: cpassword,
@@ -92,12 +95,12 @@ const SignUpMobile = () => {
         };
 
         axios.post('/api/user/sign-up', data)
-        .then(res=>{
-            cookies.set('auth-token', res?.data?.dataToSave?.jwtToken, { path: '/' });
-            navigate('/');
-        }).catch(err=>{
-            console.log('err',err);
-        });    
+            .then(res => {
+                cookies.set('auth-token', res?.data?.dataToSave?.jwtToken, { path: '/' });
+                navigate('/');
+            }).catch(err => {
+                console.log('err', err);
+            });
     }
 
     return (
@@ -105,70 +108,89 @@ const SignUpMobile = () => {
 
             <div >
                 <div >
-                    <span style={{width:"280px",fontWeight:600,fontSize:"21px",fontWeight:"bold",fontFamily:"Inter"}} >Let's Get Started</span>
+                    <span style={{ width: "280px", fontWeight: 600, fontSize: "21px", fontWeight: "bold", fontFamily: "Inter" }} >Let's Get Started</span>
                 </div>
-                    
-                <div style={{width:"272px",fontWeight:400,fontSize:"12px",color:"black",lineHeight:"14.52px",marginTop:"5px",fontFamily:"Inter"}}>
-                    <span >Already have an account? <a style={{color:"#108FB7"}} href='/'>Sign In <ArrowForwardIcon fontSize='12px'/></a></span>
+
+                <div style={{ width: "272px", fontWeight: 400, fontSize: "12px", color: "black", lineHeight: "14.52px", marginTop: "5px", fontFamily: "Inter" }}>
+                    <span >Already have an account? <a style={{ color: "#108FB7" }} href='/'>Sign In <ArrowForwardIcon fontSize='12px' /></a></span>
                 </div>
                 <form onSubmit={submitHandler}>
-                    <div style={{width:"295px",marginTop:"25px",fontWeight:700,marginBottom:"24px"}} >
+                    <div style={{ width: "295px", marginTop: "25px", fontWeight: 700, marginBottom: "24px" }} >
                         <p className={styles.caard}>Choose Your Account Type</p>
 
+                    </div>
+                    <div className={styles.inputs} >
+                        <div onClick={() => setType('ADVERTISER')} className={styles.input} >
+                            <label htmlFor='adv'>I'm an advertiser</label>
+                            <input type='radio' name='account' className='round' id='adv' checked={type === 'ADVERTISER'} />
                         </div>
-                        <div className={styles.inputs} >
-                            <div onClick={() => setType('ADVERTISER')} className={styles.input} >
-                                <label htmlFor='adv'>I'm an advertiser</label>
-                                <input type='radio' name='account' className='round' id='adv' checked={type === 'ADVERTISER'} />
-                            </div>
-                            <div onClick={() => setType('PUBLISHER')} className={styles.input}>
-                                <label htmlFor='pub'>I'm a publisher</label>
-                                <input type='radio' name='account' className='round' id='pub' checked={type === 'PUBLISHER'} />
-                            </div>
+                        <div onClick={() => setType('PUBLISHER')} className={styles.input}>
+                            <label htmlFor='pub'>I'm a publisher</label>
+                            <input type='radio' name='account' className='round' id='pub' checked={type === 'PUBLISHER'} />
                         </div>
-                    
+                    </div>
+
                     <div className={styles.caard}>
                         <p>Account Details</p>
-                        <div style={{marginTop:"24px"}} className={styles.inputs} >
-                        <div className={styles.input}>
+                        <div style={{ marginTop: "24px" }} className={styles.inputs} >
+                            <div className={styles.input}>
                                 <input type='text' className={errors.fullName ? 'input-text err' : 'input-text'} placeholder='Full Name' value={fullName} onChange={e => setFullName(e.target.value)} />
                                 <span className='error'>{errors.fullName}</span>
                             </div>
                             <div className={styles.input} >
-                                <input type='email'  placeholder='Email' value={email} onChange={e => setEmail(e.target.value)} />
+                                <input type='email' placeholder='Email' value={email} onChange={e => setEmail(e.target.value)} />
                                 <span >{errors.email}</span>
                             </div>
                         </div>
                         <div >
                             <div className={styles.input}>
-                                <input type='password' className={errors.password ? 'input-text err' : 'input-text'} placeholder='Password' value={password} onChange={e => setPassword(e.target.value)} />
+                                < span style={{ display: "flex" }}>
+                                    <input type={showPassword ? "text" : "password"}
+                                        className={errors.password ? 'input-text err' : 'input-text'} placeholder='Password' value={password} onChange={e => setPassword(e.target.value)} />
+                                    <span style={{ marginTop: "3px", marginLeft: "-30px" }} onClick={() => setShowPassword(!showPassword)}>
+
+                                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                                    </span>
+                                </span>
                                 <span className='error'>{errors.password}</span>
                             </div>
                             <div className={styles.input}>
-                                <input type='password' className={errors.cpassword ? 'input-text err' : 'input-text'} placeholder='Confirm Password' value={cpassword} onChange={e => setCpassword(e.target.value)} />
+
+                                < span style={{ display: "flex" }}>
+
+                                    <input
+                                        type={showConfPassword ? "text" : "password"}
+
+                                        className={errors.cpassword ? 'input-text err' : 'input-text'} placeholder='Confirm Password' value={cpassword} onChange={e => setCpassword(e.target.value)} />
+                                    <span style={{ marginTop: "3px", marginLeft: "-30px" }} onClick={() => setShowConfPassword(!showConfPassword)}>
+
+                                        {showConfPassword ? <VisibilityOff /> : <Visibility />}
+                                    </span>
+                                </span>
+
                                 <span className='error'>{errors.cpassword}</span>
                             </div>
                         </div>
                     </div>
                     <p >
-                     
-                            By proceeding you agree to Koinpr terms and conditions
-                 
+
+                        By proceeding you agree to Koinpr terms and conditions
+
                     </p>
                     <div className='p-5'>
 
-<Button type="submit" sx={{ marginTop: "2em", background: "black" }} variant='contained'>
-    Proceed<span><ArrowForwardIcon /></span>
-</Button>
-</div>
+                        <Button type="submit" sx={{ marginTop: "2em", background: "black" }} variant='contained'>
+                            Proceed<span><ArrowForwardIcon /></span>
+                        </Button>
+                    </div>
                 </form>
             </div>
             <Divider variant='middle' sx={{ width: "93%", margin: "auto", height: "0.5em", marginTop: "1em", background: "black" }} />
-    
-<p style={{marginTop:"3em",fontSize:"14px"}}>
 
-            All rights reserved by Koinpr Marketing Private Limited
-</p>
+            <p style={{ marginTop: "3em", fontSize: "14px" }}>
+
+                All rights reserved by Koinpr Marketing Private Limited
+            </p>
         </div>
     );
 };

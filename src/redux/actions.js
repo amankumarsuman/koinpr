@@ -9,7 +9,7 @@ export const showIndividualMarketplaceData = (payload) => {
 };
 
 export const addToCart = (payload) => {
-  console.log(payload, "payload");
+  // console.log(payload, "payload");
   
   return {
     type: actionType.ADD_TO_CART,
@@ -23,7 +23,6 @@ export const removeFromCart = (payload) => {
   };
 };
 export const subtractQuantity = (payload) => {
-  console.log(payload);
   return {
     type: actionType.SUB_QUANTITY,
     payload,
@@ -93,7 +92,6 @@ export const getUserByJwtToken =
 
     try {
       let res = await marketPlaceApi.getUserByTokenInMarketPlace();
-console.log(res,"response")
       let updatedData = await res.data.CannedList?.map((data) => {
         return {
           ...data,

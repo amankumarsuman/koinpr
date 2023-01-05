@@ -12,11 +12,60 @@ import { useDispatch } from "react-redux";
 import { SetTokenToRedux } from "../../redux/actions";
 import { useEffect } from "react";
 import { gapi } from "gapi-script";
+import { snackbarNotification } from "../../redux/snackbar.action";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import Visibility from "@mui/icons-material/Visibility";
+import { IconButton, InputAdornment, OutlinedInput } from "@mui/material";
+import { alpha, styled } from '@mui/material/styles';
+import InputBase from '@mui/material/InputBase';
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import TextField from '@mui/material/TextField';
+import FormControl from '@mui/material/FormControl';
 const SignIn = () => {
+
+
+  const CustomInput = styled(InputBase)(({ theme }) => ({
+    'label + &': {
+      marginTop: theme.spacing(3),
+    },
+    '& .MuiInputBase-input': {
+      borderRadius: 4,
+      position: 'relative',
+      backgroundColor: theme.palette.mode === 'light' ? '#fcfcfb' : '#2b2b2b',
+      border: '1px solid #ced4da',
+      fontSize: 16,
+      width: 'auto',
+      padding: '10px 12px',
+      transition: theme.transitions.create([
+        'border-color',
+        'background-color',
+        'box-shadow',
+      ]),
+      // Use the system font instead of the default Roboto font.
+      fontFamily: [
+        '-apple-system',
+        'BlinkMacSystemFont',
+        '"Segoe UI"',
+        'Roboto',
+        '"Helvetica Neue"',
+        'Arial',
+        'sans-serif',
+        '"Apple Color Emoji"',
+        '"Segoe UI Emoji"',
+        '"Segoe UI Symbol"',
+      ].join(','),
+      '&:focus': {
+        boxShadow: `${alpha(theme.palette.primary.main, 0.25)} 0 0 0 0.2rem`,
+        borderColor: theme.palette.primary.main,
+      },
+    },
+  }));
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const [errors, setErrors] = useState({});
+  const [showPassword, setShowPassword] = React.useState(false);
 
   const cookies = new Cookies();
   const navigate = useNavigate();
@@ -82,31 +131,47 @@ const dispatch=useDispatch();
           const payload={
             token:res?.data?.user?.token
           }
-        dispatch(SetTokenToRedux(payload))
-
+          dispatch(SetTokenToRedux(payload))
+          const data={
+            notificationType: "success",
+        notificationMessage: "You Logged In Successfully",
+          }
+        dispatch(snackbarNotification(data));
           navigate("/");
           setOpen(true);
-        } else {
-          console.log("error", res);
+        } 
+      else{
+        const data={
+          notificationType: "error",
+      notificationMessage: "Something went wrong",
         }
+        dispatch(snackbarNotification(data));
+
+      }
       })
       .catch((err) => {
-        console.log("err", err);
+        console.log("err", err?.response?.data?.message);
+        const data={
+          notificationType: "error",
+      notificationMessage: err?.response?.data?.message,
+        }
+        dispatch(snackbarNotification(data));
+
       });
   };
 
-  const clientId="990734078330-qteq6i15s9cni5apfkt9qv2okudhqk93.apps.googleusercontent.com"
+  // const clientId="990734078330-qteq6i15s9cni5apfkt9qv2okudhqk93.apps.googleusercontent.com"
 
 
-useEffect(()=>{
-function start(){
-  gapi.client.init({
-    clientId:clientId,
-    scope:""
-  })
-};
-gapi.load("client:auth2",start)
-})
+// useEffect(()=>{
+// function start(){
+//   gapi.client.init({
+//     clientId:clientId,
+//     scope:""
+//   })
+// };
+// gapi.load("client:auth2",start)
+// })
 
 const handleLogin = async googleData => {
   
@@ -124,7 +189,7 @@ const handleLogin = async googleData => {
   //   }
   // })
   const data = await res.json()
-  console.log(data,"data")
+  // console.log(data,"data")
   navigate("/")
   // store returned user in a context?
 }
@@ -149,13 +214,47 @@ const handleLogin = async googleData => {
             className={`email ${errors.email && "err"}`}
           />
           <span className="error">{errors.email}</span>
+          <div 
+          style={{display:"flex"}}
+          >
+
+
           <input
-            type="password"
+            // type="password"
+            type={showPassword ? "text" : "password"}
+
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className="password"
+         
           />
+          <span style={{marginTop:"30px",marginLeft:"-30px"}} onClick={() => setShowPassword(!showPassword)}>
+
+                            {showPassword ? <VisibilityOff /> : <Visibility />}
+          </span>
+
+          </div>
+           {/* <CustomInput
+                      id="outlined-adornment-password"
+                      type={showPassword ? "text" : "password"}
+                      value={password}
+                      size="small"
+                      name="userLockPassword"
+                      onChange={(e) => setPassword(e.target.value)}
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={() => setShowPassword(!showPassword)}
+                            edge="end"
+                          >
+                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                        </InputAdornment>
+                      }
+                      label="Password"
+                    /> */}
           <button className={`submitButton`} type="submit">
             Sign In
             <ArrowForwardIcon />

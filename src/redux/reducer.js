@@ -12,7 +12,6 @@ export const CartReducers = (state = initialState, action) => {
 
   switch (type) {
     case actionType.ADD_TO_CART:
-      console.log(payload,"payload")
       // return {
       //  ...state,
       //   products: {

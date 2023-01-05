@@ -24,22 +24,23 @@ import Popup from "../../common/Popup/popup/Popup";
 import AddListing from "../AddListing/Index";
 import Desktop from "../desktop/Desktop";
 import { AlertDialog } from "../../common/alertDialogue/AlertDialog";
-import Navbar from "../../common/Header/Navbar";
+// import Navbar from "../../common/Header/Navbar";
 import StripeContainer from "../Cart/stripe/StripeContainer";
 import OrderSuccess from "../Cart/orderSuccess/OrderSuccess";
 import OrderDetails from "../Cart/orderSuccess/OrderSuccess";
 import { UserAuthentication } from "../../common/userAuthentication/UserAuthentication";
 import ForgotPassword from "../forgetPassword/ForgetPassword";
 import PasswordReset from "../passwordReset";
+import { SnackbarNotification } from "../../common/snackbar/SnackBarNotification";
 
 // import Cart from "../Cart/cart/Cart";
 
 function App(props) {
-  console.log(props, "pppp");
   return (
     <div className="App">
       <BrowserRouter>
         <Header />
+        <SnackbarNotification />
 
           {/* <SettingsComponent /> */}
         {/* <NewsOpen /> */}

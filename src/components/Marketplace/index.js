@@ -46,7 +46,7 @@ const Marketplace = (addToCart) => {
             if(res.data.success){
                 setMarketList(res.data.data);
             }
-            console.log(res.data);
+            // console.log(res.data);
         }).catch(err=>{
             console.log(err,'err');
         })

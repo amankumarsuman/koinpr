@@ -59,7 +59,7 @@ function MarketPlace(props) {
   const [marketList, setMarketList] = useState([]);
 
   const [userId, setUserId] = useState();
-console.log(marketList,"marketList")
+// console.log(marketList,"marketList")
   // const filteredData = marketList.filter((item) => {
   //   return item.offerTitle === param1 && item.listingCategory == param2;
   // });
@@ -76,7 +76,7 @@ const searchQuery=(searchQuery)=>{
     if (res.data.success) {
       setMarketList(res.data.data);
     }
-    console.log(res.data);
+    // console.log(res.data);
   })
   .catch((err) => {
     console.log(err, "err");
@@ -97,7 +97,7 @@ const searchQuery=(searchQuery)=>{
         if (res.data.success) {
           setMarketList(res.data.data);
         }
-        console.log(res.data);
+        // console.log(res.data);
       })
       .catch((err) => {
         console.log(err, "err");
@@ -136,7 +136,7 @@ const searchQuery=(searchQuery)=>{
 
   useEffectOnceWhen(()=>{
     const auth = cookies.get("auth-token");
-      console.log(auth);
+      // console.log(auth);
       if (!auth) {
         navigate("/sign-in");
       }
@@ -155,7 +155,7 @@ const searchQuery=(searchQuery)=>{
             navigate("/sign-in");
           }
           setUserId(res.data.user._id);
-          console.log(" marketplace")
+          // console.log(" marketplace")
         })
         .catch((err) => {
           console.log(err, "err");

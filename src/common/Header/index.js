@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import Cookies from "universal-cookie";
 import axios from "../../axios";
 import Badge from "@mui/material/Badge";
@@ -17,7 +17,7 @@ import "./Header.scss";
 import MobileHeader from "./headerMobile/MobileHeader";
 import ReportProblemIcon from "@mui/icons-material/ReportProblem";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Avatar,
   Box,
@@ -31,13 +31,15 @@ import { AlertDialog } from "../alertDialogue/AlertDialog";
 // import Cookies from "universal-cookie";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { memo } from "react";
+import { snackbarNotification } from "../../redux/snackbar.action";
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
 const Header = () => {
   const cookies = new Cookies();
-
+const location=window.location.href
+console.log("params",location)
   const navigate = useNavigate();
 
   const [isLoggedIn, setIsLoggedIn] = useState();
@@ -46,17 +48,54 @@ const Header = () => {
 
   const [userData, setUserData] = useState();
   const [userId, setUserId] = useState();
-console.log(userData,"userData")
+
+  var token=useSelector((state)=>state.cart)
+  // console.log(userData,"userData")
+  console.log(token,"token")
+  
+
+const getUsetByToken=()=>{
+  axios
+  .post(
+    "/api/user/get-user-by-token",
+    {},
+    {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    }
+  )
+  .then((res) => {
+    // if (!res.data.success) {
+    
+    //     const data={
+    //       notificationType: "error",
+    //   notificationMessage: "User is not Verified By Token",
+    //     }
+    //     dispatch(snackbarNotification(data));
+
+      
+    //   navigate("/sign-in");
+    // }
+  //   const data={
+  //     notificationType: "success",
+  // notificationMessage: "User is Verified By Token",
+  //   }
+  //   dispatch(snackbarNotification(data));
+    console.log("first",res)
+    setUserId(res.data.user._id);
+    setUserData(res?.data?.user)
+  })
+}
 
   useEffect(() => {
-    let isCancelled=false;
+    // let isCancelled=false;
     const auth = cookies.get("auth-token");
-    console.log(auth);
-    if (!auth) {
-      navigate("/sign-in");
-    }
-    if(!isCancelled){
-
+    // console.log(auth);
+    // if (!auth) {
+      //   navigate("/sign-in");
+      // }
+      // if(!isCancelled){
       axios
         .post(
           "/api/user/get-user-by-token",
@@ -68,23 +107,40 @@ console.log(userData,"userData")
           }
         )
         .then((res) => {
-          if (!res.data.success) {
-            navigate("/sign-in");
+          // if (!res.data.success) {
+          
+          //     const data={
+          //       notificationType: "error",
+          //   notificationMessage: "User is not Verified By Token",
+          //     }
+          //     dispatch(snackbarNotification(data));
+
+            
+          //   navigate("/sign-in");
+          // }
+          const data={
+            notificationType: "success",
+        notificationMessage: "User is Verified By Token",
           }
+          dispatch(snackbarNotification(data));
+          console.log("first",res)
           setUserId(res.data.user._id);
           setUserData(res?.data?.user)
         })
-        .catch((err) => {
-          console.log(err, "err");
-          navigate("/sign-in");
-        });
-    }
+        // .catch((err) => {
+        //   console.log(err, "err");
+        //   navigate("/sign-in");
+        // });
+    // }
     // UserAuthentication();
 
-    return ()=>{
-      isCancelled=true
-    }
+    // return ()=>{
+    //   isCancelled=true
+    // }
+    getUsetByToken()
   }, [userId]);
+
+
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -95,7 +151,7 @@ console.log(userData,"userData")
   };
   const [isOpenAcc, setIsOpenAcc] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
-
+const dispatch=useDispatch()
   useEffect(() => {
     const auth = cookies.get("auth-token");
     if (!auth) {
@@ -146,7 +202,7 @@ console.log(userData,"userData")
 
   };
   const handleUserTypeOrderHistory=(userType)=>{
-    console.log(userType,"userType")
+    // console.log(userType,"userType")
     setAnchorElUser(null);
 if(userType==="PUBLISHER"){
   navigate("/wallet-publisher")
@@ -160,6 +216,12 @@ if(userType==="PUBLISHER"){
   const signOutHandler = () => {
     cookies.remove("auth-token");
     handleSignout();
+    const data={
+      notificationType: "success",
+        notificationMessage: "Logged Out Successfully",
+    }
+    dispatch(snackbarNotification(data));
+
     navigate("/sign-in");
     // setOpen(true);
     setAnchorElUser(null);
@@ -260,20 +322,24 @@ if(userType==="PUBLISHER"){
                 </MenuItem>
                 <MenuItem onClick={signOutHandler}>
                   <Typography textAlign="center">
-                    {isLoggedIn ? (
+                    {isLoggedIn ? 
                       <span onClick={handleSignout}>Sign Out</span>
-                    ) : (
-                      "Sign-In"
-                    )}
+                  : 
+                  location==="http://localhost:3000/sign-up"? "Sign In":"Sign Up"
+                    }
                   </Typography>
                 </MenuItem>
               </Menu>
             </Box>:
             <span>
-              <Link to="/sign-in">
+              {location==="http://localhost:3000/sign-up"?<Link to="/sign-in">
               Log In
               
-              </Link>
+              </Link>:<Link to="/sign-up">
+              Sign Up
+              
+              </Link>}
+              
 
             </span>
           }

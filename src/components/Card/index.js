@@ -9,7 +9,6 @@ const Card = (props) => {
 
     const navigate = useNavigate();
     // console.log('ab',Actions.addToCart );
-    console.log(props.cart );
 
     return (
         <div onClick={()=>navigate(`/expand/${props.name}`)} className='card'>

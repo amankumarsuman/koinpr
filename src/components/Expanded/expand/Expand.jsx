@@ -75,7 +75,7 @@ function Expand() {
         .get(`/api/listing/get-all?userId=${userId}&offerTitle=${id}`)
         .then((res) => {
           setDisplayData(res.data.data[0]);
-          console.log(res.data.data);
+          // console.log(res.data.data);
         })
         .catch((err) => {
           console.log(err, "err");

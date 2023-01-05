@@ -5,7 +5,7 @@ import order from  "../../../assets/order.png"
 function OrderDetails() {
 
   const {orderDetailsData}=useSelector((state)=>state)
-  console.log(orderDetailsData,"orderDetailsData")
+  // console.log(orderDetailsData,"orderDetailsData")
   return (
     <Paper  elevation={3}style={{display:"flex"}}>
         <Paper sx={{marginTop:"100px"}} >

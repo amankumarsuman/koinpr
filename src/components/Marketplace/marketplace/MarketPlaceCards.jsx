@@ -11,8 +11,7 @@ function MarketPlaceCards({ name, details, image, price = 10, data }) {
   const[id,setId]=useState()
 const cartData=useSelector((state)=>state?.cart?.products)
 var cartDataId=cartData.map((el)=>el?.id)
-console.log(cartDataId,id,"cart")
-console.log(id,cartData,"addddd")
+
   //function to show details
   const navigate = useNavigate();
   const handleShowDetails = (data) => {
@@ -25,8 +24,8 @@ console.log(id,cartData,"addddd")
   const dispatch = useDispatch();
   const [cart, setCart] = useState([]);
   const handleAddToCart = () => {
-    console.log(cartData,data?._id,"dattatat")
-    console.log(id,data?._id,"check")
+    // console.log(cartData,data?._id,"dattatat")
+    // console.log(id,data?._id,"check")
     if(cartDataId?.includes(data?._id)){
       alert("Already added to the cart")
     }else{

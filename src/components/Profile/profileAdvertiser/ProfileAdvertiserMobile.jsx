@@ -45,7 +45,7 @@ const ProfileAdvertiserMobile = () => {
     };
 
     const step1Handler = () =>{
-        console.log(formState);
+        // console.log(formState);
         // axios.patch('/api/user/update',{},{
         //     headers:{
         //         Authorization: 'Bearer ' + auth

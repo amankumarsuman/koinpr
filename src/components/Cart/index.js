@@ -59,9 +59,7 @@ const Cart = () => {
 
   const navigate = useNavigate();
   const cartData = useSelector((state) => state?.cart?.products);
-  console.log(cartData, "cartData");
   let cartDataArray = [];
-  console.log(cartDataArray, "cartDataArray");
 
   for (let i in cartData) {
     cartDataArray.push(cartData[i]);
@@ -86,7 +84,6 @@ const Cart = () => {
     setShowAddIcon(false);
   };
   const handleRemoveFromCart = (item) => {
-    console.log(item);
     dispatch(subtractQuantity({ id: item?.id, quantity: 1 }));
     setShowAddIcon(true);
     setShowProduct(false)
@@ -97,12 +94,11 @@ const Cart = () => {
   const handleCheckoutStripe = () => {
 
     axios
-      .post(`http://localhost:5000/api/stripe/create-checkout-session`, {
+      .post(`http://35.79.77.132/api/stripe/create-checkout-session`, {
         cartItems: cartDataArray,
         userId: 123,
       })
       .then((response) => {
-        console.log(response, "res");
         if (response.data.url) {
           window.location.href = response.data.url;
         }
@@ -130,7 +126,7 @@ var requestOptions = {
 
 fetch("https://api.commerce.coinbase.com/charges", requestOptions)
   .then(response => response.text())
-  .then(result => console.log(result))
+  // .then(result => console.log(result))
   .catch(error => console.log('error', error));
   };
   return (

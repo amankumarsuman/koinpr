@@ -26,7 +26,7 @@ const [handPickedData,setHandpickedData]=useState([])
 
   useEffect(()=>{
 axios.get("/api/getFeed").then((res)=>{
-  console.log(res)
+  // console.log(res)
   if(res?.status===200){
     setFeedData(res.data)
   }
@@ -34,7 +34,7 @@ axios.get("/api/getFeed").then((res)=>{
   },[])
   useEffect(()=>{
 axios.get("/api/getFeed").then((res)=>{
-  console.log(res)
+  // console.log(res)
   if(res?.status===200){
     setFeedData(res.data)
   }
@@ -42,7 +42,7 @@ axios.get("/api/getFeed").then((res)=>{
   },[])
   useEffect(()=>{
 axios.get("/api/handpicked").then((res)=>{
-  console.log(res)
+  // console.log(res)
   if(res?.status===200){
     setHandpickedData(res.data?.handpickedData)
   }

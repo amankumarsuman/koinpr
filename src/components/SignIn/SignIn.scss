@@ -67,8 +67,30 @@
             margin-top: 19px;
             width: 251px;
             height: 41px;
+            
         }
-
+        .input-icons  {
+            position: absolute;
+            border: 1px solid red;
+        }
+          
+        // .input-icons {
+        //     width: 100%;
+        //     margin-bottom: 10px;
+        // }
+          
+        // .icon {
+        //     padding: 10px;
+        //     color: green;
+        //     min-width: 50px;
+        //     text-align: center;
+        // }
+          
+        // .input-field {
+        //     width: 100%;
+        //     padding: 10px;
+        //     text-align: center;
+        // }
         .submitButton{
             margin-top: 26px;
             height: 43px;

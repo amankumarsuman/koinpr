@@ -28,7 +28,7 @@ function WalletPublisher() {
 
     setInput({ ...input, [name]: value });
   };
-  console.log(input);
+  // console.log(input);
   return (
     <div style={{ marginTop: "20px" }}>
       {/* <Grid sx={{width:"90%",margin:"auto"}} container spacing={2}> */}

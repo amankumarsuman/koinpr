@@ -7,7 +7,7 @@ export const marketPlaceApi = {
   getUserByTokenInMarketPlace: async ( ) => {
     try {
       const auth = cookies.get("auth-token");
-      console.log(auth);
+      // console.log(auth);
       if (!auth) {
         // navigate("/sign-in");
         return false

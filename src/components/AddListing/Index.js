@@ -32,7 +32,7 @@ const AddListing = () => {
 
   useEffect(() => {
     const auth = cookies.get("auth-token");
-    console.log(auth);
+    // console.log(auth);
     if (!auth) {
       navigate("/sign-in");
     }
@@ -79,7 +79,7 @@ const AddListing = () => {
 
   const [addListingInput, setAddListingInput] = useState(init);
 const [image,setImage]=useState('')
-console.log(image)
+// console.log(image)
   const handleChange = (e) => {
     const { name, value, checked } = e.target;
     if (name === "noFollowLinkAllowed") {
@@ -97,10 +97,9 @@ console.log(image)
       setAddListingInput({ ...addListingInput, [name]: value });
     }
     // setAddListingInput({ ...addListingInput, [name]: value, [checked]: value });
-    console.log(e.target.checked);
-    console.log(e.target.name);
+    // console.log(e.target.checked);
+    // console.log(e.target.name);
   };
-  console.log(addListingInput, "addListingInput");
   const [showDialog, setShowDialog] = useState(false);
 
   const handleSubmitFunction = () => {
@@ -151,27 +150,28 @@ console.log(image)
     };
     axios
       .post(
-        "api/listing/add",formData,
+        "api/listing/add",
         {
-          // email,
-          // userType,
-          // price,
-          // websiteLanguage,
-          // linkedin,
-          // googleNews,
-          // socialShare,
-          // facebook,
-          // twitter,
-          // offerTitle,
-          // listingCategory,
-          // image:image,
-          // noFollowLinkAllowed,
-          // doFollowLinkAllowed,
-          // indexedArticle,
-          // websiteLink,
-          // userType,
-          // userId: userId,
-          // image:image
+          // formData
+          email,
+          userType,
+          price,
+          websiteLanguage,
+          linkedin,
+          googleNews,
+          socialShare,
+          facebook,
+          twitter,
+          offerTitle,
+          listingCategory,
+          image:image,
+          noFollowLinkAllowed,
+          doFollowLinkAllowed,
+          indexedArticle,
+          websiteLink,
+          userType,
+          userId: userId,
+          image:image
         },
         config
       )
@@ -179,7 +179,7 @@ console.log(image)
         if (res?.data?.success) {
           navigate("/");
         }
-        console.log(res);
+        // console.log(res);
         if (!res?.data.success) {
           <CustomizedDialogs
             open={showDialog}

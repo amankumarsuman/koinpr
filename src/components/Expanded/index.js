@@ -114,10 +114,10 @@ const Expanded = () => {
               navigate("/sign-in");
             }
             setUserId(res.data.user._id);
-            console.log("first")
+            // console.log("first")
           })
           .catch((err) => {
-            console.log(err, "err");
+            // console.log(err, "err");
             navigate("/sign-in");
           });
     
@@ -131,13 +131,13 @@ const Expanded = () => {
           .get(`/api/listing/get-all?userId=${userId}&offerTitle=${id}`)
           .then((res) => {
             setDisplayData(res.data.data[0]);
-            console.log(res.data.data);
+            // console.log(res.data.data);
           })
           .catch((err) => {
             console.log(err, "err");
           });
       }
-    }, [userId]);
+    }, []);
     const[ids,setId]=useState()
     const cartData=useSelector((state)=>state?.cart?.products)
     var cartDataId=cartData.map((el)=>el?.id)

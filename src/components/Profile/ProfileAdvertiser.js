@@ -28,6 +28,7 @@ const ProfileAdvertiser = () => {
     accountNo:null,
     swiftCode:null,
     bankName:"",
+    doc:"",
 
   };
 
@@ -40,7 +41,7 @@ const ProfileAdvertiser = () => {
   const [userId, setUserId] = useState();
   const [userData,setUserData]=useState()
 
-  console.log(input);
+  // console.log(input);
 
   useEffect(() => {
     const auth = cookies.get("auth-token");
@@ -75,14 +76,14 @@ const ProfileAdvertiser = () => {
   const handleAccountDetalsCheck = (e) => {
     // string passed in
     // a string returned by default
-    console.log(e.currentTarget.value);
+    // console.log(e.currentTarget.value);
     // add + to the event to make the value a number
     setStep(+e.currentTarget.value);
   };
 
   const handleChange = (e) => {
     const { name, value, checked } = e.target;
-    console.log(name,value,"checked")
+    // console.log(name,value,"checked")
     if (name === "representCompany") {
       setInput({ ...input, representCompany: checked });
     } else if (name === "cryptoCurrency") {
@@ -155,7 +156,7 @@ const ProfileAdvertiser = () => {
           navigate("/");
           alert("Record Updated successfully");
         }
-        console.log(res);
+        // console.log(res);
         if (!res?.data.success) {
           // <CustomizedDialogs
           //   open={showDialog}
@@ -211,6 +212,7 @@ const ProfileAdvertiser = () => {
                 name="account"
                 onChange={handleAccountDetalsCheck}
                 checked={step === 2}
+                // disabled={input?.companyName.length==0 ||input?.companyId?.length==0}
               ></input>
             </div>
             {input?.representCompany && input?.userType==="PUBLISHER"?  (
@@ -338,15 +340,18 @@ const ProfileAdvertiser = () => {
                   <label>Choose Document Type</label>
                 </div>
                 <div className="wInput mt40">
-                  <input type="file" />
+                  <input type="file" name="doc" value={input?.doc} />
                 </div>
               </div>
               <p className="pBottom">
                 Max file size 5 MB. Supported file types: png, jpeg, pdf, doc.
               </p>
-              <button type="button" className="pButton mt40">
+              {input?.doc?.length>0?
+              <button  type="button" className="pButton mt40">
                 Proceed
-              </button>
+              </button>:null
+              
+            }
             </>
           )}
           {step === 3 && (

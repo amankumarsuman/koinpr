@@ -41,14 +41,14 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 
 
-const rows = [
-    {date:"10 Aug, 2022",id:"2313426",desc:"Added wallet balance",amount:"$10"},
-    {date:"12 Aug, 2022",id:"2313421",desc:"Paid for orders",amount:"$20"},
-    {date:"09 Aug, 2022",id:"2313429",desc:"Order Cancelled",amount:"$10"},
+// const rows = [
+//     {date:"10 Aug, 2022",id:"2313426",desc:"Added wallet balance",amount:"$10"},
+//     {date:"12 Aug, 2022",id:"2313421",desc:"Paid for orders",amount:"$20"},
+//     {date:"09 Aug, 2022",id:"2313429",desc:"Order Cancelled",amount:"$10"},
 
-  ];
+//   ];
 
-export default function WalletAdvertiserTableMobile() {
+export default function WalletAdvertiserTableMobile({data}) {
   return (
 
     <>
@@ -58,7 +58,7 @@ export default function WalletAdvertiserTableMobile() {
     <TableContainer component={Paper}>
       <Table sx={{ width: 300,margin:"auto" }} aria-label="customized table">
         {/* <TableHead> */}
-        {rows.map((row)=>(
+        {data?.map((row)=>(
 <>
 
           <StyledTableRow >

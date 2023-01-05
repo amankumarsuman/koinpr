@@ -94,34 +94,34 @@ const cookies = new Cookies();
 
 
 
-  useEffect(()=>{
-    const auth = cookies.get("auth-token");
-    console.log(auth);
-    // if (!auth) {
-    //   navigate("/sign-in");
-    // }
-    axios
-      .post(
-        "/api/user/get-user-by-token",
-        {},
-        {
-          headers: {
-            Authorization: "Bearer " + auth,
-          },
-        }
-      )
-      .then((res) => {
-        if (!res.data.success) {
-          navigate("/sign-in");
-        }
-        setUserId(res.data.user._id);
-        console.log(" marketplace")
-      })
-      .catch((err) => {
-        console.log(err, "err");
-        navigate("/sign-in");
-      });
-  },[])
+  // useEffect(()=>{
+  //   const auth = cookies.get("auth-token");
+  //   console.log(auth);
+  //   // if (!auth) {
+  //   //   navigate("/sign-in");
+  //   // }
+  //   axios
+  //     .post(
+  //       "/api/user/get-user-by-token",
+  //       {},
+  //       {
+  //         headers: {
+  //           Authorization: "Bearer " + auth,
+  //         },
+  //       }
+  //     )
+  //     .then((res) => {
+  //       if (!res.data.success) {
+  //         navigate("/sign-in");
+  //       }
+  //       setUserId(res.data.user._id);
+  //       console.log(" marketplace")
+  //     })
+  //     .catch((err) => {
+  //       console.log(err, "err");
+  //       navigate("/sign-in");
+  //     });
+  // },[])
 
   return (
     <div >

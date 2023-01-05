@@ -41,19 +41,14 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 
 
-const rows = [
-    {date:"10 Aug, 2022",id:"2313426",desc:"Added wallet balance",amount:"$10"},
-    {date:"12 Aug, 2022",id:"2313421",desc:"Paid for orders",amount:"$20"},
-    {date:"09 Aug, 2022",id:"2313429",desc:"Order Cancelled",amount:"$10"},
 
-  ];
 
-export default function WalletPublisherTableVertical() {
+export default function WalletPublisherTableVertical({data}) {
   return (
     <TableContainer >
       <Table sx={{ width: 250 }} aria-label="customized table">
         {/* <TableHead> */}
-        {rows.map((row)=>(
+        {data?.map((row)=>(
 <>
 
           <TableRow>
@@ -67,7 +62,7 @@ export default function WalletPublisherTableVertical() {
 
 }}
  align="center">
-         {row.date}
+         {row?.date}
        </StyledTableCell>
 
           </TableRow>
@@ -80,7 +75,7 @@ export default function WalletPublisherTableVertical() {
         
          }}
           align="center">
-          {row.id}
+          {row?.id}
         </StyledTableCell>
           </TableRow>
           <TableRow>
@@ -92,7 +87,7 @@ export default function WalletPublisherTableVertical() {
         
          }}
           align="center">
-          {row.desc}
+          {row?.desc}
         </StyledTableCell>
           </TableRow>
           <TableRow>
@@ -104,7 +99,7 @@ export default function WalletPublisherTableVertical() {
         
          }}
           align="center">
-          {row.amount}
+          {row?.amount}
         </StyledTableCell>
           </TableRow>
           <br/>

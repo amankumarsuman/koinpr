@@ -14,7 +14,7 @@ export default function CustomizedSnackbars({
   setOpen,
   handleClose,
 }) {
-  console.log(open);
+  // console.log(open);
   //   const [open, setOpen] = React.useState(false);
 
   //   const handleClick = () => {

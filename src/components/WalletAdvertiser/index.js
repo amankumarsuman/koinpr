@@ -1,10 +1,28 @@
 import './WalletAdvertiser.scss';
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import WalletPublisherTableVertical from '../WalletPublisher/walletPublisher/WalletPublisherVertical';
 import WalletAdvertiserTableMobile from './newWalletComponent/WalletAdvertiserMobile';
+import axios from '../../axios';
 
 const WalletAdvertiser = () => {
+
+const [orderHistory,setOrderHistory]=useState()
+
+//     const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
+
+// const product = await stripe.products.retrieve(
+//   'prod_N6FENKKNCsQc0H'
+// );
+
+
+const getOrderData=async()=>{
+await axios.get("http://localhost:5000/api/order").then((res)=> setOrderHistory(res.data?.OrderList))
+}
+// getOrderData()
+useEffect(()=>{
+    getOrderData()
+},[])
     return (
         <>
                     <div className="hidden md:block">
@@ -21,43 +39,24 @@ const WalletAdvertiser = () => {
                             <th>Description</th>
                             <th>Amount</th>
                         </tr>
-                        <tr>
-                            <td>12 Aug, 2022</td>
-                            <td>2313421</td>
-                            <td>Paid for orders</td>
-                            <td>$10</td>
+
+                        {orderHistory?.map((data)=>(
+
+                        <tr key={data?.id}>
+                            <td>{data?.date}</td>
+                            <td>{data?.id}</td>
+                            <td>{data?.desc}</td>
+                            <td>${data?.amount}</td>
                         </tr>
-                        <tr>
-                            <td>12 Aug, 2022</td>
-                            <td>2313421</td>
-                            <td>Added wallet balance</td>
-                            <td>$10</td>
-                        </tr>
-                        <tr>
-                            <td>12 Aug, 2022</td>
-                            <td>2313421</td>
-                            <td>Added wallet balance</td>
-                            <td>$10</td>
-                        </tr>
-                        <tr>
-                            <td>12 Aug, 2022</td>
-                            <td>2313421</td>
-                            <td>Added wallet balance</td>
-                            <td>$10</td>
-                        </tr>
-                        <tr>
-                            <td>12 Aug, 2022</td>
-                            <td>2313421</td>
-                            <td>Added wallet balance</td>
-                            <td>$10</td>
-                        </tr>
+                        ))}
+                       
                     </table>
                 </div>
             </div>
         </div>
         </div>
         <div className="md:hidden sm:block">
-            <WalletAdvertiserTableMobile />
+            <WalletAdvertiserTableMobile data={orderHistory} />
 
             </div>
         </>

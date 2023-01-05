@@ -29,15 +29,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 
-
-const rows = [
-    {date:"10 Aug, 2022",id:"2313426",desc:"Added wallet balance",amount:"$10"},
-    {date:"12 Aug, 2022",id:"2313421",desc:"Paid for orders",amount:"$20"},
-    {date:"09 Aug, 2022",id:"2313429",desc:"Order Cancelled",amount:"$10"},
-
-  ];
-
-export default function WalletPublisherTable() {
+export default function WalletPublisherTable({data}) {
   return (
     <TableContainer >
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -51,14 +43,14 @@ export default function WalletPublisherTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-       <TableRow key={row.i}>
+          {data?.map((row) => (
+       <TableRow key={row?.id}>
        <TableCell sx={{border:"1px solid black"}} align="center">
-         {row.date}
+         {row?.date}
        </TableCell>
-       <TableCell sx={{border:"1px solid black"}} align="center">{row.id}</TableCell>
-       <TableCell sx={{border:"1px solid black"}}align="center">{row.desc}</TableCell>
-       <TableCell sx={{border:"1px solid black"}}align="center">{row.amount}</TableCell>
+       <TableCell sx={{border:"1px solid black"}} align="center">{row?.id}</TableCell>
+       <TableCell sx={{border:"1px solid black"}}align="center">{row?.desc}</TableCell>
+       <TableCell sx={{border:"1px solid black"}}align="center">{row?.amount}</TableCell>
        
      </TableRow>
           ))}
