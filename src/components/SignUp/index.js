@@ -106,7 +106,7 @@ const dispatch=useDispatch()
     };
 
     axios
-      .post("http://localhost:5000/api/user/sign-up", data)
+      .post("https://koinpr.onrender.com/api/user/sign-up", data)
       .then((res) => {
         cookies.set("auth-token", res?.data?.dataToSave?.jwtToken, {
           path: "/",
