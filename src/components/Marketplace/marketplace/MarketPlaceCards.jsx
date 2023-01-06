@@ -51,15 +51,16 @@ var cartDataId=cartData.map((el)=>el?.id)
           height: "167px",
           background: "#F8F8F8",
           padding: "1em",
-          marginBottom:"30px"
+          marginBottom:"30px",
+          // marginRight:"20px"
         }}
       >
         <span onClick={() => handleShowDetails(data)}>
-          <div style={{ display: "flex", marginTop: "22px" }}>
-            <Avatar>{image}</Avatar>
+          <div style={{ display: "flex", marginTop: "12px" }}>
+            <Avatar sx={{width:"54px",height:"54px"}}>{image}</Avatar>
             <div
               style={{
-                marginTop: "0.4em",
+                marginTop: "1em",
                 marginLeft: "12px",
                 fontSize: "15px",
                 fontWeight: 600,

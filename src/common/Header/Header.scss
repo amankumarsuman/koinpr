@@ -16,12 +16,14 @@
         .heading{
             font-size: 26px;
             font-weight: 600;
+            font-family: Inter;
         }
 
         .subHeading{
             margin-left: 18px;
             font-size: 13px;
             font-weight: 400;
+            margin-top: -7px;
         }
     }
     // .left:hover{
@@ -66,26 +68,27 @@
     }
 }
 
-.popup {
-    // padding: 40px 60px;
-    padding: 0;
+.popups {
+    padding: 40px 60px;
+    // padding: 0;
+    background: #F9F9F9;
 
-    .content {
+    .contents {
         padding: 40px 60px;
         // padding: 0;
         background: #F9F9F9;
         border-radius: 3px;
 
-        .title {
+        .titles {
             font-weight: 600;
             font-size: 25px;
         }
 
-        .input {
+        .inputs {
             margin-top: 42px;
             
 
-            .ip {
+            .ips {
                 box-sizing: border-box;
                 padding: 11px 19px;
                 width: 251px;
@@ -99,7 +102,7 @@
             }
         }
 
-        .submit {
+        .submits {
             font-weight: 700;
             font-size: 16px;
             text-align: center;

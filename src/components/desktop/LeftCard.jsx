@@ -25,7 +25,7 @@ export default function DesktopLeftPaper({data}) {
          {data[4]?.date}
         <Divider />
         <div style={{ marginTop: "35px" }}>
-          <img src={`https://koinpr.onrender.com/${data[4]?.image}`} />
+          <img src={`http://localhost:5000/${data[4]?.image}`} />
         </div>
       </Typography>
       <Typography sx={{ fontSize: "15px", fontWeight: 600, marginTop: "27px" }}>

@@ -233,6 +233,7 @@ if(userType==="PUBLISHER"){
   const handleTelegram=()=>{
     setAnchorElUser(null);
     setOpen(true);
+    
 
 
   }
@@ -267,6 +268,73 @@ if(userType==="PUBLISHER"){
                 </div>
               )}
             </span> */}
+                 {isLoggedIn?
+           
+           <Box sx={{ flexGrow: 0 }}>
+             <Tooltip title="Open Account">
+               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <Typography sx={{color:"white",fontWeight:600,fontSize:"16px"}}>
+
+                 My Account
+                </Typography>
+               </IconButton>
+             </Tooltip>
+             <Menu
+               sx={{ mt: "45px" }}
+               id="menu-appbar"
+               anchorEl={anchorElUser}
+               anchorOrigin={{
+                 vertical: "top",
+                 horizontal: "right",
+               }}
+               keepMounted
+               transformOrigin={{
+                 vertical: "top",
+                 horizontal: "right",
+               }}
+               open={Boolean(anchorElUser)}
+               onClose={handleCloseUserMenu}
+             >
+               <MenuItem  onClick={handleCloseUserMenu}>
+                 <Typography onClick={() => navigate("/profile")} textAlign="center">My Profile</Typography>
+               </MenuItem>
+               <MenuItem onClick={()=>handleUserTypeOrderHistory(userData?.userType)}>
+                 <Typography textAlign="center">{userData?.userType==="ADVERTISER"?"Order History":userData?.userType==="PUBLISHER"?"Wallet History":null}</Typography>
+               </MenuItem>
+               <MenuItem onClick={handleTelegram}>
+                 <Typography textAlign="center">Telegram</Typography>
+               </MenuItem>
+               <MenuItem onClick={handleCloseUserMenu}>
+                 <Typography textAlign="center">
+                   <Link to="/add-listing">
+                   {userData?.userType==="PUBLISHER"?"Add Listing":null}
+                   
+                   </Link>
+                   </Typography>
+               </MenuItem>
+               <MenuItem onClick={signOutHandler}>
+                 <Typography textAlign="center">
+                   {isLoggedIn ? 
+                     <span onClick={handleSignout}>Sign Out</span>
+                 : 
+                 location==="http://localhost:3000/sign-up"? "Sign In":"Sign Up"
+                   }
+                 </Typography>
+               </MenuItem>
+             </Menu>
+           </Box>:
+           <span>
+             {location==="http://localhost:3000/sign-up"?<Link to="/sign-in">
+             Log In
+             
+             </Link>:<Link to="/sign-up">
+             Sign Up
+             
+             </Link>}
+             
+
+           </span>
+         }
             {isLoggedIn?
             <IconButton onClick={() => navigate("/cart")} aria-label="cart">
               <StyledBadge badgeContent={cartNumber} color="primary">
@@ -279,70 +347,7 @@ if(userType==="PUBLISHER"){
               {isLoggedIn ? "Sign Out" : "Sign-In"}
             </span> */}
 
-            {isLoggedIn?
-           
-            <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar />
-                </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: "45px" }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                <MenuItem  onClick={handleCloseUserMenu}>
-                  <Typography onClick={() => navigate("/profile")} textAlign="center">My Profile</Typography>
-                </MenuItem>
-                <MenuItem onClick={()=>handleUserTypeOrderHistory(userData?.userType)}>
-                  <Typography textAlign="center">{userData?.userType==="ADVERTISER"?"Order History":userData?.userType==="PUBLISHER"?"Wallet History":null}</Typography>
-                </MenuItem>
-                <MenuItem onClick={handleTelegram}>
-                  <Typography textAlign="center">Telegram</Typography>
-                </MenuItem>
-                <MenuItem onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">
-                    <Link to="/add-listing">
-                    {userData?.userType==="PUBLISHER"?"Add Listing":null}
-                    
-                    </Link>
-                    </Typography>
-                </MenuItem>
-                <MenuItem onClick={signOutHandler}>
-                  <Typography textAlign="center">
-                    {isLoggedIn ? 
-                      <span onClick={handleSignout}>Sign Out</span>
-                  : 
-                  location==="http://localhost:3000/sign-up"? "Sign In":"Sign Up"
-                    }
-                  </Typography>
-                </MenuItem>
-              </Menu>
-            </Box>:
-            <span>
-              {location==="http://localhost:3000/sign-up"?<Link to="/sign-in">
-              Log In
-              
-              </Link>:<Link to="/sign-up">
-              Sign Up
-              
-              </Link>}
-              
-
-            </span>
-          }
+       
           </div>
         </div>
       </div>
@@ -375,23 +380,21 @@ if(userType==="PUBLISHER"){
             </Button>
           </DialogActions> */}
           <DialogContent>
- <div className='popup'>
+ <div className='popups'>
 
 
-        <div className='content'>
-            <DialogTitle className='title'>Add Your Telegram</DialogTitle>
-            <div className='input'>
-                <input className='ip' type='text' placeholder={"Your telegram @username"} />
-                {/* { props.input2 && <input className='ip ip1' type='text' placeholder={props.input2} />} */}
+        <div className='contents'>
+            <DialogTitle className='titles'>Add Your Telegram</DialogTitle>
+            <div className='inputs'>
+                <input className='ips' type='texts' placeholder={"Your telegram @username"} />
             </div>
-            <button  type='submit' className='submit'>Submit <ArrowForwardIcon/></button>
+            <button  type='submit' className='submits'>Submit <ArrowForwardIcon/></button>
 
             <div style={{width:"272px",margin:"auto"}}>
             This will help your account manager to commute with you faster.  
             </div>
-            {/* <div className='bottom'>Facing issues? <a href='/'>Contact support</a> </div> */}
         </div>
-          <Divider variant="middle" sx={{border:"3px solid black",background:"black"}}/>
+          <Divider variant="middle" sx={{border:"3px solid black",background:"black",marginTop:"33px"}}/>
     </div>
           </DialogContent>
         </Dialog>

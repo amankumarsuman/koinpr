@@ -20,7 +20,7 @@ const WalletPublisher = () => {
 
 
 const getOrderData=async()=>{
-await axios.get("https://koinpr.onrender.com/api/order").then((res)=> setOrderHistory(res.data?.OrderList))
+await axios.get("http://localhost:5000/api/order").then((res)=> setOrderHistory(res.data?.OrderList))
 }
 // getOrderData()
 useEffect(()=>{

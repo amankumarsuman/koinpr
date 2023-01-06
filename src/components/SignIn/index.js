@@ -207,6 +207,7 @@ const handleLogin = async googleData => {
             Don't have an account? <a href="/sign-up">Sign up</a>
           </p>
           <input
+          style={{border:"1px solid black",borderRadius:"4px"}}
             type="email"
             placeholder="Email Id"
             value={email}
@@ -222,6 +223,7 @@ const handleLogin = async googleData => {
           <input
             // type="password"
             type={showPassword ? "text" : "password"}
+            style={{border:"1px solid black",borderRadius:"4px"}}
 
             placeholder="Password"
             value={password}
@@ -229,7 +231,7 @@ const handleLogin = async googleData => {
             className="password"
          
           />
-          <span style={{marginTop:"30px",marginLeft:"-30px"}} onClick={() => setShowPassword(!showPassword)}>
+          <span style={{marginTop:"27px",marginLeft:"-30px"}} onClick={() => setShowPassword(!showPassword)}>
 
                             {showPassword ? <VisibilityOff /> : <Visibility />}
           </span>
@@ -255,9 +257,9 @@ const handleLogin = async googleData => {
                       }
                       label="Password"
                     /> */}
-          <button className={`submitButton`} type="submit">
+          <button className="submitButton"type="submit">
             Sign In
-            <ArrowForwardIcon />
+            <ArrowForwardIcon sx={{fontSize:"20px",marginLeft:"5px"}} />
           </button>
         </form>
         {/* <GoogleLogin

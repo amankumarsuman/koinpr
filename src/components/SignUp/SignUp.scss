@@ -12,7 +12,7 @@
 
         .heading {
             display: block;
-            font-size: 27px;
+            font-size: 25px;
             font-weight: 600;
         }
 
@@ -34,20 +34,24 @@
         }
 
         .caard {
+
             p {
-                font-size: 15px;
+                font-size: 14px;
                 font-weight: 700;
                 margin-bottom: 12px;
-                margin-top: 12px;
+                margin-top: 31px;
+                // border: 1px solid red;
             }
 
             .m-t-23{
                 margin-top: 23px;
+
             }
 
             .inputs {
                 display: flex;
                 gap: 50px;
+                // border: 1px solid red;
 
                 .col{
                     display: flex;
@@ -74,6 +78,7 @@
                     border: 1px solid black;
                     border-radius: 3px;
 
+                    color: #3D3C3C;
                     input[name="account"] {
                         accent-color: black;
                     }

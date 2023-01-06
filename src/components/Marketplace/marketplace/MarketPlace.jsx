@@ -163,7 +163,7 @@ const searchQuery=(searchQuery)=>{
         });
     // getUserByJwtToken()
     searchQuery("pressRelease")
-  },[])
+  },[userId])
 useEffect(()=>{
   getUserByJwtToken()
 
@@ -284,7 +284,9 @@ useEffect(()=>{
     <>
       <div className="w-full p-4 mx-auto mt-20 bg-white rounded-xl  overflow-hidden ">
         <div className="md:flex lg:flex xs:flex w-full">
-          <div className="p-5 md:w-3/12 lg:w-3/12 sm:w-full bg-[#F8F8F8]">
+          <div 
+          style={{marginLeft:"80px"}} 
+          className="p-5 md:w-3/12 lg:w-3/12 sm:w-full bg-[#F8F8F8]">
             <Grid container spacing={2}>
               <Grid item xs={12} md={12} sx={{ marginLeft: "1em" }}>
                 <p
@@ -325,7 +327,7 @@ useEffect(()=>{
               <Grid
                 xs={12}
                 md={12}
-                sx={{ marginLeft: "2em", marginTop: "1em" }}
+                sx={{ marginLeft: "2em", marginTop: "35px" }}
               >
                 <p
                   className="sm:invisible md:visible"
@@ -405,7 +407,7 @@ useEffect(()=>{
               </Grid>
             </Grid>
           </div>
-          <div className="p-3 md:w-8/12 lg:w-8/12 sm:w-full place-content-center md:mx-20 ">
+          <div className="p-3 md:w-8/12 lg:w-8/12 sm:w-full place-content-center md:mx-10 ">
             <Grid container spacing={2}>
               {/* <Grid sx={{textAlign:"center"}} item xs={12} md={12}>
                 <Link to="/add-listing">

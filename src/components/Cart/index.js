@@ -94,7 +94,7 @@ const Cart = () => {
   const handleCheckoutStripe = () => {
 
     axios
-      .post(`https://koinpr.onrender.com/api/stripe/create-checkout-session`, {
+      .post(`http://35.79.77.132/api/stripe/create-checkout-session`, {
         cartItems: cartDataArray,
         userId: 123,
       })
@@ -145,7 +145,7 @@ fetch("https://api.commerce.coinbase.com/charges", requestOptions)
                     <img src={el.image} alt={el.name} />
                   </span>
                   <span className="title">{el.name}</span>
-                  <span className="title">${el.price}</span>
+                  <span className="price">${el.price}</span>
                   <div onClick={() => handleRemoveFromCart(el)} className="title">
                     {<CancelIcon/>}
                   </div>
