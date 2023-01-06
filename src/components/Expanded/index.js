@@ -137,17 +137,20 @@ const Expanded = () => {
             console.log(err, "err");
           });
       }
-    }, []);
+    },[userId,id]);
     const[ids,setId]=useState()
     const cartData=useSelector((state)=>state?.cart?.products)
     var cartDataId=cartData.map((el)=>el?.id)
     const dispatch = useDispatch();
+    console.log(cartDataId,"cartDataId")
+    console.log(displayData,"displayData")
+    console.log(cartDataId.includes(displayData?._id),"displayData")
     const handleAddToCart = () => {
       const {_id,details,image,price}=displayData
       if(cartDataId?.includes(ids)){
         alert("Already added to the cart")
       }else{
-      const payload = { _id, name:displayData?.user?.fullName, image, price, quantity: 1 };
+      const payload = { id:_id, name:displayData?.user?.fullName, image, price, quantity: 1 };
       dispatch(addToCart(payload));
       setShowAddIcon(false)
       setId(_id)
@@ -158,7 +161,7 @@ const Expanded = () => {
     const handleRemoveFromCart = () => {
       const {name,_id,details,image,price}=displayData
       
-      dispatch(subtractQuantity({ _id, quantity: 1 }));
+      dispatch(subtractQuantity({id: _id, quantity: 1 }));
       setShowAddIcon(true)
     };
     if(displayData){
@@ -177,7 +180,7 @@ const Expanded = () => {
                         <span className='data'>Todayq News is an online Cryptocurrency News, Analysis & Blockchain platform focused on covering daily happenings in the cryptocurrency and blockchain space. The website is presenting the latest developments from the market, offering a clear view of the performance and dynamics of Blockchain, Bitcoin, Ethereum, and other cryptocurrency projects.</span>
                         <div className='price'>
                             <span className='amount'>{displayData?.price?`$${displayData?.price}`:"$200"}</span>
-                            <span onClick={!cartDataId?.includes(displayData?._id)?handleAddToCart:handleRemoveFromCart}>{!cartDataId?.includes(displayData?._id)?<AddCircleOutlineIcon/>:<CancelIcon/>}</span>
+                            <span onClick={!(cartDataId?.includes(displayData?._id))?handleAddToCart:handleRemoveFromCart}>{!(cartDataId?.includes(displayData?._id))?<AddCircleOutlineIcon/>:<CancelIcon/>}</span>
                         </div>
                     </div>
                     <div className='right'>
