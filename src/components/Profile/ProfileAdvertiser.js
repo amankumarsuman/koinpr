@@ -314,14 +314,14 @@ const ProfileAdvertiser = () => {
                   disabled={userData?.walletAddress}
                 />
               </div>
-              <button
+              {/* <button
                 type="button"
                 className="pButton mt40"
                 onClick={handleSubmit}
               >
                 Proceed
                 <ArrowForwardIcon />
-              </button>
+              </button> */}
               <p className="pBottom">
                 Please make sure that the details you enter here matches the
                 documents you will be providing for verification.
@@ -346,12 +346,15 @@ const ProfileAdvertiser = () => {
               <p className="pBottom">
                 Max file size 5 MB. Supported file types: png, jpeg, pdf, doc.
               </p>
-              {input?.doc?.length>0?
-              <button  type="button" className="pButton mt40">
-                Proceed
-              </button>:null
+              {/* {input?.doc?.length>0? */}
+              {input?.userType==="PUBLISHER"?null:
               
-            }
+              <button style={{borderRadius:"5px"}} type="button" className="pButton mt40">
+                {"Proceed ->"}
+              </button>
+              }
+              
+            {/* } */}
             </>
           )}
           {step === 3 && (
@@ -471,13 +474,19 @@ const ProfileAdvertiser = () => {
                 </>
               ) : null}
 
-              <button
+              {/* <button
                 onClick={handleSubmit}
                 type="button"
                 className="pButton mt40"
               >
                 Proceed
                 <ArrowForwardIcon />
+              </button> */}
+               <button style={{borderRadius:"5px"}} 
+                onClick={handleSubmit}
+               
+               type="button" className="pButton mt40">
+                {"Proceed ->"}
               </button>
               <p className="pBottom">
                 We will automatically generate a withdrawal request at the end
