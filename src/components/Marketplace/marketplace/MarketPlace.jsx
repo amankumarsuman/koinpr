@@ -285,8 +285,8 @@ useEffect(()=>{
       <div className="w-full p-4 mx-auto mt-20 bg-white rounded-xl  overflow-hidden ">
         <div className="md:flex lg:flex xs:flex w-full">
           <div 
-          style={{marginLeft:"80px"}} 
-          className="p-5 md:w-3/12 lg:w-3/12 sm:w-full bg-[#F8F8F8]">
+          // style={{marginLeft:"80px"}} 
+          className="p-5 md:w-3/12 md:ml-14  lg:w-3/12 sm:w-full bg-[#F8F8F8]">
             <Grid container spacing={2}>
               <Grid item xs={12} md={12} sx={{ marginLeft: "1em" }}>
                 <p

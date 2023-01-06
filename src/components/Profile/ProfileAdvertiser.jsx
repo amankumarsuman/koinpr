@@ -69,7 +69,7 @@ const ProfileAdvertiser = () => {
 <Grid item xs={12} md={4}>
 <div className='pLeft'>
                 <h2 className='lHead'>Account Details</h2>
-                <p className='cStatus'>Current Status : <span className='status'>Not Verified</span></p>
+                <p className='cStatus'>Current Status : <span className='status'>Pending</span></p>
                 <div className='inputs mt40'>
                     <div className='wInput'>
                         <label>Identification Details</label>

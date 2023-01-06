@@ -16,6 +16,7 @@ import { snackbarNotification } from "../../redux/snackbar.action";
 
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Visibility from "@mui/icons-material/Visibility";
+import tickmark from "../../assets/Vector.png"
 const SignUp = () => {
   const navigate = useNavigate();
 
@@ -197,7 +198,9 @@ const dispatch=useDispatch()
                       className="round"
                       id="adv"
                       checked={type === "ADVERTISER"}
+
                     />
+                    {/* {type === "ADVERTISER"?<img src={tickmark}/>:null} */}
                   </div>
                   <div onClick={() => setType("PUBLISHER")} className="input">
                     <label style={{color:"#3D3C3C"}} htmlFor="pub">I'm a publisher</label>

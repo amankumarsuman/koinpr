@@ -52,7 +52,7 @@ function WithdrawlPublisher() {
                                     Current Status :
                                 </span>
                                 <span style={{ color: "#108FB7" }}>
-                                    Not Verified
+                                    Pending
                                 </span>
                             </p>
                             <FormControl >

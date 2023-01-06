@@ -34,7 +34,7 @@ function ProfileAdvertiser() {
                                     Current Status :
                                 </span>
                                 <span style={{ color: "#108FB7",fontWeight:400 }}>
-                                    Not Verified
+                                   Pending
                                 </span>
                             </p>
                             <FormControl >

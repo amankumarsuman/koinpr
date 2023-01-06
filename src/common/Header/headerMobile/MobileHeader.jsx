@@ -11,13 +11,18 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "../../../axios";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { styled } from "@mui/material/styles";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { is } from "immutable";
+import { useState } from "react";
+import { snackbarNotification } from "../../../redux/snackbar.action";
 
 export default function MobileHeader() {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const cookies = new Cookies();
-
+  const [userData, setUserData] = useState();
+const dispatch=useDispatch()
+const location=window.location.href;
+  const [userId, setUserId] = useState();
   const navigate = useNavigate();
 
   const [isLoggedIn, setIsLoggedIn] = React.useState();
@@ -38,18 +43,55 @@ export default function MobileHeader() {
     setAnchorElUser(null);
   };
 
+  // const signOutHandler = () => {
+  //   cookies.remove("auth-token");
+  //   handleSignout();
+  //   navigate("/sign-in");
+  //   // setOpen(true);
+  //   setAnchorElUser(null);
+  // };
+
+  // const handleSignout = (event) => {
+  //   setOpen(true);
+  // };
+
+
+  const handleUserTypeOrderHistory=(userType)=>{
+    // console.log(userType,"userType")
+    setAnchorElUser(null);
+if(userType==="PUBLISHER"){
+  navigate("/wallet-publisher")
+}else if(userType==="ADVERTISER"){
+  //navigate to order history
+  navigate("/wallet-advertiser")
+  
+}
+  }
+
   const signOutHandler = () => {
     cookies.remove("auth-token");
     handleSignout();
+    const data={
+      notificationType: "success",
+        notificationMessage: "Logged Out Successfully",
+    }
+    dispatch(snackbarNotification(data));
+
     navigate("/sign-in");
     // setOpen(true);
     setAnchorElUser(null);
   };
 
   const handleSignout = (event) => {
-    setOpen(true);
+    // setOpen(true);
   };
+  const handleTelegram=()=>{
+    setAnchorElUser(null);
+    setOpen(true);
+    
 
+
+  }
   React.useEffect(() => {
     const auth = cookies.get("auth-token");
     if (!auth) {
@@ -72,6 +114,8 @@ export default function MobileHeader() {
           return;
         }
         setIsLoggedIn(true);
+        setUserId(res.data.user._id);
+        setUserData(res?.data?.user)
       })
       .catch((err) => {
         console.log(err, "err");
@@ -112,6 +156,68 @@ export default function MobileHeader() {
               A <span style={{ fontWeight: "bold" }}>Todayq</span> Product
             </p>
           </Typography>
+          {isLoggedIn?
+
+<Box sx={{ flexGrow: 1, marginLeft: "1em" }}>
+  <Tooltip title="Open Accout">
+    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+    <Typography sx={{color:"white",fontWeight:500,fontSize:"14px"}}>
+
+My Account
+</Typography>
+    </IconButton>
+  </Tooltip>
+  <Menu
+    sx={{ mt: "45px" }}
+    id="menu-appbar"
+    anchorEl={anchorElUser}
+    anchorOrigin={{
+      vertical: "top",
+      horizontal: "right",
+    }}
+    keepMounted
+    transformOrigin={{
+      vertical: "top",
+      horizontal: "right",
+    }}
+    open={Boolean(anchorElUser)}
+    onClose={handleCloseUserMenu}
+  >
+    
+    <MenuItem  onClick={handleCloseUserMenu}>
+                 <Typography onClick={() => navigate("/profile")} textAlign="center">My Profile</Typography>
+               </MenuItem>
+               <MenuItem onClick={()=>handleUserTypeOrderHistory(userData?.userType)}>
+                 <Typography textAlign="center">{userData?.userType==="ADVERTISER"?"Order History":userData?.userType==="PUBLISHER"?"Wallet History":null}</Typography>
+               </MenuItem>
+               <MenuItem onClick={handleTelegram}>
+                 <Typography textAlign="center">Telegram</Typography>
+               </MenuItem>
+               <MenuItem onClick={handleCloseUserMenu}>
+                 <Typography textAlign="center">
+                   <Link to="/add-listing">
+                   {userData?.userType==="PUBLISHER"?"Add Listing":null}
+                   
+                   </Link>
+                   </Typography>
+               </MenuItem>
+               <MenuItem onClick={signOutHandler}>
+                 <Typography textAlign="center">
+                   {isLoggedIn ? 
+                     <span onClick={handleSignout}>Sign Out</span>
+                 : 
+                 location==="http://localhost:3000/sign-up"? "Sign In":"Sign Up"
+                   }
+                 </Typography>
+               </MenuItem>
+  </Menu>
+</Box>:
+<span>
+  <Link style={{marginLeft:"60px"}} to="/sign-in" >
+  Log In
+  </Link>
+</span>
+}
 {isLoggedIn?
 
           <IconButton onClick={() => navigate("/cart")} aria-label="cart">
@@ -120,61 +226,7 @@ export default function MobileHeader() {
             </StyledBadge>
           </IconButton>:null
 }
-{isLoggedIn?
 
-          <Box sx={{ flexGrow: 0, marginLeft: "3em" }}>
-            <Tooltip title="Open Profile">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              <MenuItem onClick={handleCloseUserMenu}>
-                <Typography
-                  onClick={() => navigate("/profile")}
-                  textAlign="center"
-                >
-                  My Profile
-                </Typography>
-              </MenuItem>
-              <MenuItem onClick={handleCloseUserMenu}>
-                <Typography textAlign="center">Order History</Typography>
-              </MenuItem>
-              <MenuItem onClick={handleCloseUserMenu}>
-                <Typography textAlign="center">Telegram</Typography>
-              </MenuItem>
-              <MenuItem onClick={signOutHandler}>
-                <Typography textAlign="center">
-                  {isLoggedIn ? (
-                    <span onClick={handleSignout}>Sign Out</span>
-                  ) : (
-                    "Sign-In"
-                  )}
-                </Typography>
-              </MenuItem>
-            </Menu>
-          </Box>:
-          <span>
-            <Link style={{marginLeft:"60px"}} to="/sign-in" >
-            Log In
-            </Link>
-          </span>
-}
         </Toolbar>
       </AppBar>
     </Box>
