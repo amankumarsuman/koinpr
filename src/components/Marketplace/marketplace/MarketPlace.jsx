@@ -299,7 +299,9 @@ useEffect(()=>{
                 >
                   Search offerTitle
                 </p>
-                <FormControl sx={{ width: "98%" }} variant="outlined">
+                <span  className="sm:invisible md:visible">
+
+                <FormControl sx={{ width: "95%" }} variant="outlined">
                   <InputLabel htmlFor="outlined-adornment-password">
                     Enter publisher name
                   </InputLabel>
@@ -323,11 +325,39 @@ useEffect(()=>{
                     }
                   />
                 </FormControl>
+                </span>
+                <span  className="sm:visible md:invisible">
+
+                <FormControl sx={{ width: "230px" }} variant="outlined">
+                  <InputLabel htmlFor="outlined-adornment-password">
+                    Enter publisher name
+                  </InputLabel>
+
+                  <OutlinedInput
+                    size="small"
+                    fullWidth
+                    sx={{ p: "10px" }}
+                    id="outlined-basic"
+                    name="offerTitle"
+                    value={offerFilter}
+                    onChange={handleSearchKeys}
+                    label="Enter publisher name"
+                    variant="outlined"
+                    endAdornment={
+                      <InputAdornment position="start">
+                        <IconButton onClick={handleSearchKeys} edge="end">
+                          <SearchIcon />
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                  />
+                </FormControl>
+                </span>
               </Grid>
               <Grid
                 xs={12}
                 md={12}
-                sx={{ marginLeft: "2em", marginTop: "35px" }}
+                sx={{ marginLeft: "2em", marginTop: "20px" }}
               >
                 <p
                   className="sm:invisible md:visible"
