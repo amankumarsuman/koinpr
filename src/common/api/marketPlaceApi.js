@@ -4,7 +4,7 @@ const cookies = new Cookies();
 
 export const marketPlaceApi = {
   
-  getUserByTokenInMarketPlace: async ( ) => {
+  getUserByTokenInMarketPlace: async ({token} ) => {
     try {
       const auth = cookies.get("auth-token");
       // console.log(auth);
@@ -14,7 +14,7 @@ export const marketPlaceApi = {
       }
       return await instance.post(PublicConstants.getUserByToken, {
             headers: {
-              Authorization: "Bearer " + auth,
+              Authorization: "Bearer " + token,
             },
           
       });

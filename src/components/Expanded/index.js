@@ -190,7 +190,7 @@ const Expanded = () => {
                         </div>
                         <div className='row'>
                             <span className='head'>Visitors</span>
-                            <span className='data'> {displayData?.visitors}</span>
+                            <span className='data'> {displayData?.visitors?displayData?.visitors:"Visitors"}</span>
                         </div>
                         <div className='row'>
                             <span className='head'>Twitter</span>
@@ -220,7 +220,7 @@ const Expanded = () => {
                             <span className='head'>Indexed Article</span>
                             <span className='data'>{displayData.indexedArticle}</span>
                         </div>
-                        <div className='row'>
+                        <div >
                             <span className='head'>Social Share</span>
                             <span className='data'>{displayData.socialShare}</span>
                         </div>

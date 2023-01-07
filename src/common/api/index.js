@@ -2,7 +2,7 @@ import  Axios from "axios";
 // import { getLocalStorage } from "../utils/utils";
 
 export const instance = Axios.create({
-  baseURL:"http://localhost:5000",
+  baseURL:"http://user.koinpr.com",
   
   mode: "cors", // no-cors, *cors, same-origin
   cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -21,7 +21,7 @@ export const instance = Axios.create({
   },
 });
 export const instanceToPost = Axios.create({
-  baseURL:"http://localhost:5000",
+  baseURL:"http://user.koinpr.com",
   mode: "cors", // no-cors, *cors, same-origin
   cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
   credentials: "same-origin", // include, *same-origin, omit
@@ -48,7 +48,7 @@ export const instanceToPost = Axios.create({
 });
 
 export const uploadInFormInstance = Axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: "http://user.koinpr.com",
   mode: "cors", // no-cors, *cors, same-origin
   cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
   credentials: "same-origin", // include, *same-origin, omit

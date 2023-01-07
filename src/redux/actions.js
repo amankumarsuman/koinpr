@@ -1,5 +1,6 @@
 import { marketPlaceApi } from "../common/api/marketPlaceApi";
 import { actionType } from "./type";
+import Cookies from "universal-cookie";
 
 export const showIndividualMarketplaceData = (payload) => {
   return {
@@ -87,12 +88,14 @@ export const getUserByJwtToken =
   () =>
   async (dispatch) => {
     dispatch(getUserByTokenRequest());
+    const cookies = new Cookies();
 
    
 
     try {
-      let res = await marketPlaceApi.getUserByTokenInMarketPlace();
-      let updatedData = await res.data.CannedList?.map((data) => {
+      const auth = cookies.get("auth-token");
+      let res = await marketPlaceApi.getUserByTokenInMarketPlace({token:auth});
+      let updatedData = await res.data.user?.map((data) => {
         return {
           ...data,
           id: data.code,

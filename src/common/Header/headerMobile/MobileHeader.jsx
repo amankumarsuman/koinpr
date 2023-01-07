@@ -120,7 +120,7 @@ if(userType==="PUBLISHER"){
       .catch((err) => {
         console.log(err, "err");
       });
-  });
+  },[]);
 
   const StyledBadge = styled(Badge)(({ theme }) => ({
     "& .MuiBadge-badge": {
@@ -149,7 +149,7 @@ if(userType==="PUBLISHER"){
             component="a"
             href="/"
             // onClick={() => navigate("/")}
-            sx={{ fontSize: "1rem", paddingLeft: "10%" }}
+            sx={{ fontSize: "1rem", paddingLeft: "2%" }}
           >
             <div style={{ fontWeight: "bold" }}>Koinpr</div>
             <p>
@@ -158,7 +158,7 @@ if(userType==="PUBLISHER"){
           </Typography>
           {isLoggedIn?
 
-<Box sx={{ flexGrow: 1, marginLeft: "1em" }}>
+<Box sx={{ flexGrow: 1,marginLeft:"15px"  }}>
   <Tooltip title="Open Accout">
     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
     <Typography sx={{color:"white",fontWeight:500,fontSize:"14px"}}>

@@ -126,6 +126,8 @@ const getUsetByToken=()=>{
           console.log("first",res)
           setUserId(res.data.user._id);
           setUserData(res?.data?.user)
+        setIsLoggedIn(true);
+
         })
         // .catch((err) => {
         //   console.log(err, "err");
@@ -178,7 +180,7 @@ const dispatch=useDispatch()
       .catch((err) => {
         console.log(err, "err");
       });
-  });
+  },[]);
 
   const StyledBadge = styled(Badge)(({ theme }) => ({
     "& .MuiBadge-badge": {

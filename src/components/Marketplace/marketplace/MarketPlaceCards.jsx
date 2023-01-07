@@ -52,6 +52,8 @@ var cartDataId=cartData.map((el)=>el?.id)
           background: "#F8F8F8",
           padding: "1em",
           marginBottom:"30px",
+          // border:"1px solid red"
+          borderRadius:"5px"
           // marginRight:"20px"
         }}
       >

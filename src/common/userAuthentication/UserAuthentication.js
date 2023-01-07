@@ -35,7 +35,7 @@ function UserAuthentication() {
     .catch((err) => {
       console.log(err, "err");
       navigate("/sign-in");
-    });
+    },[]);
   //   }, [userId]);
 }
 

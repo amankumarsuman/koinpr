@@ -167,7 +167,7 @@ const searchQuery=(searchQuery)=>{
 useEffect(()=>{
   getUserByJwtToken()
 
-},[])
+},[userId])
   useEffect(()=>{
     if(!userId){
       return;
@@ -290,7 +290,7 @@ useEffect(()=>{
             <Grid container spacing={2}>
               <Grid item xs={12} md={12} sx={{ marginLeft: "1em" }}>
                 <p
-                  className="sm:invisible md:visible"
+                  className="invisible md:visible"
                   style={{
                     fontSize: "16px",
                     fontWeight: "bold",
@@ -299,7 +299,7 @@ useEffect(()=>{
                 >
                   Search offerTitle
                 </p>
-                <span  className="sm:invisible md:visible">
+                <span  className="invisible md:visible">
 
                 <FormControl sx={{ width: "95%" }} variant="outlined">
                   <InputLabel htmlFor="outlined-adornment-password">
@@ -328,7 +328,7 @@ useEffect(()=>{
                 </span>
                 <span  className="sm:visible md:invisible">
 
-                <FormControl sx={{ width: "230px" }} variant="outlined">
+                <FormControl sx={{ width: "230px",marginTop:-10 }} variant="outlined">
                   <InputLabel htmlFor="outlined-adornment-password">
                     Enter publisher name
                   </InputLabel>
@@ -336,7 +336,7 @@ useEffect(()=>{
                   <OutlinedInput
                     size="small"
                     fullWidth
-                    sx={{ p: "10px" }}
+                    sx={{ p: "10px"}}
                     id="outlined-basic"
                     name="offerTitle"
                     value={offerFilter}

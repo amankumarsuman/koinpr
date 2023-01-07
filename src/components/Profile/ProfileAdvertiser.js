@@ -4,6 +4,8 @@ import Cookies from "universal-cookie";
 import axios from "../../axios";
 import "./Profile.scss";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { snackbarNotification } from "../../redux/snackbar.action";
+import { useDispatch } from "react-redux";
 
 const ProfileAdvertiser = () => {
   const init = {
@@ -40,7 +42,7 @@ const ProfileAdvertiser = () => {
 
   const [userId, setUserId] = useState();
   const [userData,setUserData]=useState()
-
+const dispatch=useDispatch()
   // console.log(input);
 
   useEffect(() => {
@@ -154,7 +156,13 @@ const ProfileAdvertiser = () => {
       .then((res) => {
         if (res?.data?.success) {
           navigate("/");
-          alert("Record Updated successfully");
+
+          const data={
+            notificationType: "success",
+        notificationMessage: "Record Updated successfully",
+          }
+        dispatch(snackbarNotification(data));
+          // alert("Record Updated successfully");
         }
         // console.log(res);
         if (!res?.data.success) {
@@ -164,8 +172,13 @@ const ProfileAdvertiser = () => {
           //   err={res?.data?.message}
           // />;
           console.log("error", res);
-          alert("res?.data?.message");
+          // alert("res?.data?.message");
           // setShowDialog(true);
+          const data={
+            notificationType: "error",
+        notificationMessage: res?.data?.message,
+          }
+          dispatch(snackbarNotification(data));
         }
       })
       .catch((err) => {
@@ -177,7 +190,12 @@ const ProfileAdvertiser = () => {
         //   setShowDialog={setShowDialog}
         //   err={err?.response?.data?.message}
         // />;
-        alert(err?.response?.data?.message);
+        // alert(err?.response?.data?.message);
+        const data={
+          notificationType: "error",
+      notificationMessage: err?.response?.data?.message,
+        }
+        dispatch(snackbarNotification(data));
         }
         // console.log("err", err);
         // console.log("err", err?.response?.data?.message);
@@ -349,7 +367,10 @@ const ProfileAdvertiser = () => {
               {/* {input?.doc?.length>0? */}
               {input?.userType==="PUBLISHER"?null:
               
-              <button style={{borderRadius:"5px"}} type="button" className="pButton mt40">
+              <button 
+              onClick={handleSubmit}
+              
+              style={{borderRadius:"5px"}} type="button" className="pButton mt40">
                 {"Proceed ->"}
               </button>
               }
