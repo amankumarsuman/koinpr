@@ -39,121 +39,135 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const Header = () => {
   const cookies = new Cookies();
 const location=window.location.href
-console.log("params",location)
-  const navigate = useNavigate();
+// console.log("params",location)
+const navigate = useNavigate();
 
-  const [isLoggedIn, setIsLoggedIn] = useState();
-  const [open, setOpen] = React.useState(false);
+const [isLoggedIn, setIsLoggedIn] = useState(false);
+const [open, setOpen] = React.useState(false);
 
+console.log(isLoggedIn,"check login")
+const [userData, setUserData] = useState();
+const [userId, setUserId] = useState();
+const [anchorElUser, setAnchorElUser] = useState(null);
 
-  const [userData, setUserData] = useState();
-  const [userId, setUserId] = useState();
-
-  var token=useSelector((state)=>state.cart)
+var token=useSelector((state)=>state.cart)
+const cartNumber = useSelector((state) => state?.cart?.total);
   // console.log(userData,"userData")
   console.log(token,"token")
   
 
-const getUsetByToken=()=>{
-  axios
-  .post(
-    "/api/user/get-user-by-token",
-    {},
-    {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    }
-  )
-  .then((res) => {
-    // if (!res.data.success) {
-    
-    //     const data={
-    //       notificationType: "error",
-    //   notificationMessage: "User is not Verified By Token",
-    //     }
-    //     dispatch(snackbarNotification(data));
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+  const getUsetByToken=()=>{
+    axios
+    .post(
+      "/api/user/get-user-by-token",
+      {},
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      }
+    )
+    .then((res) => {
+      // if (!res.data.success) {
       
-    //   navigate("/sign-in");
-    // }
-  //   const data={
-  //     notificationType: "success",
-  // notificationMessage: "User is Verified By Token",
-  //   }
-  //   dispatch(snackbarNotification(data));
-    console.log("first",res)
-    setUserId(res.data.user._id);
-    setUserData(res?.data?.user)
-  })
-}
-
-  useEffect(() => {
-    // let isCancelled=false;
-    const auth = cookies.get("auth-token");
-    // console.log(auth);
-    // if (!auth) {
+      //     const data={
+      //       notificationType: "error",
+      //   notificationMessage: "User is not Verified By Token",
+      //     }
+      //     dispatch(snackbarNotification(data));
+  
+        
       //   navigate("/sign-in");
       // }
-      // if(!isCancelled){
-      axios
-        .post(
-          "/api/user/get-user-by-token",
-          {},
-          {
-            headers: {
-              Authorization: "Bearer " + auth,
-            },
-          }
-        )
-        .then((res) => {
-          // if (!res.data.success) {
-          
-          //     const data={
-          //       notificationType: "error",
-          //   notificationMessage: "User is not Verified By Token",
-          //     }
-          //     dispatch(snackbarNotification(data));
-
+    //   const data={
+    //     notificationType: "success",
+    // notificationMessage: "User is Verified By Token",
+    //   }
+    //   dispatch(snackbarNotification(data));
+      console.log("first",res)
+      setUserId(res.data.user._id);
+      setUserData(res?.data?.user)
+    })
+  }
+  const authNew = cookies.get("auth-token");
+  
+    useEffect(() => {
+      // let isCancelled=false;
+      const auth = cookies.get("auth-token");
+      // console.log(auth);
+      // if (!auth) {
+        //   navigate("/sign-in");
+        // }
+        // if(!isCancelled){
+        axios
+          .post(
+            "/api/user/get-user-by-token",
+            {},
+            {
+              headers: {
+                Authorization: "Bearer " + auth,
+              },
+            }
+          )
+          .then((res) => {
+            if (!res.data.success) {
             
-          //   navigate("/sign-in");
-          // }
-          const data={
-            notificationType: "success",
-        notificationMessage: "User is Verified By Token",
-          }
-          dispatch(snackbarNotification(data));
-          console.log("first",res)
-          setUserId(res.data.user._id);
-          setUserData(res?.data?.user)
+            //     const data={
+            //       notificationType: "error",
+            //   notificationMessage: "User is not Verified By Token",
+            //     }
+            //     dispatch(snackbarNotification(data));
+  
+              
+            //   navigate("/sign-in");
+            // }
+            const data={
+              notificationType: "success",
+          notificationMessage: "User is Verified By Token",
+            }
+            dispatch(snackbarNotification(data));
+            console.log("first",res)
+            setUserId(res.data.user._id);
+            setUserData(res?.data?.user)
         setIsLoggedIn(true);
 
-        })
-        // .catch((err) => {
-        //   console.log(err, "err");
-        //   navigate("/sign-in");
-        // });
-    // }
-    // UserAuthentication();
+      }
+      if(!res?.data?.success){
+        setIsLoggedIn(false);
 
-    // return ()=>{
-    //   isCancelled=true
-    // }
-    getUsetByToken()
-  }, [userId]);
+      }
+          })
+          // .catch((err) => {
+          //   console.log(err, "err");
+          //   navigate("/sign-in");
+          // });
+      // }
+      // UserAuthentication();
+  
+      // return ()=>{
+      //   isCancelled=true
+      // }
+      // getUsetByToken()
+    }, [authNew]);
+  
 
 
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
-  const [isOpenAcc, setIsOpenAcc] = useState(false);
-  const [openDialog, setOpenDialog] = useState(false);
-const dispatch=useDispatch()
   useEffect(() => {
     const auth = cookies.get("auth-token");
     if (!auth) {
@@ -176,11 +190,192 @@ const dispatch=useDispatch()
           return;
         }
         setIsLoggedIn(true);
+        setUserId(res.data.user._id);
+        setUserData(res?.data?.user)
       })
       .catch((err) => {
         console.log(err, "err");
       });
-  },[]);
+  },[authNew]);
+
+
+
+
+
+
+
+// const getUsetByToken=()=>{
+//   axios
+//   .post(
+//     "/api/user/get-user-by-token",
+//     {},
+//     {
+//       headers: {
+//         Authorization: "Bearer " + token,
+//       },
+//     }
+//   )
+//   .then((res) => {
+//     if (!res.data.success) {
+//       setIsLoggedIn(false);
+    
+//         const data={
+//           notificationType: "error",
+//       notificationMessage: "User is not Verified By Token",
+//         }
+//         dispatch(snackbarNotification(data));
+
+      
+//       navigate("/sign-in");
+//     }
+//     const data={
+//       notificationType: "success",
+//   notificationMessage: "User is Verified By Token",
+//     }
+//     dispatch(snackbarNotification(data));
+//     console.log("first",res)
+//     setUserId(res.data.user._id);
+//     setUserData(res?.data?.user)
+//         setIsLoggedIn(true);
+
+//   })
+// }
+
+  // useEffect(() => {
+  //   // let isCancelled=false;
+  //   const auth = cookies.get("auth-token");
+  //   // console.log(auth);
+  //   // if (!auth) {
+  //     //   navigate("/sign-in");
+  //     // }
+  //     // if(!isCancelled){
+  //     axios
+  //       .post(
+  //         "/api/user/get-user-by-token",
+  //         {},
+  //         {
+  //           headers: {
+  //             Authorization: "Bearer " + auth,
+  //           },
+  //         }
+  //       )
+  //       .then((res) => {
+  //         // if (!res.data.success) {
+          
+  //         //     const data={
+  //         //       notificationType: "error",
+  //         //   notificationMessage: "User is not Verified By Token",
+  //         //     }
+  //         //     dispatch(snackbarNotification(data));
+
+            
+  //         //   navigate("/sign-in");
+  //         // }
+  //         const data={
+  //           notificationType: "success",
+  //       notificationMessage: "User is Verified By Token",
+  //         }
+  //         dispatch(snackbarNotification(data));
+  //         console.log("first",res)
+  //         setUserId(res.data.user._id);
+  //         setUserData(res?.data?.user)
+  //       setIsLoggedIn(true);
+
+  //       })
+  //       // .catch((err) => {
+  //       //   console.log(err, "err");
+  //       //   navigate("/sign-in");
+  //       // });
+  //   // }
+  //   // UserAuthentication();
+
+  //   // return ()=>{
+  //   //   isCancelled=true
+  //   // }
+  //   // getUsetByToken()
+  // }, [userId]);
+
+
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const [isOpenAcc, setIsOpenAcc] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
+const dispatch=useDispatch()
+
+// const getUserByToken=()=>{
+//   const auth = cookies.get("auth-token");
+//     if (!auth) {
+//       setIsLoggedIn(false);
+//       return;
+//     }
+//     axios
+//       .post(
+//         "/api/user/get-user-by-token",
+//         {},
+//         {
+//           headers: {
+//             Authorization: "Bearer " + auth,
+//           },
+//         }
+//       )
+//       .then((res) => {
+//         console.log(res?.data,"res")
+//         if (!res.data.success) {
+//           setIsLoggedIn(false);
+//           return;
+//         }
+//         if (res.data.success) {
+//         console.log("first")
+//         setIsLoggedIn(true);
+//         setUserId(res?.data?.user?._id)
+//         }
+//       })
+//       .catch((err) => {
+//         console.log(err, "err");
+//       });
+// }
+
+// useEffect(()=>{
+//   getUserByToken()
+// },[userId])
+// getUserByToken()
+  // useEffect(() => {
+  //   const auth = cookies.get("auth-token");
+  //   if (!auth) {
+  //     setIsLoggedIn(false);
+  //     return;
+  //   }
+  //   axios
+  //     .post(
+  //       "/api/user/get-user-by-token",
+  //       {},
+  //       {
+  //         headers: {
+  //           Authorization: "Bearer " + auth,
+  //         },
+  //       }
+  //     )
+  //     .then((res) => {
+  //       console.log(res?.data,"res")
+  //       if (!res.data.success) {
+  //         setIsLoggedIn(false);
+  //         return;
+  //       }
+  //       if (res.data.success) {
+  //       console.log("first")
+  //       setIsLoggedIn(true);
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.log(err, "err");
+  //     });
+  // },[]);
 
   const StyledBadge = styled(Badge)(({ theme }) => ({
     "& .MuiBadge-badge": {
@@ -191,9 +386,7 @@ const dispatch=useDispatch()
     },
   }));
 
-  const cartNumber = useSelector((state) => state?.cart?.total);
 
-  const [anchorElUser, setAnchorElUser] = useState(null);
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -223,6 +416,7 @@ if(userType==="PUBLISHER"){
         notificationMessage: "Logged Out Successfully",
     }
     dispatch(snackbarNotification(data));
+    setIsLoggedIn(false);
 
     navigate("/sign-in");
     // setOpen(true);
@@ -235,7 +429,7 @@ if(userType==="PUBLISHER"){
   const handleTelegram=()=>{
     setAnchorElUser(null);
     setOpen(true);
-    
+    navigate("/")
 
 
   }
@@ -402,7 +596,7 @@ if(userType==="PUBLISHER"){
         </Dialog>
       </div>
       <div className="md:hidden lg:hidden sm:block">
-        <MobileHeader />
+        <MobileHeader handleTelegram={handleTelegram} />
       </div>
     </>
   );

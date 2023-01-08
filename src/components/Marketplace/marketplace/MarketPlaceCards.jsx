@@ -5,8 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, subtractQuantity } from "../../../redux/actions";
 import CancelIcon from '@mui/icons-material/Cancel';
+import { LoadingForm } from "../../../common/loader/Loader";
 
-function MarketPlaceCards({ name, details, image, price = 10, data }) {
+function MarketPlaceCards({ name, details, image, price = 10, data,isLoading }) {
   const [showAddIcon,setShowAddIcon]=useState(true)
   const[id,setId]=useState()
 const cartData=useSelector((state)=>state?.cart?.products)
@@ -45,6 +46,14 @@ var cartDataId=cartData.map((el)=>el?.id)
   };
   return (
     <>
+
+    {isLoading?
+  <div style={{ 
+    height: "75.5vh",
+}}>
+<LoadingForm/>
+  </div>:
+  
       <div
         style={{
           width: "282px",
@@ -99,6 +108,7 @@ var cartDataId=cartData.map((el)=>el?.id)
           </span>
         </div>
       </div>
+}
     </>
   );
 }

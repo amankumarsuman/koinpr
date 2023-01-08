@@ -32,12 +32,13 @@ import { UserAuthentication } from "../../../common/userAuthentication/UserAuthe
 import "../Marketplace.scss"
 import { useEffectOnceWhen } from "../../../common/useEffectOnceWhen.js/useEffectOncewhen";
 import { getUserByJwtToken } from "../../../redux/actions";
+import { LoadingForm } from "../../../common/loader/Loader";
 function MarketPlace(props) {
   const query = '';
 
   const [listingFilter, setListingFilter] = useState("pressRelease");
   const [offerFilter, setOfferFilter] = useState();
-
+const [isLoading,setIsLoading]=useState(false)
   //for getting current location from the react-router
   // const location = useLocation();
   // console.log(location.search);
@@ -74,12 +75,15 @@ const searchQuery=(searchQuery)=>{
   .get(`/api/listing/get-all?${searchQuery}`)
   .then((res) => {
     if (res.data.success) {
+
       setMarketList(res.data.data);
+      setIsLoading(true)
     }
     // console.log(res.data);
   })
   .catch((err) => {
     console.log(err, "err");
+    
   });
 }
 
@@ -96,6 +100,7 @@ const searchQuery=(searchQuery)=>{
       .then((res) => {
         if (res.data.success) {
           setMarketList(res.data.data);
+          setIsLoading(false)
         }
         // console.log(res.data);
       })
@@ -448,11 +453,13 @@ ADD
                 </Link>
               </Grid> */}
 
+
               {marketList
                 ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 ?.map((el) => (
                   <Grid item xs={12} md={4}>
                     <MarketPlaceCards
+                    isLoading={isLoading}
                       data={el}
                       name={el?.user?.fullName}
                       details={"View Details"}
