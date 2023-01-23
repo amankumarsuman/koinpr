@@ -8,6 +8,8 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { Button, Divider } from '@mui/material';
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Visibility from "@mui/icons-material/Visibility";
+import { snackbarNotification } from '../../../redux/snackbar.action';
+import { useDispatch } from 'react-redux';
 const SignUpMobile = () => {
 
     const navigate = useNavigate();
@@ -20,7 +22,7 @@ const SignUpMobile = () => {
     const [errors, setErrors] = useState({});
     const [showPassword, setShowPassword] = useState(false);
     const [showConfPassword, setShowConfPassword] = useState(false);
-
+const dispatch=useDispatch()
     const cookies = new Cookies();
 
     const validateInput = () => {
@@ -97,7 +99,14 @@ const SignUpMobile = () => {
         axios.post('/api/user/sign-up', data)
             .then(res => {
                 cookies.set('auth-token', res?.data?.dataToSave?.jwtToken, { path: '/' });
-                navigate('/');
+                // navigate('/');
+                const data={
+                    notificationType: "success",
+                notificationMessage: "You Are Registered Successfully",
+                  }
+                dispatch(snackbarNotification(data));
+        navigate("/VerifyEmail");
+
             }).catch(err => {
                 console.log('err', err);
             });
