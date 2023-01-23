@@ -124,7 +124,7 @@ const dispatch=useDispatch();
     };
 
     axios
-      .post("/api/user/login", data)
+      .post("api/user/login", data)
       .then((res) => {
         if (res?.data?.success) {
           cookies.set("auth-token", res?.data?.user?.token, { path: "/" });
@@ -204,7 +204,7 @@ const handleLogin = async googleData => {
         <form onSubmit={submitHandler}>
           <p className="chead">Sign In</p>
           <p className="signUp">
-            Don't have an account? <a href="/sign-up">Sign up</a>
+            Don't have an account? <Link to="/sign-up">Sign up</Link>
           </p>
           <input
           style={{border:"1px solid black",borderRadius:"4px"}}
@@ -269,9 +269,9 @@ const handleLogin = async googleData => {
     onFailure={handleLogin}
     cookiePolicy={'single_host_origin'}
 /> */}
-        <a href="/forgot-password" className="forgot">
+        <Link to="/forgot-password" className="forgot">
           Forgot password?
-        </a>
+        </Link>
       </div>
       <div className="allRight">
         All rights reserved by Koinpr Marketing Private Limited

@@ -101,7 +101,7 @@ const Expanded = () => {
 
         axios
           .post(
-            "/api/user/get-user-by-token",
+            "api/user/get-user-by-token",
             {},
             {
               headers: {
@@ -128,7 +128,11 @@ const Expanded = () => {
     useEffect(() => {
       if (userId) {
         axios
-          .get(`/api/listing/get-all?userId=${userId}&offerTitle=${id}`)
+          .get(`/api/listing/get-all?userId=${userId}&offerTitle=${id}`,{
+            headers:{
+              token:"koinpratodayqproductrsstoken"
+            }
+          })
           .then((res) => {
             setDisplayData(res.data.data[0]);
             // console.log(res.data.data);

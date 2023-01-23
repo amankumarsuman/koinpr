@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Cookies from 'universal-cookie';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import styles from "./signupmobile.module.css";
 import axios from '../../../axios';
@@ -104,7 +104,7 @@ const SignUpMobile = () => {
     }
 
     return (
-        <div className='w-11/12 m-auto p-4 bg-[#F9F9F9]' >
+        <div className='w-11/12 m-auto p-4 bg-[#F9F9F9] px-4 pl-10' >
 
             <div >
                 <div >
@@ -112,7 +112,7 @@ const SignUpMobile = () => {
                 </div>
 
                 <div style={{ width: "272px", fontWeight: 400, fontSize: "12px", color: "black", lineHeight: "14.52px", marginTop: "5px", fontFamily: "Inter" }}>
-                    <span >Already have an account? <a style={{ color: "#108FB7" }} href='/'>Sign In <ArrowForwardIcon fontSize='12px' /></a></span>
+                    <span >Already have an account? <Link style={{ color: "#108FB7" }} to='/'>Sign In <ArrowForwardIcon fontSize='12px' /></Link></span>
                 </div>
                 <form onSubmit={submitHandler}>
                     <div style={{ width: "295px", marginTop: "25px", fontWeight: 700, marginBottom: "24px" }} >

@@ -38,7 +38,7 @@ const AddListing = () => {
     }
     axios
       .post(
-        "/api/user/get-user-by-token",
+        "http://user.koinpr.com/api/user/get-user-by-token",
         {},
         {
           headers: {

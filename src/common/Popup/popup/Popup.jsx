@@ -39,6 +39,8 @@ import { useEffect } from 'react';
 import Cookies from "universal-cookie";
 import axios from '../../../axios';
 import { useState } from 'react';
+import { snackbarNotification } from '../../../redux/snackbar.action';
+import { useDispatch, useSelector } from 'react-redux';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -82,6 +84,8 @@ BootstrapDialogTitle.propTypes = {
 export default function Popup(props) {
   const [open, setOpen] = React.useState(true);
   const [userId,setUserId]=useState()
+const data=useSelector((state)=>state?.cart?.authenticatedUserDetails);
+  const [emailOtp,setEmailOtp]=useState()
 const navigate=useNavigate()
 const cookies = new Cookies();
   const handleClickOpen = () => {
@@ -91,8 +95,66 @@ const cookies = new Cookies();
     setOpen(false);
     navigate("/sign-in")
   };
+  const handleOtpChange=(e)=>{
+    setEmailOtp(e.target.value)
+  }
+const dispatch=useDispatch()
+const handleSubmit=()=>{
+  if(props.name1==="otp"){
+    axios.post("api/user/verifyOtp",{
+      userId:data?._id,
+      otp:emailOtp
+    }).then((res)=>{
+      if(res?.data?.status==="Verified"){
+        console.log(res?.data)
+        const data={
+          notificationType: "success",
+      notificationMessage: res?.data?.message,
+        }
+        dispatch(snackbarNotification(data));
+       
+        setOpen(false);
+        navigate("/sign-in")
+    
+      }
+      if (res?.data?.status!=="Verified") {
+        // <CustomizedDialogs
+        //   open={showDialog}
+        //   setShowDialog={setShowDialog}
+        //   err={res?.data?.message}
+        // />;
+        console.log("error", res);
+        // alert("res?.data?.message");
+        // setShowDialog(true);
+        const data={
+          notificationType: "error",
+      notificationMessage: res?.data?.message,
+        }
+        dispatch(snackbarNotification(data));
+      }
+    }) .catch((err) => {
+      if (!err?.response?.data?.success) 
+      {
+      // setShowDialog(true);
+      // <CustomizedDialogs
+      //   showDialog={true}
+      //   setShowDialog={setShowDialog}
+      //   err={err?.response?.data?.message}
+      // />;
+      // alert(err?.response?.data?.message);
+      const data={
+        notificationType: "error",
+    notificationMessage: err?.response?.data?.message,
+      }
+      dispatch(snackbarNotification(data));
+      }
+      // console.log("err", err);
+      // console.log("err", err?.response?.data?.message);
+    });
 
-
+   
+  }
+}
 
   // useEffect(()=>{
   //   const auth = cookies.get("auth-token");
@@ -139,13 +201,13 @@ const cookies = new Cookies();
         <DialogContent sx={{background:"#F9F9F9 !important",textAlign:"center"}} >
           <div>
 
-         <TextField sx={{textAlign:"center",marginTop:"44px"}} label={props.label1} name={props.name1} variant="outlined" />
+         <TextField onChange={handleOtpChange} sx={{textAlign:"center",marginTop:"44px"}} label={props.label1} name={props.name1} variant="outlined" />
           </div>
           <div>
 
           {props?.name2 &&  <TextField sx={{textAlign:"center",marginTop:"44px"}} label={props.label2} name={props.name2} variant="outlined" />}
           </div>
-          <div onClick={handleClose} className='p-5'>
+          <div onClick={handleSubmit} className='p-5'>
 
 <Button type="submit" sx={{ marginTop: "2em", background: "black" }} variant='contained'>
     Proceed<span><ArrowForwardIcon /></span>

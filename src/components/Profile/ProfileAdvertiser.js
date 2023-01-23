@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 import axios from "../../axios";
 import "./Profile.scss";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { snackbarNotification } from "../../redux/snackbar.action";
 import { useDispatch } from "react-redux";
+import { Divider, Slide } from "@mui/material";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 const ProfileAdvertiser = () => {
   const init = {
     address: "",
@@ -42,6 +49,67 @@ const ProfileAdvertiser = () => {
 
   const [userId, setUserId] = useState();
   const [userData,setUserData]=useState()
+  const [emailOtp,setEmailOtp]=useState();
+
+  const handleEmailOtp=(e)=>{
+    setEmailOtp(e.target.value)
+  }
+
+  const submitOtp=()=>{
+
+axios.post("api/user/verifyOtp",{
+  userId:userId,
+  otp:emailOtp
+}).then((res)=>{
+  if(res?.data?.status==="Verified"){
+    console.log(res?.data)
+    const data={
+      notificationType: "success",
+  notificationMessage: res?.data?.message,
+    }
+    dispatch(snackbarNotification(data));
+    navigate("/")
+    setOpen(false)
+
+
+  }
+  if (res?.data?.status!=="Verified") {
+    // <CustomizedDialogs
+    //   open={showDialog}
+    //   setShowDialog={setShowDialog}
+    //   err={res?.data?.message}
+    // />;
+    console.log("error", res);
+    // alert("res?.data?.message");
+    // setShowDialog(true);
+    const data={
+      notificationType: "error",
+  notificationMessage: res?.data?.message,
+    }
+    dispatch(snackbarNotification(data));
+  }
+}) .catch((err) => {
+  if (!err?.response?.data?.success) 
+  {
+  // setShowDialog(true);
+  // <CustomizedDialogs
+  //   showDialog={true}
+  //   setShowDialog={setShowDialog}
+  //   err={err?.response?.data?.message}
+  // />;
+  // alert(err?.response?.data?.message);
+  const data={
+    notificationType: "error",
+notificationMessage: err?.response?.data?.message,
+  }
+  dispatch(snackbarNotification(data));
+  }
+  // console.log("err", err);
+  // console.log("err", err?.response?.data?.message);
+});
+    
+  }
+  console.log(userData,"userData")
 const dispatch=useDispatch()
   // console.log(input);
 
@@ -52,7 +120,7 @@ const dispatch=useDispatch()
     }
     axios
       .post(
-        "/api/user/get-user-by-token",
+        "api/user/get-user-by-token",
         {},
         {
           headers: {
@@ -201,13 +269,39 @@ const dispatch=useDispatch()
         // console.log("err", err?.response?.data?.message);
       });
   };
+  const [openDialog, setOpenDialog] = useState(false);
+
+  // const handleOpenUserMenu = (event) => {
+  //   setAnchorElUser(event.currentTarget);
+  // };
+
+  // const handleCloseUserMenu = (userType) => {
+  //   setAnchorElUser(null);
+
+  // };
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleEmailVerification=()=>{
+    // setAnchorElUser(null);
+    setOpen(true);
+    // navigate("/")
+  }
   return (
     <>
       <div className="Profile">
         <div className="pLeft">
           <h2 className="lHead">Account Details</h2>
           <p className="cStatus">
-            Current Status : <span className="status">Pending</span>
+            Current Status : <span className="status">{userData?.emailVerified?"Verified":
+            
+            <span style={{cursor:"pointer"}} onClick={handleEmailVerification}>Pending</span>}</span>
           </p>
           <div className="inputs mt40">
             <div className="wInput">
@@ -516,6 +610,55 @@ const dispatch=useDispatch()
             </>
           )}
         </div>
+      </div>
+
+      <div >
+        {/* <Button variant="outlined" onClick={handleClickOpen}>
+          Slide in alert dialog
+        </Button> */}
+        <Dialog
+          open={open}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={handleClose}
+          sx={{ backgroundImage: "#F9F9F9 !important" }}
+          aria-describedby="alert-dialog-slide-description"
+        >
+          {/* <div style={{ textAlign: "center" }}>
+            <ReportProblemIcon sx={{ fontSize: "50px" }} />
+          </div> */}
+          {/* <DialogContent>
+            <DialogContentText variant="h5" id="alert-dialog-slide-description">
+              Dou you want to logout?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button variant="outlined" onClick={handleClose}>
+              Disagree
+            </Button>
+            <Button variant="contained" onClick={handleClose}>
+              Agree
+            </Button>
+          </DialogActions> */}
+          <DialogContent>
+            <div className='popups'>
+
+
+              <div className='contents'>
+                <DialogTitle className='titles'>Add Your Verification Code</DialogTitle>
+                <div className='inputs'>
+                  <input style={{marginLeft:"2em"}}  className='ips' name="emailOtp" value={emailOtp} type='texts' onChange={handleEmailOtp} placeholder={"Your Email Otp 1234"} />
+                </div>
+                <button type='submit' style={{marginLeft:"2em",borderRadius:"5px"}} onClick={submitOtp} className='submits'>Submit <ArrowForwardIcon /></button>
+
+                <div style={{ width: "272px", margin: "auto" }}>
+                  This will help your account manager to commute with you faster.
+                </div>
+              </div>
+              <Divider variant="middle" sx={{ border: "3px solid black", background: "black", marginTop: "33px" }} />
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
     </>
   );

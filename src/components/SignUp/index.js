@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Cookies from "universal-cookie";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import "./SignUp.scss";
 import axios from "../../axios";
@@ -107,18 +107,20 @@ const dispatch=useDispatch()
     };
 
     axios
-      .post("http://localhost:5000/api/user/sign-up", data)
+      .post("api/user/sign-up", data)
       .then((res) => {
+        console.log(res.data)
         cookies.set("auth-token", res?.data?.dataToSave?.jwtToken, {
           path: "/",
         });
-        dispatch(SetTokenToRedux({token:res?.data?.dataToSave?.jwtToken}))
+        dispatch(SetTokenToRedux({token:res?.data?.data?.jwtToken,data:res?.data.data}))
+        
          const data={
             notificationType: "success",
         notificationMessage: "You Are Registered Successfully",
           }
         dispatch(snackbarNotification(data));
-        navigate("/");
+        navigate("/VerifyEmail");
       })
       .catch((err) => {
         console.log("err", err);
@@ -181,9 +183,9 @@ const dispatch=useDispatch()
               <span className="heading">Let's Get Started</span>
               <span className="subHeading">
                 Already have an account?{" "}
-                <a href="/">
+                <Link to="/">
                   Sign In <ArrowForwardIcon sx={{ fontSize: "15px" }} />
-                </a>
+                </Link>
               </span>
             </div>
             <form onSubmit={submitHandler}>

@@ -194,7 +194,8 @@ return{
      
       return {
         ...state,
-        token: payload.token
+        token: payload.token,
+        authenticatedUserDetails:payload?.data
       };
     default:
       return state;

@@ -30,10 +30,10 @@ export default function MobileHeader({handleTelegram}) {
   const [userId, setUserId] = useState();
   const navigate = useNavigate();
 
-  const [isLoggedIn, setIsLoggedIn] = React.useState();
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const authNew = cookies.get("auth-token");
-
+console.log(isLoggedIn,"isLoggedIn")
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -90,6 +90,7 @@ export default function MobileHeader({handleTelegram}) {
   };
 
   const handleSignout = (event) => {
+    
     // setOpen(true);
   };
   // const handleTelegram = () => {
@@ -99,6 +100,8 @@ export default function MobileHeader({handleTelegram}) {
 
 
   // }
+  // const authNew = cookies.get("auth-token");
+
   React.useEffect(() => {
     // let isCancelled=false;
     const auth = cookies.get("auth-token");
@@ -109,7 +112,7 @@ export default function MobileHeader({handleTelegram}) {
       // if(!isCancelled){
       axios
         .post(
-          "/api/user/get-user-by-token",
+          "api/user/get-user-by-token",
           {},
           {
             headers: {
@@ -138,7 +141,10 @@ export default function MobileHeader({handleTelegram}) {
           setUserId(res.data.user._id);
           setUserData(res?.data?.user)
         setIsLoggedIn(true);
+        if (!res?.data?.success) {
+          setIsLoggedIn(false);
 
+        }
         })
         // .catch((err) => {
         //   console.log(err, "err");
@@ -156,14 +162,14 @@ export default function MobileHeader({handleTelegram}) {
 
   React.useEffect(() => {
     const auth = cookies.get("auth-token");
-    if (!auth) {
-      setIsLoggedIn(false);
-      return;
-    }
+    // if (!auth) {
+    //   setIsLoggedIn(false);
+    //   return;
+    // }
     axios
       .post(
-        "/api/user/get-user-by-token",
-        {},
+        "http://user.koinpr.com/api/user/get-user-by-token",
+        // {},
         {
           headers: {
             Authorization: "Bearer " + auth,
@@ -182,7 +188,7 @@ export default function MobileHeader({handleTelegram}) {
       .catch((err) => {
         console.log(err, "err");
       });
-  }, [userId]);
+  }, [authNew]);
 
   const StyledBadge = styled(Badge)(({ theme }) => ({
     "& .MuiBadge-badge": {
@@ -196,7 +202,7 @@ export default function MobileHeader({handleTelegram}) {
   const cartNumber = useSelector((state) => state?.cart?.total);
 
   return (
-    <Box sx={{ flexGrow: 1, marginBottom: "6em" }}>
+    <Box sx={{  marginBottom: "6em" }}>
       <AppBar sx={{ background: "black" }} position="fixed">
         <Toolbar sx={{ padding: "0.6em" }} variant="dense">
           {/* <IconButton
@@ -207,9 +213,10 @@ export default function MobileHeader({handleTelegram}) {
           >
             <MenuIcon />
           </IconButton> */}
+          
           <Typography
-            component="a"
-            href="/"
+            // component="a"
+            
             // onClick={() => navigate("/")}
             sx={{ fontSize: "1rem", paddingLeft: "2%" }}
           >
@@ -220,7 +227,7 @@ export default function MobileHeader({handleTelegram}) {
           </Typography>
           {isLoggedIn ?
 
-            <Box sx={{ flexGrow: 1, marginLeft: "15px" }}>
+            <Box sx={{  marginLeft: "15px" }}>
               <Tooltip title="Open Accout">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Typography sx={{ color: "white", fontWeight: 500, fontSize: "14px" }}>
@@ -268,7 +275,10 @@ export default function MobileHeader({handleTelegram}) {
                     {isLoggedIn ?
                       <span onClick={handleSignout}>Sign Out</span>
                       :
-                      location === "http://localhost:3000/sign-up" ? "Sign In" : "Sign Up"
+                      <span style={{border:"1px solid red"}}>
+
+                        location === "http://localhost:3000/#/sign-up" ? "Sign In" : "Sign Up"
+                      </span>
                     }
                   </Typography>
                 </MenuItem>
@@ -276,18 +286,30 @@ export default function MobileHeader({handleTelegram}) {
             </Box> :
             <span >
               {/* Login */}
-              <Link style={{marginLeft:"60px"}}  to={location==="http://localhost:3000/sign-up"? "/sign-in":"/sign-up"} >
+              <Link style={{marginLeft:"60px"}}  to={location==="https://koinpr-x2nc.vercel.app/#/sign-up"? "/sign-in":"/sign-up"} >
               {isLoggedIn ? 
                      <span onClick={handleSignout}>Sign Out</span>
                  : 
-                 location==="http://localhost:3000/sign-up"? "Sign In":"Sign Up"
+
+                   location==="https://koinpr-x2nc.vercel.app/#/sign-up"?  <span style={{marginLeft:"70px"}}>
+                   <Link to="/sign-in">
+                   
+                   Sign in
+                   </Link>
+                </span>:
+                 <span style={{marginLeft:"70px"}}>
+                   <Link to="/sign-up">
+                   
+                    Sign Up
+                   </Link>
+                </span>
                    }
               </Link>
             </span>
           }
           {isLoggedIn ?
 
-            <IconButton onClick={() => navigate("/cart")} aria-label="cart">
+            <IconButton sx={{marginLeft:"80px"}} onClick={() => navigate("/cart")} aria-label="cart">
               <StyledBadge badgeContent={cartNumber} color="primary">
                 <ShoppingCartIcon sx={{ color: "white" }} />
               </StyledBadge>

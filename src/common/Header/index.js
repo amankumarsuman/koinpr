@@ -38,23 +38,22 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const Header = () => {
   const cookies = new Cookies();
-const location=window.location.href
-// console.log("params",location)
-const navigate = useNavigate();
+  const location = window.location.href
+  // console.log("params",location)
+  const navigate = useNavigate();
 
-const [isLoggedIn, setIsLoggedIn] = useState(false);
-const [open, setOpen] = React.useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [open, setOpen] = React.useState(false);
 
-console.log(isLoggedIn,"check login")
-const [userData, setUserData] = useState();
-const [userId, setUserId] = useState();
-const [anchorElUser, setAnchorElUser] = useState(null);
+  console.log(isLoggedIn, "check login")
+  const [userData, setUserData] = useState();
+  const [userId, setUserId] = useState();
+  const [anchorElUser, setAnchorElUser] = useState(null);
 
-var token=useSelector((state)=>state.cart)
-const cartNumber = useSelector((state) => state?.cart?.total);
+  var token = useSelector((state) => state.cart)
+  const cartNumber = useSelector((state) => state?.cart?.total);
   // console.log(userData,"userData")
-  console.log(token,"token")
-  
+  console.log(token, "token")
 
 
 
@@ -70,117 +69,118 @@ const cartNumber = useSelector((state) => state?.cart?.total);
 
 
 
-  const getUsetByToken=()=>{
+
+  const getUsetByToken = () => {
     axios
-    .post(
-      "/api/user/get-user-by-token",
-      {},
-      {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      }
-    )
-    .then((res) => {
-      // if (!res.data.success) {
-      
-      //     const data={
-      //       notificationType: "error",
-      //   notificationMessage: "User is not Verified By Token",
-      //     }
-      //     dispatch(snackbarNotification(data));
-  
-        
-      //   navigate("/sign-in");
-      // }
-    //   const data={
-    //     notificationType: "success",
-    // notificationMessage: "User is Verified By Token",
-    //   }
-    //   dispatch(snackbarNotification(data));
-      console.log("first",res)
-      setUserId(res.data.user._id);
-      setUserData(res?.data?.user)
-    })
-  }
-  const authNew = cookies.get("auth-token");
-  
-    useEffect(() => {
-      // let isCancelled=false;
-      const auth = cookies.get("auth-token");
-      // console.log(auth);
-      // if (!auth) {
+      .post(
+        "api/user/get-user-by-token",
+        {},
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      )
+      .then((res) => {
+        // if (!res.data.success) {
+
+        //     const data={
+        //       notificationType: "error",
+        //   notificationMessage: "User is not Verified By Token",
+        //     }
+        //     dispatch(snackbarNotification(data));
+
+
         //   navigate("/sign-in");
         // }
-        // if(!isCancelled){
-        axios
-          .post(
-            "/api/user/get-user-by-token",
-            {},
-            {
-              headers: {
-                Authorization: "Bearer " + auth,
-              },
-            }
-          )
-          .then((res) => {
-            if (!res.data.success) {
-            
-            //     const data={
-            //       notificationType: "error",
-            //   notificationMessage: "User is not Verified By Token",
-            //     }
-            //     dispatch(snackbarNotification(data));
-  
-              
-            //   navigate("/sign-in");
-            // }
-            const data={
-              notificationType: "success",
-          notificationMessage: "User is Verified By Token",
-            }
-            dispatch(snackbarNotification(data));
-            console.log("first",res)
-            setUserId(res.data.user._id);
-            setUserData(res?.data?.user)
-        setIsLoggedIn(true);
+        //   const data={
+        //     notificationType: "success",
+        // notificationMessage: "User is Verified By Token",
+        //   }
+        //   dispatch(snackbarNotification(data));
+        console.log("first", res)
+        setUserId(res.data.user._id);
+        setUserData(res?.data?.user)
+      })
+  }
+  const authNew = cookies.get("auth-token");
 
-      }
-      if(!res?.data?.success){
-        setIsLoggedIn(false);
+  useEffect(() => {
+    // let isCancelled=false;
+    const auth = cookies.get("auth-token");
+    // console.log(auth);
+    // if (!auth) {
+    //   navigate("/sign-in");
+    // }
+    // if(!isCancelled){
+    axios
+      .post(
+        "api/user/get-user-by-token",
+        // {},
+        {
+          headers: {
+            Authorization: "Bearer " + auth,
+          },
+        }
+      )
+      .then((res) => {
+        if (!res.data.success) {
 
-      }
-          })
-          // .catch((err) => {
-          //   console.log(err, "err");
+          //     const data={
+          //       notificationType: "error",
+          //   notificationMessage: "User is not Verified By Token",
+          //     }
+          //     dispatch(snackbarNotification(data));
+
+
           //   navigate("/sign-in");
-          // });
-      // }
-      // UserAuthentication();
-  
-      // return ()=>{
-      //   isCancelled=true
-      // }
-      // getUsetByToken()
-    }, [authNew]);
-  
+          // }
+          const data = {
+            notificationType: "success",
+            notificationMessage: "User is Verified By Token",
+          }
+          dispatch(snackbarNotification(data));
+          console.log("first", res)
+          setUserId(res.data.user._id);
+          setUserData(res?.data?.user)
+          setIsLoggedIn(true);
+
+        }
+        if (!res?.data?.success) {
+          setIsLoggedIn(false);
+
+        }
+      })
+    // .catch((err) => {
+    //   console.log(err, "err");
+    //   navigate("/sign-in");
+    // });
+    // }
+    // UserAuthentication();
+
+    // return ()=>{
+    //   isCancelled=true
+    // }
+    // getUsetByToken()
+  }, [authNew]);
+
 
 
 
 
   useEffect(() => {
     const auth = cookies.get("auth-token");
-    if (!auth) {
-      setIsLoggedIn(false);
-      return;
-    }
+    // if (!auth) {
+    //   setIsLoggedIn(false);
+    //   return;
+    // }
     axios
       .post(
-        "/api/user/get-user-by-token",
+        "api/user/get-user-by-token",
         {},
         {
           headers: {
-            Authorization: "Bearer " + auth,
+            authorization: "Bearer " + auth,
           },
         }
       )
@@ -196,7 +196,7 @@ const cartNumber = useSelector((state) => state?.cart?.total);
       .catch((err) => {
         console.log(err, "err");
       });
-  },[authNew]);
+  }, [authNew]);
 
 
 
@@ -204,42 +204,42 @@ const cartNumber = useSelector((state) => state?.cart?.total);
 
 
 
-// const getUsetByToken=()=>{
-//   axios
-//   .post(
-//     "/api/user/get-user-by-token",
-//     {},
-//     {
-//       headers: {
-//         Authorization: "Bearer " + token,
-//       },
-//     }
-//   )
-//   .then((res) => {
-//     if (!res.data.success) {
-//       setIsLoggedIn(false);
-    
-//         const data={
-//           notificationType: "error",
-//       notificationMessage: "User is not Verified By Token",
-//         }
-//         dispatch(snackbarNotification(data));
+  // const getUsetByToken=()=>{
+  //   axios
+  //   .post(
+  //     "/api/user/get-user-by-token",
+  //     {},
+  //     {
+  //       headers: {
+  //         authorization: "Bearer " + token,
+  //       },
+  //     }
+  //   )
+  //   .then((res) => {
+  //     if (!res.data.success) {
+  //       setIsLoggedIn(false);
 
-      
-//       navigate("/sign-in");
-//     }
-//     const data={
-//       notificationType: "success",
-//   notificationMessage: "User is Verified By Token",
-//     }
-//     dispatch(snackbarNotification(data));
-//     console.log("first",res)
-//     setUserId(res.data.user._id);
-//     setUserData(res?.data?.user)
-//         setIsLoggedIn(true);
+  //         const data={
+  //           notificationType: "error",
+  //       notificationMessage: "User is not Verified By Token",
+  //         }
+  //         dispatch(snackbarNotification(data));
 
-//   })
-// }
+
+  //       navigate("/sign-in");
+  //     }
+  //     const data={
+  //       notificationType: "success",
+  //   notificationMessage: "User is Verified By Token",
+  //     }
+  //     dispatch(snackbarNotification(data));
+  //     console.log("first",res)
+  //     setUserId(res.data.user._id);
+  //     setUserData(res?.data?.user)
+  //         setIsLoggedIn(true);
+
+  //   })
+  // }
 
   // useEffect(() => {
   //   // let isCancelled=false;
@@ -255,20 +255,20 @@ const cartNumber = useSelector((state) => state?.cart?.total);
   //         {},
   //         {
   //           headers: {
-  //             Authorization: "Bearer " + auth,
+  //             authorization: "Bearer " + auth,
   //           },
   //         }
   //       )
   //       .then((res) => {
   //         // if (!res.data.success) {
-          
+
   //         //     const data={
   //         //       notificationType: "error",
   //         //   notificationMessage: "User is not Verified By Token",
   //         //     }
   //         //     dispatch(snackbarNotification(data));
 
-            
+
   //         //   navigate("/sign-in");
   //         // }
   //         const data={
@@ -306,45 +306,45 @@ const cartNumber = useSelector((state) => state?.cart?.total);
   };
   const [isOpenAcc, setIsOpenAcc] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
-const dispatch=useDispatch()
+  const dispatch = useDispatch()
 
-// const getUserByToken=()=>{
-//   const auth = cookies.get("auth-token");
-//     if (!auth) {
-//       setIsLoggedIn(false);
-//       return;
-//     }
-//     axios
-//       .post(
-//         "/api/user/get-user-by-token",
-//         {},
-//         {
-//           headers: {
-//             Authorization: "Bearer " + auth,
-//           },
-//         }
-//       )
-//       .then((res) => {
-//         console.log(res?.data,"res")
-//         if (!res.data.success) {
-//           setIsLoggedIn(false);
-//           return;
-//         }
-//         if (res.data.success) {
-//         console.log("first")
-//         setIsLoggedIn(true);
-//         setUserId(res?.data?.user?._id)
-//         }
-//       })
-//       .catch((err) => {
-//         console.log(err, "err");
-//       });
-// }
+  // const getUserByToken=()=>{
+  //   const auth = cookies.get("auth-token");
+  //     if (!auth) {
+  //       setIsLoggedIn(false);
+  //       return;
+  //     }
+  //     axios
+  //       .post(
+  //         "/api/user/get-user-by-token",
+  //         {},
+  //         {
+  //           headers: {
+  //             authorization: "Bearer " + auth,
+  //           },
+  //         }
+  //       )
+  //       .then((res) => {
+  //         console.log(res?.data,"res")
+  //         if (!res.data.success) {
+  //           setIsLoggedIn(false);
+  //           return;
+  //         }
+  //         if (res.data.success) {
+  //         console.log("first")
+  //         setIsLoggedIn(true);
+  //         setUserId(res?.data?.user?._id)
+  //         }
+  //       })
+  //       .catch((err) => {
+  //         console.log(err, "err");
+  //       });
+  // }
 
-// useEffect(()=>{
-//   getUserByToken()
-// },[userId])
-// getUserByToken()
+  // useEffect(()=>{
+  //   getUserByToken()
+  // },[userId])
+  // getUserByToken()
   // useEffect(() => {
   //   const auth = cookies.get("auth-token");
   //   if (!auth) {
@@ -357,7 +357,7 @@ const dispatch=useDispatch()
   //       {},
   //       {
   //         headers: {
-  //           Authorization: "Bearer " + auth,
+  //           authorization: "Bearer " + auth,
   //         },
   //       }
   //     )
@@ -396,24 +396,24 @@ const dispatch=useDispatch()
     setAnchorElUser(null);
 
   };
-  const handleUserTypeOrderHistory=(userType)=>{
+  const handleUserTypeOrderHistory = (userType) => {
     // console.log(userType,"userType")
     setAnchorElUser(null);
-if(userType==="PUBLISHER"){
-  navigate("/wallet-publisher")
-}else if(userType==="ADVERTISER"){
-  //navigate to order history
-  navigate("/wallet-advertiser")
-  
-}
+    if (userType === "PUBLISHER") {
+      navigate("/wallet-publisher")
+    } else if (userType === "ADVERTISER") {
+      //navigate to order history
+      navigate("/wallet-advertiser")
+
+    }
   }
 
   const signOutHandler = () => {
     cookies.remove("auth-token");
     handleSignout();
-    const data={
+    const data = {
       notificationType: "success",
-        notificationMessage: "Logged Out Successfully",
+      notificationMessage: "Logged Out Successfully",
     }
     dispatch(snackbarNotification(data));
     setIsLoggedIn(false);
@@ -426,7 +426,7 @@ if(userType==="PUBLISHER"){
   const handleSignout = (event) => {
     // setOpen(true);
   };
-  const handleTelegram=()=>{
+  const handleTelegram = () => {
     setAnchorElUser(null);
     setOpen(true);
     navigate("/")
@@ -444,10 +444,9 @@ if(userType==="PUBLISHER"){
             </span>
           </div>
           <div className="right">
-            {isLoggedIn?
-            
-            <span onClick={() => navigate("/")}>Publishers</span>:null
-          }
+            {isLoggedIn ?
+              <span onClick={() => navigate("/")}>Publishers</span> : null
+            }
             {/* <span
               className="myAccount"
               onClick={(e) => {
@@ -464,86 +463,85 @@ if(userType==="PUBLISHER"){
                 </div>
               )}
             </span> */}
-                 {isLoggedIn?
-           
-           <Box sx={{ flexGrow: 0 }}>
-             <Tooltip title="Open Account">
-               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Typography sx={{color:"white",fontWeight:600,fontSize:"16px"}}>
+            {isLoggedIn ?
 
-                 My Account
-                </Typography>
-               </IconButton>
-             </Tooltip>
-             <Menu
-               sx={{ mt: "45px" }}
-               id="menu-appbar"
-               anchorEl={anchorElUser}
-               anchorOrigin={{
-                 vertical: "top",
-                 horizontal: "right",
-               }}
-               keepMounted
-               transformOrigin={{
-                 vertical: "top",
-                 horizontal: "right",
-               }}
-               open={Boolean(anchorElUser)}
-               onClose={handleCloseUserMenu}
-             >
-               <MenuItem  onClick={handleCloseUserMenu}>
-                 <Typography onClick={() => navigate("/profile")} textAlign="center">My Profile</Typography>
-               </MenuItem>
-               <MenuItem onClick={()=>handleUserTypeOrderHistory(userData?.userType)}>
-                 <Typography textAlign="center">{userData?.userType==="ADVERTISER"?"Order History":userData?.userType==="PUBLISHER"?"Wallet History":null}</Typography>
-               </MenuItem>
-               <MenuItem onClick={handleTelegram}>
-                 <Typography textAlign="center">Telegram</Typography>
-               </MenuItem>
-               <MenuItem onClick={handleCloseUserMenu}>
-                 <Typography textAlign="center">
-                   <Link to="/add-listing">
-                   {userData?.userType==="PUBLISHER"?"Add Listing":null}
-                   
-                   </Link>
-                   </Typography>
-               </MenuItem>
-               <MenuItem onClick={signOutHandler}>
-                 <Typography textAlign="center">
-                   {isLoggedIn ? 
-                     <span onClick={handleSignout}>Sign Out</span>
-                 : 
-                 location==="http://localhost:3000/sign-up"? "Sign In":"Sign Up"
-                   }
-                 </Typography>
-               </MenuItem>
-             </Menu>
-           </Box>:
-           <span>
-             {location==="http://localhost:3000/sign-up"?<Link to="/sign-in">
-             Log In
-             
-             </Link>:<Link to="/sign-up">
-             Sign Up
-             
-             </Link>}
-             
+              <Box sx={{ flexGrow: 0 }}>
+                <Tooltip title="Open Account">
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <Typography sx={{ color: "white", fontWeight: 600, fontSize: "16px" }}>
+                      My Account
+                    </Typography>
+                  </IconButton>
+                </Tooltip>
+                <Menu
+                  sx={{ mt: "45px" }}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
+                  <MenuItem onClick={handleCloseUserMenu}>
+                    <Typography onClick={() => navigate("/profile")} textAlign="center">My Profile</Typography>
+                  </MenuItem>
+                  <MenuItem onClick={() => handleUserTypeOrderHistory(userData?.userType)}>
+                    <Typography textAlign="center">{userData?.userType === "ADVERTISER" ? "Order History" : userData?.userType === "PUBLISHER" ? "Wallet History" : null}</Typography>
+                  </MenuItem>
+                  <MenuItem onClick={handleTelegram}>
+                    <Typography textAlign="center">Telegram</Typography>
+                  </MenuItem>
+                  <MenuItem onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">
+                      <Link to="/add-listing">
+                        {userData?.userType === "PUBLISHER" ? "Add Listing" : null}
 
-           </span>
-         }
-            {isLoggedIn?
-            <IconButton onClick={() => navigate("/cart")} aria-label="cart">
-              <StyledBadge badgeContent={cartNumber} color="primary">
-                <ShoppingCartIcon sx={{ color: "white" }} />
-              </StyledBadge>
-            </IconButton>:null
-            
-          }
+                      </Link>
+                    </Typography>
+                  </MenuItem>
+                  <MenuItem onClick={signOutHandler}>
+                    <Typography textAlign="center">
+                      {isLoggedIn ?
+                        <span onClick={handleSignout}>Sign Out</span>
+                        :
+                        location === "https://koinpr-x2nc.vercel.app/#/sign-up" ? "Sign In" : "Sign Up"
+                      }
+                    </Typography>
+                  </MenuItem>
+                </Menu>
+              </Box> :
+              <span>
+                {location === "https://koinpr-x2nc.vercel.app/#/sign-up" ? <Link to="/sign-in">
+                  Log In
+
+                </Link> : <Link to="/sign-up">
+                  Sign Up
+
+                </Link>}
+
+
+              </span>
+            }
+            {isLoggedIn ?
+              <IconButton onClick={() => navigate("/cart")} aria-label="cart">
+                <StyledBadge badgeContent={cartNumber} color="primary">
+                  <ShoppingCartIcon sx={{ color: "white" }} />
+                </StyledBadge>
+              </IconButton> : null
+
+            }
             {/* <span onClick={signOutHandler}>
               {isLoggedIn ? "Sign Out" : "Sign-In"}
             </span> */}
 
-       
+
           </div>
         </div>
       </div>
@@ -556,7 +554,7 @@ if(userType==="PUBLISHER"){
           TransitionComponent={Transition}
           keepMounted
           onClose={handleClose}
-          sx={{backgroundImage:"#F9F9F9 !important"}}
+          sx={{ backgroundImage: "#F9F9F9 !important" }}
           aria-describedby="alert-dialog-slide-description"
         >
           {/* <div style={{ textAlign: "center" }}>
@@ -576,26 +574,26 @@ if(userType==="PUBLISHER"){
             </Button>
           </DialogActions> */}
           <DialogContent>
- <div className='popups'>
+            <div className='popups'>
 
 
-        <div className='contents'>
-            <DialogTitle className='titles'>Add Your Telegram</DialogTitle>
-            <div className='inputs'>
-                <input className='ips' type='texts' placeholder={"Your telegram @username"} />
+              <div className='contents'>
+                <DialogTitle className='titles'>Add Your Telegram</DialogTitle>
+                <div className='inputs'>
+                  <input className='ips' type='texts' placeholder={"Your telegram @username"} />
+                </div>
+                <button type='submit' className='submits'>Submit <ArrowForwardIcon /></button>
+
+                <div style={{ width: "272px", margin: "auto" }}>
+                  This will help your account manager to commute with you faster.
+                </div>
+              </div>
+              <Divider variant="middle" sx={{ border: "3px solid black", background: "black", marginTop: "33px" }} />
             </div>
-            <button  type='submit' className='submits'>Submit <ArrowForwardIcon/></button>
-
-            <div style={{width:"272px",margin:"auto"}}>
-            This will help your account manager to commute with you faster.  
-            </div>
-        </div>
-          <Divider variant="middle" sx={{border:"3px solid black",background:"black",marginTop:"33px"}}/>
-    </div>
           </DialogContent>
         </Dialog>
       </div>
-      <div className="md:hidden lg:hidden sm:block">
+      <div style={{width:"100%"}} className="md:hidden lg:hidden sm:block">
         <MobileHeader handleTelegram={handleTelegram} />
       </div>
     </>

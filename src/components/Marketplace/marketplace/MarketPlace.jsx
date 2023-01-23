@@ -33,6 +33,7 @@ import "../Marketplace.scss"
 import { useEffectOnceWhen } from "../../../common/useEffectOnceWhen.js/useEffectOncewhen";
 import { getUserByJwtToken } from "../../../redux/actions";
 import { LoadingForm } from "../../../common/loader/Loader";
+import TabLevelLoader from "../../loader/Loader";
 function MarketPlace(props) {
   const query = '';
 
@@ -60,6 +61,7 @@ const [isLoading,setIsLoading]=useState(false)
   const [marketList, setMarketList] = useState([]);
 
   const [userId, setUserId] = useState();
+  const [isLoadings,setIsLoadings]=useState(true)
 // console.log(marketList,"marketList")
   // const filteredData = marketList.filter((item) => {
   //   return item.offerTitle === param1 && item.listingCategory == param2;
@@ -72,7 +74,7 @@ const [isLoading,setIsLoading]=useState(false)
 
 const searchQuery=(searchQuery)=>{
   axios
-  .get(`/api/listing/get-all?${searchQuery}`)
+  .get(`api/listing/get-all?${searchQuery}`)
   .then((res) => {
     if (res.data.success) {
 
@@ -96,11 +98,16 @@ const searchQuery=(searchQuery)=>{
       searchQuery += `&offerTitle=${oc}`;
     }
     axios
-      .get(`/api/listing/get-all?${searchQuery}`)
+      .get(`api/listing/get-all?${searchQuery}`,{
+        headers: {
+          token: "koinpratodayqproductrsstoken",
+        },
+      })
       .then((res) => {
         if (res.data.success) {
           setMarketList(res.data.data);
           setIsLoading(false)
+          setIsLoadings(false)
         }
         // console.log(res.data);
       })
@@ -109,75 +116,109 @@ const searchQuery=(searchQuery)=>{
       });
   };
 
-  // useEffect(() => {
-  //   const auth = cookies.get("auth-token");
-  //   // console.log(auth);
-  //   if (!auth) {
-  //     navigate("/sign-in");
-  //   }
-  //   axios
-  //     .post(
-  //       "/api/user/get-user-by-token",
-  //       {},
-  //       {
-  //         headers: {
-  //           Authorization: "Bearer " + auth,
-  //         },
-  //       }
-  //     )
-  //     .then((res) => {
-  //       if (!res.data.success) {
-  //         navigate("/sign-in");
-  //       }
-  //       setUserId(res.data.user._id);
-  //       console.log(" marketplace")
-  //     })
-  //     .catch((err) => {
-  //       console.log(err, "err");
-  //       navigate("/sign-in");
-  //     });
-  //   // UserAuthentication();
-  // }, [window.location.search,userId]);
-
-  useEffectOnceWhen(()=>{
+  useEffect(() => {
     const auth = cookies.get("auth-token");
-      // console.log(auth);
-      if (!auth) {
-        navigate("/sign-in");
-      }
-      axios
-        .post(
-          "/api/user/get-user-by-token",
-          {},
-          {
-            headers: {
-              Authorization: "Bearer " + auth,
-            },
-          }
-        )
-        .then((res) => {
-          if (!res.data.success) {
-            navigate("/sign-in");
-          }
-          setUserId(res.data.user._id);
-          // console.log(" marketplace")
-        })
-        .catch((err) => {
-          console.log(err, "err");
+//     const cookieValue = document.cookie
+// .split('; ')
+// .find(row => row.startsWith('Bearer'))
+// .split('=')[1];
+// console.log(cookieValue,"cookievalue")
+    // console.log(auth);
+    if (!auth) {
+      navigate("/sign-in");
+    }
+    axios
+      .post(
+        "api/user/get-user-by-token",
+        {},
+        {
+          headers: {
+            Authorization: "Bearer " + auth,
+          },
+        }
+      )
+      .then((res) => {
+        if (!res.data.success) {
           navigate("/sign-in");
-        });
-    // getUserByJwtToken()
-    searchQuery("pressRelease")
-  },[userId])
-useEffect(()=>{
-  getUserByJwtToken()
+        }
+        setUserId(res.data.user._id);
+        console.log(" marketplace")
+      })
+      .catch((err) => {
+        console.log(err, "err");
+        navigate("/sign-in");
+      });
+    // UserAuthentication();
+  }, [window.location.search,userId]);
+  const auth = cookies.get("auth-token");
+  console.log(auth);
+  // useEffectOnceWhen(()=>{
+    // const auth = cookies.get("auth-token");
+    //   console.log(auth);
+    //   // if (!auth) {
+    //   //   navigate("/sign-in");
+    //   // }
+    //   axios
+    //     .post(
+    //       "http://localhost:5000/api/user/get-user-by-token",
+       
+    //       {
+    //         headers: {
+    //           Authorization: "Bearer " + auth,
+    //         },
+    //       }
+    //     )
+    //     .then((res) => {
+    //       if (!res.data.success) {
+    //         // navigate("/sign-in");
+    //       }
+    //       setUserId(res.data.user._id);
+    //       // console.log(" marketplace")
+    //     })
+    //     .catch((err) => {
+    //       console.log(err, "err");
+    //       navigate("/sign-in");
+    //     });
+    // // getUserByJwtToken()
+    // searchQuery("pressRelease")
+  // },[userId])
+// useEffect(()=>{
+//   // getUserByJwtToken()
+//   const auth = cookies.get("auth-token");
+//   console.log(auth);
+//   // if (!auth) {
+//   //   navigate("/sign-in");
+//   // }
+//   axios
+//     .post(
+//       "http://localhost:5000/api/user/get-user-by-token",
+   
+//       {
+//         headers: {
+//           Authorization: "Bearer " + auth,
+//         },
+//       }
+//     )
+//     .then((res) => {
+//       if (!res.data.success) {
+//         // navigate("/sign-in");
+//       }
+//       setUserId(res.data.user._id);
+//       // console.log(" marketplace")
+//     })
+//     .catch((err) => {
+//       console.log(err, "err");
+//       navigate("/sign-in");
+//     });
+// // getUserByJwtToken()
+// searchQuery("pressRelease")
 
-},[userId])
+// },[userId])
   useEffect(()=>{
-    if(!userId){
-      return;
+    // if(!userId){
+    //   return;
 
-    };
+    // };
 
     const { search } = window.location;
     let params = new URLSearchParams(search);
@@ -287,6 +328,9 @@ useEffect(()=>{
 
   return (
     <>
+
+    {isLoadings?<TabLevelLoader />:
+    
       <div className="w-full p-4 mx-auto mt-20 bg-white rounded-xl  overflow-hidden ">
         <div className="md:flex lg:flex xs:flex w-full">
           <div 
@@ -307,14 +351,14 @@ useEffect(()=>{
                 <span  className="invisible md:visible">
 
                 <FormControl sx={{ width: "95%" }} variant="outlined">
-                  <InputLabel htmlFor="outlined-adornment-password">
+                  <InputLabel sx={{marginTop:"-5px"}}>
                     Enter publisher name
                   </InputLabel>
 
                   <OutlinedInput
                     size="small"
                     fullWidth
-                    sx={{ p: "10px" }}
+                    // sx={{ p: "10px" }}
                     id="outlined-basic"
                     name="offerTitle"
                     value={offerFilter}
@@ -333,15 +377,15 @@ useEffect(()=>{
                 </span>
                 <span  className="sm:visible md:invisible">
 
-                <FormControl sx={{ width: "230px",marginTop:-10 }} variant="outlined">
-                  <InputLabel htmlFor="outlined-adornment-password">
+                <FormControl sx={{ width: "230px", }} variant="outlined">
+                  <InputLabel sx={{marginTop:"-5px"}}>
                     Enter publisher name
                   </InputLabel>
 
                   <OutlinedInput
                     size="small"
                     fullWidth
-                    sx={{ p: "10px"}}
+                    // sx={{ p: "10px"}}
                     id="outlined-basic"
                     name="offerTitle"
                     value={offerFilter}
@@ -496,6 +540,7 @@ ADD
           </div>
         </div>
       </div>
+    }
     </>
   );
 }

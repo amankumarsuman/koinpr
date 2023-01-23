@@ -2,10 +2,8 @@
 
     width: 95%;
     margin: auto;
-    margin-top: 55px;
+    padding: 55px 0;
     display: flex;
-
-
 }
 
 .leftPaper {

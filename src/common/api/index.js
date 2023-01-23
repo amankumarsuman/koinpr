@@ -70,6 +70,7 @@ export const uploadInFormInstance = Axios.create({
 
 // the commit check
 export class PublicConstants {
-  static getUserByToken = "/api/user/get-user-by-token";
+  // static getUserByToken = "http://localhost:5000/api/user/get-user-by-token";
+  static getUserByToken = "http://user.koinpr.com/api/user/get-user-by-token";
  
 }

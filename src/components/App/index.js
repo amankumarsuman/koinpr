@@ -12,7 +12,7 @@ import CommonPopup from "../../common/Popup";
 import Cart from "../Cart";
 
 import "./App.scss";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, HashRouter } from "react-router-dom";
 import MarketPlace from "../Marketplace/marketplace/MarketPlace";
 // import Expand from "../Expanded/expand/Expand";
 // import WalletPublisher from "../WalletPublisher/walletPublisher/WalletPublisher";
@@ -32,15 +32,34 @@ import { UserAuthentication } from "../../common/userAuthentication/UserAuthenti
 import ForgotPassword from "../forgetPassword/ForgetPassword";
 import PasswordReset from "../passwordReset";
 import { SnackbarNotification } from "../../common/snackbar/SnackBarNotification";
+import NewsPopup from "../desktop/NewsPopup";
+import { Box } from "@mui/material";
+import TabLevelLoader from "../loader/Loader";
 
 // import Cart from "../Cart/cart/Cart";
 
 function App(props) {
   return (
     <div className="App">
-      <BrowserRouter>
+
+      {/* <NewsPopup/> */}
+      <HashRouter>
         <Header />
         <SnackbarNotification />
+        {/* <Box
+              id="Main"
+              sx={{
+                height: "auto",
+                position: "absolute",
+                top: "6em",
+                left: "3.5em",
+                width: "96%",
+              }}
+            >
+              <TabLevelLoader />
+            
+            </Box> */}
+
 
           {/* <SettingsComponent /> */}
         {/* <NewsOpen /> */}
@@ -49,8 +68,8 @@ function App(props) {
         {/* <CategoryExtended /> */}
         {/* <HomeExtended /> */}
         {/* <Desktop /> */}
-        {/* <Desktop/> */}
         <Routes>
+          {/* <Route path="/" exact element={<Desktop />} /> */}
           <Route path="/" exact element={<MarketPlace />} />
           <Route path="/expand/:id" exact element={<Expanded />} />
           <Route path="/checkout" exact element={<StripeContainer />} />
@@ -84,21 +103,26 @@ function App(props) {
               />
             }
           />
+          <Route
+            path="/VerifyEmail"
+            exact
+            element={
+              <Popup
+                title="Verify Email"
+                name1="otp"
+                label1="Enter Otp"
+               
+                buttonText="Submit"
+              />
+            }
+          />
           <Route path="/cart" exact element={<Cart />} />
           <Route path="/order-details" exact element={<OrderDetails />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
 			<Route path="/password-reset/:id/:token" element={<PasswordReset />} />
-          {/* <Route path='/profile' exact element={<ProfileAdvertiser />}/> */}
-          {/* <Route path='/marketplace' exact element={<ProfileAdvertiser />}/> */}
-          {/* <Expanded/> */}
-          {/* <WalletPublisher /> */}
-          {/* <WalletAdvertiser /> */}
-          {/* <ProfileAdvertiser /> */}
-          {/* <AddListing /> */}
-          {/* <CommonPopup title='Reset Your Password' input1='Registered Email' input2="Confirm It" buttonText='Submit' /> */}
-          {/* <Cart /> */}
+         
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </div>
   );
 }

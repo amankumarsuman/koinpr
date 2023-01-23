@@ -8,6 +8,7 @@ import Card from '../Card';
 import axios from '../../axios';
 import Actions from '../../actions/cartActions';
 import { Button } from '@mui/material';
+import TabLevelLoader from '../loader/Loader';
 
 
 const Marketplace = (addToCart) => {
@@ -18,13 +19,14 @@ const Marketplace = (addToCart) => {
     const [marketList, setMarketList] = useState([]);
     const [searchVal, setSearchVal] = useState('');
     const [userId, setUserId] = useState();
+    const [isLoading,setIsLoading]=useState(true)
 
     useEffect(()=>{
         const auth = cookies.get('auth-token');
-        if(!auth){
-            navigate('/sign-in');
-        }
-        axios.post('/api/user/get-user-by-token',{},{
+        // if(!auth){
+        //     navigate('/sign-in');
+        // }
+        axios.post('http://user.koinpr.com/api/user/get-user-by-token',{},{
             headers:{
                 Authorization: 'Bearer ' + auth
             }
@@ -45,6 +47,7 @@ const Marketplace = (addToCart) => {
         ).then(res=>{
             if(res.data.success){
                 setMarketList(res.data.data);
+                setIsLoading(false)
             }
             // console.log(res.data);
         }).catch(err=>{
@@ -55,73 +58,77 @@ const Marketplace = (addToCart) => {
 
     return (
         <div className='marketplace'>
-            <div className='panels'>
-                <div className='mpLeft'>
-                    <div className='publishers'>
-                        <span>Search</span>
-                        <input type='search' name='psearch' placeholder='Enter publisher name' value={searchVal} onChange={(e)=>{setSearchVal(e.target.value)}}/>
-                    </div>
-                    <div className='publishers'>
-                        <span>Choose Category</span>
-                        <div className='option'>
-                            <label htmlFor='pressRelease'>Press Release</label>
-                            <input type='radio' name='category' id='pressRelease' value='pressRelease' />
-                        </div>
-                        <div className='option'>
-                            <label htmlFor='sponsoredArticles'>Sponsored Articles</label>
-                            <input type='radio' name='category' id='sponsoredArticles' value='sponsoredArticles' />
-                        </div>
-                        <div className='option'>
-                            <label htmlFor='button'>Button Ads</label>
-                            <input type='radio' name='category' id='button' value='buttonAds' />
-                        </div>
-                        <div className='option'>
-                            <label htmlFor='banner'>Banner Ads</label>
-                            <input type='radio' name='category' id='banner' value='bannerAds' />
-                        </div>
-                        {/* <div className='option'>
-                            {/* <label htmlFor='bannerAds'>Banner Ads</label> */}
-                            {/* <input type='radio' name='category' id='bannerAds' value='bannerAds' /> */}
-                        {/* </div> */}
-                    </div>
-                </div>
-                {/* <div className='mpRight'>
-                    <div className='row'>
-                        <Card name='Todayq News' price='500'/>
-                        <Card name='Amreek' price='Infinity'/>
-                        <Card name='Todayq News' price='500'/>
-                    </div>
-                    <div className='row'>
-                        <Card name='Todayq News' price='500'/>
-                        <Card name='Todayq News' price='500'/>
-                        <Card name='Todayq News' price='500'/>
-                    </div>
-                    <div className='row'>
-                        <Card name='Todayq News' price='500'/>
-                        <Card name='Todayq News' price='500'/>
-                        <Card name='Todayq News' price='500'/>
-                    </div>
-                </div> */}
-                <div className='mpRight'>
-                    <div style={{border:"1px solid red !important"}}>
-                        <Button variant='contained'>
+
+            {isLoading?<TabLevelLoader/>:
+             <div className='panels'>
+             <div className='mpLeft'>
+                 <div className='publishers'>
+                     <span>Search</span>
+                     <input type='search' name='psearch' placeholder='Enter publisher name' value={searchVal} onChange={(e)=>{setSearchVal(e.target.value)}}/>
+                 </div>
+                 <div className='publishers'>
+                     <span>Choose Category</span>
+                     <div className='option'>
+                         <label htmlFor='pressRelease'>Press Release</label>
+                         <input type='radio' name='category' id='pressRelease' value='pressRelease' />
+                     </div>
+                     <div className='option'>
+                         <label htmlFor='sponsoredArticles'>Sponsored Articles</label>
+                         <input type='radio' name='category' id='sponsoredArticles' value='sponsoredArticles' />
+                     </div>
+                     <div className='option'>
+                         <label htmlFor='button'>Button Ads</label>
+                         <input type='radio' name='category' id='button' value='buttonAds' />
+                     </div>
+                     <div className='option'>
+                         <label htmlFor='banner'>Banner Ads</label>
+                         <input type='radio' name='category' id='banner' value='bannerAds' />
+                     </div>
+                     {/* <div className='option'>
+                         {/* <label htmlFor='bannerAds'>Banner Ads</label> */}
+                         {/* <input type='radio' name='category' id='bannerAds' value='bannerAds' /> */}
+                     {/* </div> */}
+                 </div>
+             </div>
+             {/* <div className='mpRight'>
+                 <div className='row'>
+                     <Card name='Todayq News' price='500'/>
+                     <Card name='Amreek' price='Infinity'/>
+                     <Card name='Todayq News' price='500'/>
+                 </div>
+                 <div className='row'>
+                     <Card name='Todayq News' price='500'/>
+                     <Card name='Todayq News' price='500'/>
+                     <Card name='Todayq News' price='500'/>
+                 </div>
+                 <div className='row'>
+                     <Card name='Todayq News' price='500'/>
+                     <Card name='Todayq News' price='500'/>
+                     <Card name='Todayq News' price='500'/>
+                 </div>
+             </div> */}
+             <div className='mpRight'>
+                 <div style={{border:"1px solid red !important"}}>
+                     <Button variant='contained'>
 Add
-                        </Button>
-                    </div>
-                {marketList.map(item=>(
-                    <Card name={item.offerTitle} price='500' id={item._id} />
-                ))}
-                    {/* <Card name='Todayq News' price='500'/>
-                    <Card name='Amreek' price='Infinity'/>
-                    <Card name='Todayq News' price='500'/>
-                    <Card name='Todayq News' price='500'/>
-                    <Card name='Todayq News' price='500'/>
-                    <Card name='Todayq News' price='500'/>
-                    <Card name='Todayq News' price='500'/>
-                    <Card name='Todayq News' price='500'/>
-                    <Card name='Todayq News' price='500'/> */}
-                </div>
-            </div>
+                     </Button>
+                 </div>
+             {marketList.map(item=>(
+                 <Card name={item.offerTitle} price='500' id={item._id} />
+             ))}
+                 {/* <Card name='Todayq News' price='500'/>
+                 <Card name='Amreek' price='Infinity'/>
+                 <Card name='Todayq News' price='500'/>
+                 <Card name='Todayq News' price='500'/>
+                 <Card name='Todayq News' price='500'/>
+                 <Card name='Todayq News' price='500'/>
+                 <Card name='Todayq News' price='500'/>
+                 <Card name='Todayq News' price='500'/>
+                 <Card name='Todayq News' price='500'/> */}
+             </div>
+         </div>
+            }
+           
         </div>
     )
 }
