@@ -188,18 +188,22 @@ const dispatch=useDispatch()
                     </p>
                     <div className='p-5'>
 
-                        <Button type="submit" sx={{ marginTop: "2em", background: "black" }} variant='contained'>
+                        {/* <Button type="submit" sx={{ marginTop: "2em", background: "black" }} variant='contained'>
                             Proceed<span><ArrowForwardIcon /></span>
-                        </Button>
+                        </Button> */}
+                         <button type="submit" className={styles.submit}>
+                  Proceed
+                  <ArrowForwardIcon fontSize="10px" sx={{marginLeft:"5px"}} />
+                </button>
                     </div>
                 </form>
             </div>
             <Divider variant='middle' sx={{ width: "93%", margin: "auto", height: "0.5em", marginTop: "1em", background: "black" }} />
 
-            <p style={{ marginTop: "3em", fontSize: "14px" }}>
+            {/* <p style={{ marginTop: "3em", fontSize: "14px" }}>
 
                 All rights reserved by Koinpr Marketing Private Limited
-            </p>
+            </p> */}
         </div>
     );
 };

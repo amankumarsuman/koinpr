@@ -35,6 +35,8 @@ import { SnackbarNotification } from "../../common/snackbar/SnackBarNotification
 import NewsPopup from "../desktop/NewsPopup";
 import { Box } from "@mui/material";
 import TabLevelLoader from "../loader/Loader";
+import Footer from "../footer/Footer";
+import VerifyEmailPopup from "../popups/VerifyEmailPopup";
 
 // import Cart from "../Cart/cart/Cart";
 
@@ -107,13 +109,14 @@ function App(props) {
             path="/VerifyEmail"
             exact
             element={
-              <Popup
-                title="Verify Email"
-                name1="otp"
-                label1="Enter Otp"
+              // <Popup
+              //   title="Verify Email"
+              //   name1="otp"
+              //   label1="Enter Otp"
                
-                buttonText="Submit"
-              />
+              //   buttonText="Submit"
+              // />
+              <VerifyEmailPopup/>
             }
           />
           <Route path="/cart" exact element={<Cart />} />
@@ -123,6 +126,7 @@ function App(props) {
          
         </Routes>
       </HashRouter>
+      {/* <Footer/> */}
     </div>
   );
 }

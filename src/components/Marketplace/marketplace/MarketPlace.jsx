@@ -34,6 +34,7 @@ import { useEffectOnceWhen } from "../../../common/useEffectOnceWhen.js/useEffec
 import { getUserByJwtToken } from "../../../redux/actions";
 import { LoadingForm } from "../../../common/loader/Loader";
 import TabLevelLoader from "../../loader/Loader";
+import ChangeEmailPopup from "../../popups/ChangeEmail";
 function MarketPlace(props) {
   const query = '';
 
@@ -61,7 +62,9 @@ const [isLoading,setIsLoading]=useState(false)
   const [marketList, setMarketList] = useState([]);
 
   const [userId, setUserId] = useState();
+  const [user,setUser]=useState()
   const [isLoadings,setIsLoadings]=useState(true)
+  console.log(user,"user")
 // console.log(marketList,"marketList")
   // const filteredData = marketList.filter((item) => {
   //   return item.offerTitle === param1 && item.listingCategory == param2;
@@ -90,14 +93,10 @@ const searchQuery=(searchQuery)=>{
 }
 
   const getData = (lc, oc) => {
-    let searchQuery = `userId=${userId}`;
+    // let searchQuery = `userId=${userId}`;
     if(lc){
       searchQuery += `&listingCategory=${lc}`;
-    }
-    if(offerFilter){
-      searchQuery += `&offerTitle=${oc}`;
-    }
-    axios
+      axios
       .get(`api/listing/get-all?${searchQuery}`,{
         headers: {
           token: "koinpratodayqproductrsstoken",
@@ -114,19 +113,60 @@ const searchQuery=(searchQuery)=>{
       .catch((err) => {
         console.log(err, "err");
       });
+    }
+    else if(offerFilter){
+      searchQuery += `&offerTitle=${oc}`;
+      axios
+      .get(`api/listing/get-all?${searchQuery}`,{
+        headers: {
+          token: "koinpratodayqproductrsstoken",
+        },
+      })
+      .then((res) => {
+        if (res.data.success) {
+          setMarketList(res.data.data);
+          setIsLoading(false)
+          setIsLoadings(false)
+        }
+        // console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err, "err");
+      });
+    }else{
+
+      axios
+        .get(`api/listing/get-all`,{
+          headers: {
+            token: "koinpratodayqproductrsstoken",
+          },
+        })
+        .then((res) => {
+          if (res.data.success) {
+            setMarketList(res.data.data);
+            setIsLoading(false)
+            setIsLoadings(false)
+          }
+          // console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err, "err");
+        });
+    }
   };
 
   useEffect(() => {
     const auth = cookies.get("auth-token");
+    console.log(auth,"auth")
 //     const cookieValue = document.cookie
 // .split('; ')
 // .find(row => row.startsWith('Bearer'))
 // .split('=')[1];
 // console.log(cookieValue,"cookievalue")
     // console.log(auth);
-    if (!auth) {
-      navigate("/sign-in");
-    }
+    // if (!auth) {
+    //   navigate("/sign-in");
+    // }
     axios
       .post(
         "api/user/get-user-by-token",
@@ -138,10 +178,12 @@ const searchQuery=(searchQuery)=>{
         }
       )
       .then((res) => {
+        console.log(res,"market err")
         if (!res.data.success) {
           navigate("/sign-in");
         }
         setUserId(res.data.user._id);
+        setUser(res?.data?.user)
         console.log(" marketplace")
       })
       .catch((err) => {
@@ -160,7 +202,7 @@ const searchQuery=(searchQuery)=>{
     //   // }
     //   axios
     //     .post(
-    //       "http://localhost:5000/api/user/get-user-by-token",
+    //       "https://koinprapi.onrender.com/api/user/get-user-by-token",
        
     //       {
     //         headers: {
@@ -191,7 +233,7 @@ const searchQuery=(searchQuery)=>{
 //   // }
 //   axios
 //     .post(
-//       "http://localhost:5000/api/user/get-user-by-token",
+//       "https://koinprapi.onrender.com/api/user/get-user-by-token",
    
 //       {
 //         headers: {
@@ -508,6 +550,7 @@ ADD
                       name={el?.user?.fullName}
                       details={"View Details"}
                       price={el?.price}
+                      user={user}
                     />
                   </Grid>
                 ))}
@@ -539,6 +582,7 @@ ADD
             </Grid>
           </div>
         </div>
+        {/* <ChangeEmailPopup oldEmail={user}/> */}
       </div>
     }
     </>

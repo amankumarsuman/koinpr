@@ -7,7 +7,7 @@ import { addToCart, subtractQuantity } from "../../../redux/actions";
 import CancelIcon from '@mui/icons-material/Cancel';
 import { LoadingForm } from "../../../common/loader/Loader";
 
-function MarketPlaceCards({ name, details, image, price = 10, data,isLoading }) {
+function MarketPlaceCards({ user,name, details, image, price = 10, data,isLoading }) {
   const [showAddIcon,setShowAddIcon]=useState(true)
   const[id,setId]=useState()
 const cartData=useSelector((state)=>state?.cart?.products)
@@ -102,10 +102,13 @@ var cartDataId=cartData.map((el)=>el?.id)
         >
           <p>${price}</p>
           {/* {console.log(data?._id===cartData?.id)} */}
-          <span onClick={!cartDataId?.includes(data?._id)?handleAddToCart:handleRemoveFromCart}>
+          {user?.userType==="ADVERTISER"?
+          
+          <span  onClick={!cartDataId?.includes(data?._id)?handleAddToCart:handleRemoveFromCart}>
             {/* <span style={{border:"1px solid red"}}>{id===data?._id?"yes":"no"}</span> */}
             {!cartDataId?.includes(data?._id) ?<AddCircleOutlineIcon />:<CancelIcon/>}
-          </span>
+          </span>:null
+          }
         </div>
       </div>
 }

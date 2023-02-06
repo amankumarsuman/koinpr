@@ -6,7 +6,7 @@ import "./Profile.scss";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { snackbarNotification } from "../../redux/snackbar.action";
 import { useDispatch } from "react-redux";
-import { Divider, Slide } from "@mui/material";
+import { Button, Divider, Slide } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -50,11 +50,16 @@ const ProfileAdvertiser = () => {
   const [userId, setUserId] = useState();
   const [userData,setUserData]=useState()
   const [emailOtp,setEmailOtp]=useState();
-
+  const [selectedFile, setSelectedFile] = useState();
+	const [isFilePicked, setIsFilePicked] = useState(false);
   const handleEmailOtp=(e)=>{
     setEmailOtp(e.target.value)
   }
 
+  console.log(input,"input")
+const handleNext=()=>{
+  setStep(2)
+}
   const submitOtp=()=>{
 
 axios.post("api/user/verifyOtp",{
@@ -293,15 +298,19 @@ const dispatch=useDispatch()
     setOpen(true);
     // navigate("/")
   }
+
+  const handlePublisherNext=()=>{
+    setStep(3)
+  }
   return (
     <>
-      <div className="Profile">
+      <div style={{position:"relative"}} className="Profile">
         <div className="pLeft">
           <h2 className="lHead">Account Details</h2>
           <p className="cStatus">
-            Current Status : <span className="status">{userData?.emailVerified?"Verified":
+            Current Status : <span className="status">{userData?.userVerified?"Verified":"Pending"}</span>
             
-            <span style={{cursor:"pointer"}} onClick={handleEmailVerification}>Pending</span>}</span>
+             {/* <span style={{cursor:"pointer"}} onClick={handleEmailVerification}>Pending</span>}</span> */}
           </p>
           <div className="inputs mt40">
             <div className="wInput">
@@ -327,7 +336,9 @@ const dispatch=useDispatch()
                 // disabled={input?.companyName.length==0 ||input?.companyId?.length==0}
               ></input>
             </div>
-            {input?.representCompany && input?.userType==="PUBLISHER"?  (
+            {
+            // input?.representCompany &&
+             input?.userType==="PUBLISHER"?  (
               <div className="wInput mt20">
                 <label>Withdrawl Options</label>
                 <input
@@ -373,7 +384,7 @@ const dispatch=useDispatch()
                     placeholder="Company Name"
                     name="companyName"
                     value={input?.companyName}
-                    disabled={userData?.companyName}
+                    disabled={userData?.userVerified}
                   />
                   <input
                     // onChange={changeHandler}
@@ -382,7 +393,7 @@ const dispatch=useDispatch()
                     placeholder="Company Identification No."
                     name="companyId"
                     value={input?.companyId}
-                    disabled={userData?.companyId}
+                    disabled={userData?.userVerified}
                   />
                 </div>
               ) : (
@@ -394,7 +405,7 @@ const dispatch=useDispatch()
                     placeholder="First Name"
                     name="firstName"
                     value={input?.firstName}
-                    disabled={userData?.firstName}
+                    disabled={userData?.userVerified}
                   />
                   <input
                     // onChange={changeHandler}
@@ -403,6 +414,8 @@ const dispatch=useDispatch()
                     placeholder="Last Name"
                     name="lastName"
                     value={userData?.lastName}
+                  disabled={userData?.userVerified}
+
                   />
                 </div>
               )}
@@ -414,7 +427,7 @@ const dispatch=useDispatch()
                   onChange={handleChange}
                   name="country"
                   value={input?.country}
-                  disabled={userData?.country}
+                  disabled={userData?.userVerified}
                 />
                 <input
                   className="wInput"
@@ -423,17 +436,47 @@ const dispatch=useDispatch()
                   onChange={handleChange}
                   name="walletAddress"
                   value={input?.walletAddress}
-                  disabled={userData?.walletAddress}
+                  disabled={userData?.userVerified}
                 />
+     
               </div>
-              {/* <button
+
+{input?.representCompany?
+<span>
+{
+              input?.companyName?.length>0 && input?.companyId?.length>0 && input?.country?.length>0 && input?.walletAddress?.length>0?
+              // input?.walletAddress?.length>0 && input?.country?.length>0 && input?.lastName?.length>0?
+              
+              <button
                 type="button"
                 className="pButton mt40"
-                onClick={handleSubmit}
+                onClick={handleNext}
+                style={{borderRadius:"5px"}}
               >
-                Proceed
+                Next
                 <ArrowForwardIcon />
-              </button> */}
+              </button>:
+             <span style={{color:"red"}}>All field is Mandatory</span>
+            }
+
+</span>
+:
+
+<span>
+  
+{ input?.lastName?.length>0 && input?.firstName?.length>0 && input?.country?.length>0 && input?.walletAddress?.length>0?
+              <button
+              type="button"
+              className="pButton mt40"
+              onClick={handleNext}
+              style={{borderRadius:"5px"}}
+            >
+              Next
+              <ArrowForwardIcon />
+            </button>:"All field is mandatory"}
+</span>
+}
+           
               <p className="pBottom">
                 Please make sure that the details you enter here matches the
                 documents you will be providing for verification.
@@ -451,15 +494,26 @@ const dispatch=useDispatch()
                 <div className="wInput mt40">
                   <label>Choose Document Type</label>
                 </div>
-                <div className="wInput mt40">
+                {/* <div className="wInput mt40">
                   <input type="file" name="doc" value={input?.doc} />
-                </div>
+                </div> */}
+                <Button variant="outlined"  sx={{color:"black",borderColor:"black",marginTop:"20px",textTransform:"none"}} component="label">
+        Upload File +
+        <input  hidden accept="image/*" multiple type="file" />
+      </Button>
               </div>
               <p className="pBottom">
                 Max file size 5 MB. Supported file types: png, jpeg, pdf, doc.
               </p>
               {/* {input?.doc?.length>0? */}
-              {input?.userType==="PUBLISHER"?null:
+              {input?.userType==="PUBLISHER"?
+              <button 
+              onClick={handlePublisherNext}
+              
+              style={{borderRadius:"5px"}} type="button" className="pButton mt40">
+                {"Next ->"}
+              </button>
+              :
               
               <button 
               onClick={handleSubmit}

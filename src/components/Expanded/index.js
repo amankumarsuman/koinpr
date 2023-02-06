@@ -59,6 +59,7 @@ const Expanded = () => {
     const cookies = new Cookies();
     const navigate = useNavigate();
     const [userId, setUserId] = useState();
+    const[userData,setUserData]=useState()
     const [showAddIcon,setShowAddIcon]=useState(true)
 
     
@@ -114,6 +115,7 @@ const Expanded = () => {
               navigate("/sign-in");
             }
             setUserId(res.data.user._id);
+            setUserData(res?.data?.user)
             // console.log("first")
           })
           .catch((err) => {
@@ -128,7 +130,7 @@ const Expanded = () => {
     useEffect(() => {
       if (userId) {
         axios
-          .get(`/api/listing/get-all?userId=${userId}&offerTitle=${id}`,{
+          .get(`/api/listing/get-all?offerTitle=${id}`,{
             headers:{
               token:"koinpratodayqproductrsstoken"
             }
@@ -184,7 +186,10 @@ const Expanded = () => {
                         <span className='data'>Todayq News is an online Cryptocurrency News, Analysis & Blockchain platform focused on covering daily happenings in the cryptocurrency and blockchain space. The website is presenting the latest developments from the market, offering a clear view of the performance and dynamics of Blockchain, Bitcoin, Ethereum, and other cryptocurrency projects.</span>
                         <div className='price'>
                             <span className='amount'>{displayData?.price?`$${displayData?.price}`:"$200"}</span>
+                            {userData?.userType==="ADVERTISER"?
                             <span onClick={!(cartDataId?.includes(displayData?._id))?handleAddToCart:handleRemoveFromCart}>{!(cartDataId?.includes(displayData?._id))?<AddCircleOutlineIcon/>:<CancelIcon/>}</span>
+                            :null
+                          }
                         </div>
                     </div>
                     <div className='right'>
@@ -225,8 +230,8 @@ const Expanded = () => {
                             <span className='data'>{displayData.indexedArticle}</span>
                         </div>
                         <div >
-                            <span className='head'>Social Share</span>
-                            <span className='data'>{displayData.socialShare}</span>
+                            <span className='lasthead'>Social Share</span>
+                            <span className='lastdata'>{displayData.socialShare}</span>
                         </div>
                     </div>
                 </div>

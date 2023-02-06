@@ -82,13 +82,44 @@
                 font-weight: 600;
                 font-size: 18px;
             }
+            .lasthead {
+                padding: 15px 0 20px 21px;
+                height: 52px;
+                display: inline-block;
+                width: 227px;
+                border-right: 1px solid black;
+                box-sizing: border-box;
+                font-weight: 600;
+                font-size: 18px;
+            }
+        //     .lasthead {
+        //         // padding: 15px 0 20px 21px;
+        //         padding: 1em;
+        //         height: 52px;
+        //         display: inline-block;
+        //         width: 112px;
+        //         border-right: 1px solid black;
+        //         box-sizing: border-box;
+        //         font-weight: 600;
+        //         font-size: 12px;
+        // // border: 1px solid red;
 
+        //     }
             .data {
                 padding: 15px 0 20px 39px;
-                height: 52px;
+                height: 62px;
                 display: inline-block;
                 width: 400px;
                 box-sizing: border-box;
+                // border: 1px solid red;
+            }
+            .lastdata {
+                padding: 15px 0 20px 39px;
+                height: 62px;
+                display: inline-block;
+                width: 400px;
+                box-sizing: border-box;
+                // border: 1px solid red;
             }
         }
     }
@@ -123,9 +154,12 @@
                 height: 500px !important;
                 // box-sizing: border-box;
                 background: #F8F8F8;
+                margin-left: 20px;
                 border-radius: 3px;
                 padding-bottom: 80px;
-
+                border-radius: 5px;
+                // text-align: center;
+// border: 1px solid green;
     
                 .headExp {
                     display: flex;
@@ -203,12 +237,34 @@
             // border: 1px solid red;
 
                 }
+                .lasthead {
+                    // padding: 15px 0 20px 21px;
+                    padding: 1em;
+                    // height: 52px;
+                    display: inline-block;
+                    width: 112px;
+                    border-right: 1px solid black;
+                    box-sizing: border-box;
+                    font-weight: 600;
+                    font-size: 12px;
+            // border: 1px solid red;
+
+                }
     
                 .data {
                     // border-right: 1px solid blue;
 
                     // padding: 15px 0 20px 39px;
                     height: 52px;
+                    // display: inline-block;
+                    // width: 400px;
+                    // box-sizing: border-box;
+                }
+                .lastdata {
+                    // border-right: 1px solid red;
+
+                    // padding: 15px 0 20px 39px;
+                    // height: 52px;
                     // display: inline-block;
                     // width: 400px;
                     // box-sizing: border-box;

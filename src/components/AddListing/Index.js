@@ -14,7 +14,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { Box, Button, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 const AddListing = () => {
   const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     "& .MuiDialogContent-root": {
@@ -38,7 +38,7 @@ const AddListing = () => {
     }
     axios
       .post(
-        "http://user.koinpr.com/api/user/get-user-by-token",
+        "https://koinprapi.onrender.com/api/user/get-user-by-token",
         {},
         {
           headers: {
@@ -146,7 +146,8 @@ const [image,setImage]=useState('')
     const token = cookies.get("auth-token");
 
     const config = {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: { authorization: `Bearer ${token}`,token:"koinpratodayqproductrsstoken" },
+      
     };
     axios
       .post(
@@ -413,7 +414,7 @@ const [image,setImage]=useState('')
                 </Select>
               </FormControl>
             </Box>
-            <input
+            {/* <input
               onChange={(e)=>setImage(e.target.files[0])}
               type="file"
               name="image"
@@ -421,8 +422,14 @@ const [image,setImage]=useState('')
               className="input"
               
               // {...register("twitter")}
-            />
+            /> */}
+                   <Button variant="outlined"  sx={{color:"black",borderColor:"black",textTransform:"none",maxWidth:"250px"}} component="label">
+        Upload File +
+        <input  hidden accept="image/*" multiple type="file" />
+      </Button>
           </div>
+          <div className="invisible md:visible ">
+
           <div style={{display:"flex",justifyContent:"space-between"}}>
 
 
@@ -445,6 +452,34 @@ const [image,setImage]=useState('')
             <ArrowBackIcon/>
             Cancel
           </button>
+          </div>
+          </div>
+          <div className="sm:block md:invisible ">
+
+          <div 
+          style={{display:"flex",flexDirection:"column",marginTop:"-120px", justifyContent:"space-between"}}>
+
+
+          <button
+            type="button"
+            onClick={handleSubmitFunction}
+            className="submit"
+          >
+            Submit Listing
+            <ArrowForwardIcon/>
+          </button>
+          <button
+            type="button"
+            onClick={()=>
+        navigate("/")
+            
+            }
+            className="submit"
+          >
+            <ArrowBackIcon/>
+            Cancel
+          </button>
+          </div>
           </div>
         </div>
         {/* {showDialog ? (

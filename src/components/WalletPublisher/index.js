@@ -6,10 +6,90 @@ import WalletPublisherTableVertical from "./walletPublisher/WalletPublisherVerti
 import { useState } from "react";
 import axios from "../../axios";
 import { useEffect } from "react";
+import { snackbarNotification } from "../../redux/snackbar.action";
+import { useDispatch } from "react-redux";
+import Cookies from "universal-cookie";
+import { useNavigate } from "react-router-dom";
 
 const WalletPublisher = () => {
+const init={
+  method:"",
+  amount:""
+}
+const [input,setInput]=useState(init)
+const[withdrawAmount,setWithdrawAmount]=useState()
+const [userId, setUserId] = useState();
+const [userData,setUserData]=useState()
+const cookies = new Cookies();
+const navigate=useNavigate()
+const handleChange=(e)=>{
+  const {name,value}=e.target;
+  setInput({...input,[name]:value})
+}
+const dispatch=useDispatch()
+const handleClick=()=>{
+const {method,amount}=input;
+
+axios.post("https://koinprapi.onrender.com/api/withdraw/addWithdrawRequest",{
+  method,
+  amount,
+  // userId:userId,
+  Headers:{
+    token:"koinpratodayqproductrsstoken"
+  }
+  
+}
 
 
+).then((res)=>{
+  setWithdrawAmount(res?.data?.withdrawRequestData)
+  const data={
+    notificationType: "success",
+notificationMessage: res?.data?.message,
+  }
+dispatch(snackbarNotification(data));
+setInput(init)
+}).catch((err)=>{
+  const data={
+    notificationType: "success",
+notificationMessage:err,
+  }
+dispatch(snackbarNotification(data));
+})
+}
+
+
+
+useEffect(() => {
+  const auth = cookies.get("auth-token");
+  if (!auth) {
+    navigate("/sign-in");
+  }
+  axios
+    .post(
+      "api/user/get-user-by-token",
+      {},
+      {
+        headers: {
+          Authorization: "Bearer " + auth,
+        },
+      }
+    )
+    .then((res) => {
+      if (!res.data.success) {
+        navigate("/sign-in");
+      }
+      setUserId(res.data.user._id);
+
+      // setInput(res?.data?.user);
+      setUserData(res?.data?.user)
+    })
+    .catch((err) => {
+      console.log(err, "err");
+      navigate("/sign-in");
+    });
+}, [userId]);
+console.log(input)
   const [orderHistory,setOrderHistory]=useState()
 
 //     const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
@@ -29,8 +109,8 @@ useEffect(()=>{
   return (
     <div className="WalletPublisher">
       <div className="head">
-        <div className="left">Current Wallet Balance : {orderHistory?.map((el)=>el.desc=="Added Wallet Balance"?`${el.amount}`:"$")}</div>
-        <div className="right">Pending Withdrawl : $20</div>
+        <div className="left">Current Wallet Balance : {orderHistory?.map((el)=>el.desc=="Added Wallet Balance"?`${el.amount-Number(withdrawAmount?.amount)}`:"$")}</div>
+        <div className="right">Pending Withdrawl : ${withdrawAmount?.amount}</div>
       </div>
       <div className="content">
         <div className="cLeft">
@@ -40,6 +120,9 @@ useEffect(()=>{
             className="wInput"
             type="text"
             placeholder="Enter Withdrawl Amount"
+            name="amount"
+            value={input?.amount}
+            onChange={handleChange}
           ></input>
           <div className="subHeading sub1">Choose your payment method</div>
           <div className="wInput">
@@ -49,6 +132,7 @@ useEffect(()=>{
               name="method"
               value="bankTransfer"
               id="bankTransfer"
+              onChange={handleChange}
             ></input>
           </div>
           <div className="wInput method">
@@ -58,9 +142,10 @@ useEffect(()=>{
               name="method"
               value="crypto"
               id="crypto"
+              onChange={handleChange}
             ></input>
           </div>
-          <button className="proceed">Proceed</button>
+          <button onClick={handleClick} style={{borderRadius:"5px"}} className="proceed">{"Proceed ->"}</button>
         </div>
         <div className="cRight">
           <div className="mainHeading">Wallet History</div>

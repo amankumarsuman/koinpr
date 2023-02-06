@@ -1,6 +1,6 @@
 .signup {
-    padding: 33px 408px 0 393px;
-
+    padding: 73px 408px 0 393px;
+// border: 1px solid green;
     .content {
         padding: 30px;
         background-color: #F9F9F9;
@@ -9,6 +9,7 @@
         gap: 2rem;
         border-bottom: 9px solid black;
         border-radius: 3px;
+        // border: 1px solid red;
 
         .heading {
             display: block;
@@ -28,6 +29,8 @@
         }
 
         .textIp{
+            margin-bottom: 20px;
+            margin-top: 20px;
             input:focus {
                 outline: 1px solid black;
             }
@@ -39,7 +42,7 @@
                 font-size: 14px;
                 font-weight: 700;
                 margin-bottom: 12px;
-                margin-top: 31px;
+                // margin-top: 21px;
                 // border: 1px solid red;
             }
 
@@ -133,6 +136,7 @@
                 font-size: 16px;
                 font-weight: 700;
                 border: none;
+                border-radius: 5px;
             }
                          
         }
@@ -146,13 +150,17 @@
     text-align: center;
     font-size: 14px;
     font-weight: 400;
+    // border: 1px solid red;
+    // box-shadow: #3D3C3C;
+    // background-color: whitesmoke;
+
 }
 .signupMobile {
     // padding: 63px 408px 0 393px;
 
     .content {
         width: 100%;
-        border: 1px solid red;
+        // border: 1px solid red;
         padding: 30px;
         background-color: #F9F9F9;
         display: flex;

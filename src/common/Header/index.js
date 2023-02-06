@@ -49,7 +49,7 @@ const Header = () => {
   const [userData, setUserData] = useState();
   const [userId, setUserId] = useState();
   const [anchorElUser, setAnchorElUser] = useState(null);
-
+const [telegram,setTelegram]=useState("")
   var token = useSelector((state) => state.cart)
   const cartNumber = useSelector((state) => state?.cart?.total);
   // console.log(userData,"userData")
@@ -77,7 +77,7 @@ const Header = () => {
         {},
         {
           headers: {
-            Authorization: "Bearer " + token,
+            authorization: "Bearer " + token,
           },
         }
       )
@@ -119,7 +119,7 @@ const Header = () => {
         // {},
         {
           headers: {
-            Authorization: "Bearer " + auth,
+            authorization: "Bearer " + auth,
           },
         }
       )
@@ -433,6 +433,14 @@ const Header = () => {
 
 
   }
+
+  const handleSubmit=()=>{
+    axios.patch(`https://koinprapi.onrender.com/api/user/update/${userId}`,{
+      telegram:telegram
+    }).then((res)=>{
+      console.log(res)
+    })
+  }
   return (
     <>
       <div className="hidden md:block lg:block">
@@ -580,15 +588,15 @@ const Header = () => {
               <div className='contents'>
                 <DialogTitle className='titles'>Add Your Telegram</DialogTitle>
                 <div className='inputs'>
-                  <input className='ips' type='texts' placeholder={"Your telegram @username"} />
+                  <input className='ips' name="telegram" value={telegram} onChange={(e)=>setTelegram(e.target.value)} type='texts' placeholder={"Your telegram @username"} />
                 </div>
-                <button type='submit' className='submits'>Submit <ArrowForwardIcon /></button>
+                <button type='submit' onClick={handleSubmit} style={{borderRadius:"5px"}} className='submits'>Submit <ArrowForwardIcon /></button>
 
-                <div style={{ width: "272px", margin: "auto" }}>
+                <div style={{ width: "90%",  }}>
                   This will help your account manager to commute with you faster.
                 </div>
               </div>
-              <Divider variant="middle" sx={{ border: "3px solid black", background: "black", marginTop: "33px" }} />
+              <Divider  sx={{ border: "3px solid black", background: "black", marginTop: "33px" }} />
             </div>
           </DialogContent>
         </Dialog>

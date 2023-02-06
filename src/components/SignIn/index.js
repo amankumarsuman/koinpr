@@ -66,6 +66,7 @@ const SignIn = () => {
 
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = React.useState(false);
+  const [isLoadings,setIsLoadings]=useState(true)
 
   const cookies = new Cookies();
   const navigate = useNavigate();
@@ -273,9 +274,9 @@ const handleLogin = async googleData => {
           Forgot password?
         </Link>
       </div>
-      <div className="allRight">
+      {/* <div className="allRight">
         All rights reserved by Koinpr Marketing Private Limited
-      </div>
+      </div> */}
       {open ? (
         <CustomizedSnackbars
           open={open}

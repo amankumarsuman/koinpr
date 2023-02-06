@@ -313,9 +313,9 @@ const dispatch=useDispatch()
 /> */}
           </div>
         </div>
-        <div className="allRight">
+        {/* <div className="allRight">
           All rights reserved by Koinpr Marketing Private Limited
-        </div>
+        </div> */}
       </div>
       <div className="sm:block md:hidden lg:hidden">
         <SignUpMobile />

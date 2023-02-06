@@ -92,7 +92,11 @@ const Cart = () => {
   };
 
   const handleCheckoutStripe = () => {
-
+axios.post("https://koinprapi.onrender.com/api/orderDetails/addOrder",{
+ userId: cartDataArray?._id,
+      amount:cartDataArray?.price,
+      title:cartDataArray?.title,
+}).then((res)=>console.log(res?.data))
     axios
       .post(`https://user.koinpr.com/api/stripe/create-checkout-session`, {
         cartItems: cartDataArray,

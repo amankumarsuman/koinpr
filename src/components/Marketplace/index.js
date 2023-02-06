@@ -26,7 +26,7 @@ const Marketplace = (addToCart) => {
         // if(!auth){
         //     navigate('/sign-in');
         // }
-        axios.post('http://user.koinpr.com/api/user/get-user-by-token',{},{
+        axios.post('https://koinprapi.onrender.com/api/user/get-user-by-token',{},{
             headers:{
                 Authorization: 'Bearer ' + auth
             }

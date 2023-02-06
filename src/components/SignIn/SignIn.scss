@@ -127,7 +127,6 @@
     padding:0;
 width: 90%;
 margin:auto;
-
         input:focus {
             outline: 1px solid black;
         }
@@ -138,6 +137,7 @@ margin:auto;
         }
 
         .content {
+
             box-sizing: border-box;
             background-color: #f9f9f9;
             // padding: 0 54px;
@@ -164,12 +164,15 @@ margin:auto;
             .chead {
                 font-size: 25px;
                 font-weight: 600;
-                margin-top: 38px;
+                margin-top: 18px;
+// border: 1px solid red;
+
             }
 
             .signUp {
                 margin-top: 8px;
                 font-size: 14px;
+
 
                 a {
                     text-decoration: none;
