@@ -34,11 +34,10 @@ const ProfileAdvertiser = () => {
     userType: "",
     walletAddress: "",
     bankTransfer: true,
-    accountNo:null,
-    swiftCode:null,
-    bankName:"",
-    doc:"",
-
+    accountNo: null,
+    swiftCode: null,
+    bankName: "",
+    doc: "",
   };
 
   const cookies = new Cookies();
@@ -48,74 +47,72 @@ const ProfileAdvertiser = () => {
   const [step, setStep] = useState(1);
 
   const [userId, setUserId] = useState();
-  const [userData,setUserData]=useState()
-  const [emailOtp,setEmailOtp]=useState();
+  const [userData, setUserData] = useState();
+  const [emailOtp, setEmailOtp] = useState();
   const [selectedFile, setSelectedFile] = useState();
-	const [isFilePicked, setIsFilePicked] = useState(false);
-  const handleEmailOtp=(e)=>{
-    setEmailOtp(e.target.value)
-  }
+  const [isFilePicked, setIsFilePicked] = useState(false);
+  const handleEmailOtp = (e) => {
+    setEmailOtp(e.target.value);
+  };
 
-  console.log(input,"input")
-const handleNext=()=>{
-  setStep(2)
-}
-  const submitOtp=()=>{
-
-axios.post("api/user/verifyOtp",{
-  userId:userId,
-  otp:emailOtp
-}).then((res)=>{
-  if(res?.data?.status==="Verified"){
-    console.log(res?.data)
-    const data={
-      notificationType: "success",
-  notificationMessage: res?.data?.message,
-    }
-    dispatch(snackbarNotification(data));
-    navigate("/")
-    setOpen(false)
-
-
-  }
-  if (res?.data?.status!=="Verified") {
-    // <CustomizedDialogs
-    //   open={showDialog}
-    //   setShowDialog={setShowDialog}
-    //   err={res?.data?.message}
-    // />;
-    console.log("error", res);
-    // alert("res?.data?.message");
-    // setShowDialog(true);
-    const data={
-      notificationType: "error",
-  notificationMessage: res?.data?.message,
-    }
-    dispatch(snackbarNotification(data));
-  }
-}) .catch((err) => {
-  if (!err?.response?.data?.success) 
-  {
-  // setShowDialog(true);
-  // <CustomizedDialogs
-  //   showDialog={true}
-  //   setShowDialog={setShowDialog}
-  //   err={err?.response?.data?.message}
-  // />;
-  // alert(err?.response?.data?.message);
-  const data={
-    notificationType: "error",
-notificationMessage: err?.response?.data?.message,
-  }
-  dispatch(snackbarNotification(data));
-  }
-  // console.log("err", err);
-  // console.log("err", err?.response?.data?.message);
-});
-    
-  }
-  console.log(userData,"userData")
-const dispatch=useDispatch()
+  console.log(input, "input");
+  const handleNext = () => {
+    setStep(2);
+  };
+  const submitOtp = () => {
+    axios
+      .post("api/user/verifyOtp", {
+        userId: userId,
+        otp: emailOtp,
+      })
+      .then((res) => {
+        if (res?.data?.status === "Verified") {
+          console.log(res?.data);
+          const data = {
+            notificationType: "success",
+            notificationMessage: res?.data?.message,
+          };
+          dispatch(snackbarNotification(data));
+          navigate("/");
+          setOpen(false);
+        }
+        if (res?.data?.status !== "Verified") {
+          // <CustomizedDialogs
+          //   open={showDialog}
+          //   setShowDialog={setShowDialog}
+          //   err={res?.data?.message}
+          // />;
+          console.log("error", res);
+          // alert("res?.data?.message");
+          // setShowDialog(true);
+          const data = {
+            notificationType: "error",
+            notificationMessage: res?.data?.message,
+          };
+          dispatch(snackbarNotification(data));
+        }
+      })
+      .catch((err) => {
+        if (!err?.response?.data?.success) {
+          // setShowDialog(true);
+          // <CustomizedDialogs
+          //   showDialog={true}
+          //   setShowDialog={setShowDialog}
+          //   err={err?.response?.data?.message}
+          // />;
+          // alert(err?.response?.data?.message);
+          const data = {
+            notificationType: "error",
+            notificationMessage: err?.response?.data?.message,
+          };
+          dispatch(snackbarNotification(data));
+        }
+        // console.log("err", err);
+        // console.log("err", err?.response?.data?.message);
+      });
+  };
+  console.log(userData, "userData");
+  const dispatch = useDispatch();
   // console.log(input);
 
   useEffect(() => {
@@ -140,7 +137,7 @@ const dispatch=useDispatch()
         setUserId(res.data.user._id);
 
         setInput(res?.data?.user);
-        setUserData(res?.data?.user)
+        setUserData(res?.data?.user);
       })
       .catch((err) => {
         console.log(err, "err");
@@ -192,7 +189,7 @@ const dispatch=useDispatch()
       bankTransfer,
       bankName,
       swiftCode,
-      accountNo
+      accountNo,
     } = input;
     const token = cookies.get("auth-token");
 
@@ -222,7 +219,7 @@ const dispatch=useDispatch()
           bankTransfer,
           accountNo,
           swiftCode,
-          bankName
+          bankName,
         },
         config
       )
@@ -230,11 +227,11 @@ const dispatch=useDispatch()
         if (res?.data?.success) {
           navigate("/");
 
-          const data={
+          const data = {
             notificationType: "success",
-        notificationMessage: "Record Updated successfully",
-          }
-        dispatch(snackbarNotification(data));
+            notificationMessage: "Record Updated successfully",
+          };
+          dispatch(snackbarNotification(data));
           // alert("Record Updated successfully");
         }
         // console.log(res);
@@ -247,28 +244,27 @@ const dispatch=useDispatch()
           console.log("error", res);
           // alert("res?.data?.message");
           // setShowDialog(true);
-          const data={
+          const data = {
             notificationType: "error",
-        notificationMessage: res?.data?.message,
-          }
+            notificationMessage: res?.data?.message,
+          };
           dispatch(snackbarNotification(data));
         }
       })
       .catch((err) => {
-        if (!err?.response?.data?.success) 
-        {
-        // setShowDialog(true);
-        // <CustomizedDialogs
-        //   showDialog={true}
-        //   setShowDialog={setShowDialog}
-        //   err={err?.response?.data?.message}
-        // />;
-        // alert(err?.response?.data?.message);
-        const data={
-          notificationType: "error",
-      notificationMessage: err?.response?.data?.message,
-        }
-        dispatch(snackbarNotification(data));
+        if (!err?.response?.data?.success) {
+          // setShowDialog(true);
+          // <CustomizedDialogs
+          //   showDialog={true}
+          //   setShowDialog={setShowDialog}
+          //   err={err?.response?.data?.message}
+          // />;
+          // alert(err?.response?.data?.message);
+          const data = {
+            notificationType: "error",
+            notificationMessage: err?.response?.data?.message,
+          };
+          dispatch(snackbarNotification(data));
         }
         // console.log("err", err);
         // console.log("err", err?.response?.data?.message);
@@ -293,24 +289,27 @@ const dispatch=useDispatch()
   const handleClose = () => {
     setOpen(false);
   };
-  const handleEmailVerification=()=>{
+  const handleEmailVerification = () => {
     // setAnchorElUser(null);
     setOpen(true);
     // navigate("/")
-  }
+  };
 
-  const handlePublisherNext=()=>{
-    setStep(3)
-  }
+  const handlePublisherNext = () => {
+    setStep(3);
+  };
+  console.log(userData, "userData");
   return (
     <>
-      <div style={{position:"relative"}} className="Profile">
+      <div style={{ position: "relative" }} className="Profile">
         <div className="pLeft">
           <h2 className="lHead">Account Details</h2>
           <p className="cStatus">
-            Current Status : <span className="status">{userData?.userVerified?"Verified":"Pending"}</span>
-            
-             {/* <span style={{cursor:"pointer"}} onClick={handleEmailVerification}>Pending</span>}</span> */}
+            Current Status :{" "}
+            <span className="status">
+              {userData?.userVerified ? "Verified" : "Pending"}
+            </span>
+            {/* <span style={{cursor:"pointer"}} onClick={handleEmailVerification}>Pending</span>}</span> */}
           </p>
           <div className="inputs mt40">
             <div className="wInput">
@@ -337,19 +336,20 @@ const dispatch=useDispatch()
               ></input>
             </div>
             {
-            // input?.representCompany &&
-             input?.userType==="PUBLISHER"?  (
-              <div className="wInput mt20">
-                <label>Withdrawl Options</label>
-                <input
-                  type="radio"
-                  onChange={handleAccountDetalsCheck}
-                  name="account"
-                  value="3"
-                  checked={step === 3}
-                ></input>
-              </div>
-            ):null}
+              // input?.representCompany &&
+              input?.userType === "PUBLISHER" ? (
+                <div className="wInput mt20">
+                  <label>Withdrawl Options</label>
+                  <input
+                    type="radio"
+                    onChange={handleAccountDetalsCheck}
+                    name="account"
+                    value="3"
+                    checked={step === 3}
+                  ></input>
+                </div>
+              ) : null
+            }
           </div>
         </div>
         <div className="pRight">
@@ -384,7 +384,8 @@ const dispatch=useDispatch()
                     placeholder="Company Name"
                     name="companyName"
                     value={input?.companyName}
-                    disabled={userData?.userVerified}
+                    // disabled={userData?.userVerified}
+                    disabled={userData?.companyName?.length > 0}
                   />
                   <input
                     // onChange={changeHandler}
@@ -393,7 +394,8 @@ const dispatch=useDispatch()
                     placeholder="Company Identification No."
                     name="companyId"
                     value={input?.companyId}
-                    disabled={userData?.userVerified}
+                    // disabled={userData?.userVerified}
+                    disabled={userData?.companyId?.length > 0}
                   />
                 </div>
               ) : (
@@ -405,7 +407,8 @@ const dispatch=useDispatch()
                     placeholder="First Name"
                     name="firstName"
                     value={input?.firstName}
-                    disabled={userData?.userVerified}
+                    // disabled={userData?.userVerified}
+                    disabled={userData?.firstName?.length > 0}
                   />
                   <input
                     // onChange={changeHandler}
@@ -414,8 +417,7 @@ const dispatch=useDispatch()
                     placeholder="Last Name"
                     name="lastName"
                     value={userData?.lastName}
-                  disabled={userData?.userVerified}
-
+                    disabled={userData?.lastName?.length > 0}
                   />
                 </div>
               )}
@@ -427,7 +429,8 @@ const dispatch=useDispatch()
                   onChange={handleChange}
                   name="country"
                   value={input?.country}
-                  disabled={userData?.userVerified}
+                  // disabled={userData?.userVerified}
+                  disabled={userData?.country?.length > 0}
                 />
                 <input
                   className="wInput"
@@ -436,47 +439,53 @@ const dispatch=useDispatch()
                   onChange={handleChange}
                   name="walletAddress"
                   value={input?.walletAddress}
-                  disabled={userData?.userVerified}
+                  // disabled={userData?.userVerified}
+                  disabled={userData?.walletAddress?.length > 0}
                 />
-     
               </div>
 
-{input?.representCompany?
-<span>
-{
-              input?.companyName?.length>0 && input?.companyId?.length>0 && input?.country?.length>0 && input?.walletAddress?.length>0?
-              // input?.walletAddress?.length>0 && input?.country?.length>0 && input?.lastName?.length>0?
-              
-              <button
-                type="button"
-                className="pButton mt40"
-                onClick={handleNext}
-                style={{borderRadius:"5px"}}
-              >
-                Next
-                <ArrowForwardIcon />
-              </button>:
-             <span style={{color:"red"}}>All field is Mandatory</span>
-            }
+              {input?.representCompany ? (
+                <span>
+                  {input?.companyName?.length > 0 &&
+                  input?.companyId?.length > 0 &&
+                  input?.country?.length > 0 &&
+                  input?.walletAddress?.length > 0 ? (
+                    // input?.walletAddress?.length>0 && input?.country?.length>0 && input?.lastName?.length>0?
 
-</span>
-:
+                    <button
+                      type="button"
+                      className="pButton mt40"
+                      onClick={handleNext}
+                      style={{ borderRadius: "5px" }}
+                    >
+                      Next
+                      <ArrowForwardIcon />
+                    </button>
+                  ) : (
+                    <span style={{ color: "red" }}>All field is Mandatory</span>
+                  )}
+                </span>
+              ) : (
+                <span>
+                  {input?.lastName?.length > 0 &&
+                  input?.firstName?.length > 0 &&
+                  input?.country?.length > 0 &&
+                  input?.walletAddress?.length > 0 ? (
+                    <button
+                      type="button"
+                      className="pButton mt40"
+                      onClick={handleNext}
+                      style={{ borderRadius: "5px" }}
+                    >
+                      Next
+                      <ArrowForwardIcon />
+                    </button>
+                  ) : (
+                    "All field is mandatory"
+                  )}
+                </span>
+              )}
 
-<span>
-  
-{ input?.lastName?.length>0 && input?.firstName?.length>0 && input?.country?.length>0 && input?.walletAddress?.length>0?
-              <button
-              type="button"
-              className="pButton mt40"
-              onClick={handleNext}
-              style={{borderRadius:"5px"}}
-            >
-              Next
-              <ArrowForwardIcon />
-            </button>:"All field is mandatory"}
-</span>
-}
-           
               <p className="pBottom">
                 Please make sure that the details you enter here matches the
                 documents you will be providing for verification.
@@ -497,33 +506,45 @@ const dispatch=useDispatch()
                 {/* <div className="wInput mt40">
                   <input type="file" name="doc" value={input?.doc} />
                 </div> */}
-                <Button variant="outlined"  sx={{color:"black",borderColor:"black",marginTop:"20px",textTransform:"none"}} component="label">
-        Upload File +
-        <input  hidden accept="image/*" multiple type="file" />
-      </Button>
+                <Button
+                  variant="outlined"
+                  sx={{
+                    color: "black",
+                    borderColor: "black",
+                    marginTop: "20px",
+                    textTransform: "none",
+                  }}
+                  component="label"
+                >
+                  Upload File +
+                  <input hidden accept="image/*" multiple type="file" />
+                </Button>
               </div>
               <p className="pBottom">
                 Max file size 5 MB. Supported file types: png, jpeg, pdf, doc.
               </p>
               {/* {input?.doc?.length>0? */}
-              {input?.userType==="PUBLISHER"?
-              <button 
-              onClick={handlePublisherNext}
-              
-              style={{borderRadius:"5px"}} type="button" className="pButton mt40">
-                {"Next ->"}
-              </button>
-              :
-              
-              <button 
-              onClick={handleSubmit}
-              
-              style={{borderRadius:"5px"}} type="button" className="pButton mt40">
-                {"Proceed ->"}
-              </button>
-              }
-              
-            {/* } */}
+              {input?.userType === "PUBLISHER" ? (
+                <button
+                  onClick={handlePublisherNext}
+                  style={{ borderRadius: "5px" }}
+                  type="button"
+                  className="pButton mt40"
+                >
+                  {"Next ->"}
+                </button>
+              ) : (
+                <button
+                  onClick={handleSubmit}
+                  style={{ borderRadius: "5px" }}
+                  type="button"
+                  className="pButton mt40"
+                >
+                  {"Proceed ->"}
+                </button>
+              )}
+
+              {/* } */}
             </>
           )}
           {step === 3 && (
@@ -651,10 +672,12 @@ const dispatch=useDispatch()
                 Proceed
                 <ArrowForwardIcon />
               </button> */}
-               <button style={{borderRadius:"5px"}} 
+              <button
+                style={{ borderRadius: "5px" }}
                 onClick={handleSubmit}
-               
-               type="button" className="pButton mt40">
+                type="button"
+                className="pButton mt40"
+              >
                 {"Proceed ->"}
               </button>
               <p className="pBottom">
@@ -666,7 +689,7 @@ const dispatch=useDispatch()
         </div>
       </div>
 
-      <div >
+      <div>
         {/* <Button variant="outlined" onClick={handleClickOpen}>
           Slide in alert dialog
         </Button> */}
@@ -695,21 +718,44 @@ const dispatch=useDispatch()
             </Button>
           </DialogActions> */}
           <DialogContent>
-            <div className='popups'>
-
-
-              <div className='contents'>
-                <DialogTitle className='titles'>Add Your Verification Code</DialogTitle>
-                <div className='inputs'>
-                  <input style={{marginLeft:"2em"}}  className='ips' name="emailOtp" value={emailOtp} type='texts' onChange={handleEmailOtp} placeholder={"Your Email Otp 1234"} />
+            <div className="popups">
+              <div className="contents">
+                <DialogTitle className="titles">
+                  Add Your Verification Code
+                </DialogTitle>
+                <div className="inputs">
+                  <input
+                    style={{ marginLeft: "2em" }}
+                    className="ips"
+                    name="emailOtp"
+                    value={emailOtp}
+                    type="texts"
+                    onChange={handleEmailOtp}
+                    placeholder={"Your Email Otp 1234"}
+                  />
                 </div>
-                <button type='submit' style={{marginLeft:"2em",borderRadius:"5px"}} onClick={submitOtp} className='submits'>Submit <ArrowForwardIcon /></button>
+                <button
+                  type="submit"
+                  style={{ marginLeft: "2em", borderRadius: "5px" }}
+                  onClick={submitOtp}
+                  className="submits"
+                >
+                  Submit <ArrowForwardIcon />
+                </button>
 
                 <div style={{ width: "272px", margin: "auto" }}>
-                  This will help your account manager to commute with you faster.
+                  This will help your account manager to commute with you
+                  faster.
                 </div>
               </div>
-              <Divider variant="middle" sx={{ border: "3px solid black", background: "black", marginTop: "33px" }} />
+              <Divider
+                variant="middle"
+                sx={{
+                  border: "3px solid black",
+                  background: "black",
+                  marginTop: "33px",
+                }}
+              />
             </div>
           </DialogContent>
         </Dialog>

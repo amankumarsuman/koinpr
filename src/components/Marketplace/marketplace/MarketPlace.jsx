@@ -12,7 +12,7 @@ import {
   Select,
   TablePagination,
 } from "@mui/material";
-import SearchIcon from '@mui/icons-material/Search';
+import SearchIcon from "@mui/icons-material/Search";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import SavedSearchIcon from "@mui/icons-material/SavedSearch";
@@ -29,18 +29,18 @@ import { ProgressWithLabel } from "../../../common/progressWithLabel/ProgressWit
 import { StringParam, useQueryParam } from "use-query-params";
 import { UserAuthentication } from "../../../common/userAuthentication/UserAuthentication";
 
-import "../Marketplace.scss"
+import "../Marketplace.scss";
 import { useEffectOnceWhen } from "../../../common/useEffectOnceWhen.js/useEffectOncewhen";
 import { getUserByJwtToken } from "../../../redux/actions";
 import { LoadingForm } from "../../../common/loader/Loader";
 import TabLevelLoader from "../../loader/Loader";
 import ChangeEmailPopup from "../../popups/ChangeEmail";
 function MarketPlace(props) {
-  const query = '';
+  const query = "";
 
   const [listingFilter, setListingFilter] = useState("pressRelease");
   const [offerFilter, setOfferFilter] = useState();
-const [isLoading,setIsLoading]=useState(false)
+  const [isLoading, setIsLoading] = useState(false);
   //for getting current location from the react-router
   // const location = useLocation();
   // console.log(location.search);
@@ -49,7 +49,7 @@ const [isLoading,setIsLoading]=useState(false)
   // const param1 = params.get("param1");
   // const param2 = params.get("param2");
   // console.log(param1);
-  // console.log(params, "param");  
+  // console.log(params, "param");
   // const [category, setCategory] = React.useState('press');
   // const [input, setInput] = useState(init);
   // const [categoryParam, setCategoryParam] = useQueryParam(
@@ -62,10 +62,10 @@ const [isLoading,setIsLoading]=useState(false)
   const [marketList, setMarketList] = useState([]);
 
   const [userId, setUserId] = useState();
-  const [user,setUser]=useState()
-  const [isLoadings,setIsLoadings]=useState(true)
-  console.log(user,"user")
-// console.log(marketList,"marketList")
+  const [user, setUser] = useState();
+  const [isLoadings, setIsLoadings] = useState(true);
+  console.log(user, "user");
+  // console.log(marketList,"marketList")
   // const filteredData = marketList.filter((item) => {
   //   return item.offerTitle === param1 && item.listingCategory == param2;
   // });
@@ -75,68 +75,28 @@ const [isLoading,setIsLoading]=useState(false)
   //   setMarketList(filteredData);
   // }, [param1, param2]);
 
-const searchQuery=(searchQuery)=>{
-  axios
-  .get(`api/listing/get-all?${searchQuery}`)
-  .then((res) => {
-    if (res.data.success) {
-
-      setMarketList(res.data.data);
-      setIsLoading(true)
-    }
-    // console.log(res.data);
-  })
-  .catch((err) => {
-    console.log(err, "err");
-    
-  });
-}
+  // var searchQuery = (searchQuerys) => {
+  //   axios
+  //     .get(`api/listing/get-all?${searchQuerys}`)
+  //     .then((res) => {
+  //       if (res.data.success) {
+  //         setMarketList(res.data.data);
+  //         setIsLoading(true);
+  //       }
+  //       // console.log(res.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err, "err");
+  //     });
+  // };
 
   const getData = (lc, oc) => {
     // let searchQuery = `userId=${userId}`;
-    if(lc){
-      searchQuery += `&listingCategory=${lc}`;
+    let searchQuery;
+    if (lc) {
+      // searchQuery += `listingCategory=${lc}`;
       axios
-      .get(`api/listing/get-all?${searchQuery}`,{
-        headers: {
-          token: "koinpratodayqproductrsstoken",
-        },
-      })
-      .then((res) => {
-        if (res.data.success) {
-          setMarketList(res.data.data);
-          setIsLoading(false)
-          setIsLoadings(false)
-        }
-        // console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err, "err");
-      });
-    }
-    else if(offerFilter){
-      searchQuery += `&offerTitle=${oc}`;
-      axios
-      .get(`api/listing/get-all?${searchQuery}`,{
-        headers: {
-          token: "koinpratodayqproductrsstoken",
-        },
-      })
-      .then((res) => {
-        if (res.data.success) {
-          setMarketList(res.data.data);
-          setIsLoading(false)
-          setIsLoadings(false)
-        }
-        // console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err, "err");
-      });
-    }else{
-
-      axios
-        .get(`api/listing/get-all`,{
+        .get(`api/listing/get-all?listingCategory=${lc}`, {
           headers: {
             token: "koinpratodayqproductrsstoken",
           },
@@ -144,8 +104,45 @@ const searchQuery=(searchQuery)=>{
         .then((res) => {
           if (res.data.success) {
             setMarketList(res.data.data);
-            setIsLoading(false)
-            setIsLoadings(false)
+            setIsLoading(false);
+            setIsLoadings(false);
+          }
+          // console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err, "err");
+        });
+    } else if (offerFilter) {
+      // searchQuery += `&offerTitle=${oc}`;
+      axios
+        .get(`api/listing/get-all?offerTitle=${oc}`, {
+          headers: {
+            token: "koinpratodayqproductrsstoken",
+          },
+        })
+        .then((res) => {
+          if (res.data.success) {
+            setMarketList(res.data.data);
+            setIsLoading(false);
+            setIsLoadings(false);
+          }
+          // console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err, "err");
+        });
+    } else {
+      axios
+        .get(`api/listing/get-all`, {
+          headers: {
+            token: "koinpratodayqproductrsstoken",
+          },
+        })
+        .then((res) => {
+          if (res.data.success) {
+            setMarketList(res.data.data);
+            setIsLoading(false);
+            setIsLoadings(false);
           }
           // console.log(res.data);
         })
@@ -157,12 +154,12 @@ const searchQuery=(searchQuery)=>{
 
   useEffect(() => {
     const auth = cookies.get("auth-token");
-    console.log(auth,"auth")
-//     const cookieValue = document.cookie
-// .split('; ')
-// .find(row => row.startsWith('Bearer'))
-// .split('=')[1];
-// console.log(cookieValue,"cookievalue")
+    console.log(auth, "auth");
+    //     const cookieValue = document.cookie
+    // .split('; ')
+    // .find(row => row.startsWith('Bearer'))
+    // .split('=')[1];
+    // console.log(cookieValue,"cookievalue")
     // console.log(auth);
     // if (!auth) {
     //   navigate("/sign-in");
@@ -178,85 +175,85 @@ const searchQuery=(searchQuery)=>{
         }
       )
       .then((res) => {
-        console.log(res,"market err")
+        console.log(res, "market err");
         if (!res.data.success) {
           navigate("/sign-in");
         }
         setUserId(res.data.user._id);
-        setUser(res?.data?.user)
-        console.log(" marketplace")
+        setUser(res?.data?.user);
+        console.log(" marketplace");
       })
       .catch((err) => {
         console.log(err, "err");
         navigate("/sign-in");
       });
     // UserAuthentication();
-  }, [window.location.search,userId]);
+  }, [window.location.search, userId]);
   const auth = cookies.get("auth-token");
   console.log(auth);
   // useEffectOnceWhen(()=>{
-    // const auth = cookies.get("auth-token");
-    //   console.log(auth);
-    //   // if (!auth) {
-    //   //   navigate("/sign-in");
-    //   // }
-    //   axios
-    //     .post(
-    //       "https://koinprapi.onrender.com/api/user/get-user-by-token",
-       
-    //       {
-    //         headers: {
-    //           Authorization: "Bearer " + auth,
-    //         },
-    //       }
-    //     )
-    //     .then((res) => {
-    //       if (!res.data.success) {
-    //         // navigate("/sign-in");
-    //       }
-    //       setUserId(res.data.user._id);
-    //       // console.log(" marketplace")
-    //     })
-    //     .catch((err) => {
-    //       console.log(err, "err");
-    //       navigate("/sign-in");
-    //     });
-    // // getUserByJwtToken()
-    // searchQuery("pressRelease")
-  // },[userId])
-// useEffect(()=>{
-//   // getUserByJwtToken()
-//   const auth = cookies.get("auth-token");
-//   console.log(auth);
-//   // if (!auth) {
-//   //   navigate("/sign-in");
-//   // }
-//   axios
-//     .post(
-//       "https://koinprapi.onrender.com/api/user/get-user-by-token",
-   
-//       {
-//         headers: {
-//           Authorization: "Bearer " + auth,
-//         },
-//       }
-//     )
-//     .then((res) => {
-//       if (!res.data.success) {
-//         // navigate("/sign-in");
-//       }
-//       setUserId(res.data.user._id);
-//       // console.log(" marketplace")
-//     })
-//     .catch((err) => {
-//       console.log(err, "err");
-//       navigate("/sign-in");
-//     });
-// // getUserByJwtToken()
-// searchQuery("pressRelease")
+  // const auth = cookies.get("auth-token");
+  //   console.log(auth);
+  //   // if (!auth) {
+  //   //   navigate("/sign-in");
+  //   // }
+  //   axios
+  //     .post(
+  //       "https://koinprapi.onrender.com/api/user/get-user-by-token",
 
-// },[userId])
-  useEffect(()=>{
+  //       {
+  //         headers: {
+  //           Authorization: "Bearer " + auth,
+  //         },
+  //       }
+  //     )
+  //     .then((res) => {
+  //       if (!res.data.success) {
+  //         // navigate("/sign-in");
+  //       }
+  //       setUserId(res.data.user._id);
+  //       // console.log(" marketplace")
+  //     })
+  //     .catch((err) => {
+  //       console.log(err, "err");
+  //       navigate("/sign-in");
+  //     });
+  // // getUserByJwtToken()
+  // searchQuery("pressRelease")
+  // },[userId])
+  // useEffect(()=>{
+  //   // getUserByJwtToken()
+  //   const auth = cookies.get("auth-token");
+  //   console.log(auth);
+  //   // if (!auth) {
+  //   //   navigate("/sign-in");
+  //   // }
+  //   axios
+  //     .post(
+  //       "https://koinprapi.onrender.com/api/user/get-user-by-token",
+
+  //       {
+  //         headers: {
+  //           Authorization: "Bearer " + auth,
+  //         },
+  //       }
+  //     )
+  //     .then((res) => {
+  //       if (!res.data.success) {
+  //         // navigate("/sign-in");
+  //       }
+  //       setUserId(res.data.user._id);
+  //       // console.log(" marketplace")
+  //     })
+  //     .catch((err) => {
+  //       console.log(err, "err");
+  //       navigate("/sign-in");
+  //     });
+  // // getUserByJwtToken()
+  // searchQuery("pressRelease")
+
+  // },[userId])
+  useEffect(() => {
     // if(!userId){
     //   return;
 
@@ -265,19 +262,18 @@ const searchQuery=(searchQuery)=>{
     const { search } = window.location;
     let params = new URLSearchParams(search);
 
-    let lc = params.get('listingCategory');
-    let ot = params.get('offerTitle');
-
-    if(lc){
+    let lc = params.get("listingCategory");
+    let ot = params.get("offerTitle");
+    console.log(lc, ot, params, "search");
+    if (lc) {
       setListingFilter(lc);
     }
-    if(ot){
+    if (ot) {
       setOfferFilter(ot);
-    };
+    }
 
     getData(lc, ot);
-    
-  }, [window.location.search, userId]);
+  }, [window.location.search, listingFilter]);
 
   // useEffect(() => {
   //   if (userId) {
@@ -331,7 +327,7 @@ const searchQuery=(searchQuery)=>{
   //       .catch((err) => {
   //         console.log(err, "err");
   //       });
-  //   } 
+  //   }
   //   // else {
   //   //   axios
   //   //     .get(`/api/listing/get-all?offerTitle=${offerTitle}&userId=${userId}`)
@@ -346,7 +342,7 @@ const searchQuery=(searchQuery)=>{
   //   //     });
   //   // }
   // }, []);
-  
+
   const handleReset = () => {
     getData();
     // setInput(init);
@@ -370,98 +366,99 @@ const searchQuery=(searchQuery)=>{
 
   return (
     <>
+      {isLoadings ? (
+        <TabLevelLoader />
+      ) : (
+        <div className="w-full p-4 mx-auto mt-20 bg-white rounded-xl  overflow-hidden ">
+          <div className="md:flex lg:flex xs:flex w-full">
+            <div
+              // style={{marginLeft:"80px"}}
+              className="p-5 md:w-3/12 md:ml-14  lg:w-3/12 sm:w-full bg-[#F8F8F8]"
+            >
+              <Grid container spacing={2}>
+                <Grid item xs={12} md={12} sx={{ marginLeft: "1em" }}>
+                  <p
+                    className="invisible md:visible"
+                    style={{
+                      fontSize: "16px",
+                      fontWeight: "bold",
+                      marginBottom: "16px",
+                    }}
+                  >
+                    Search offerTitle
+                  </p>
+                  <span className="invisible md:visible">
+                    <FormControl sx={{ width: "95%" }} variant="outlined">
+                      <InputLabel sx={{ marginTop: "-5px" }}>
+                        Enter publisher name
+                      </InputLabel>
 
-    {isLoadings?<TabLevelLoader />:
-    
-      <div className="w-full p-4 mx-auto mt-20 bg-white rounded-xl  overflow-hidden ">
-        <div className="md:flex lg:flex xs:flex w-full">
-          <div 
-          // style={{marginLeft:"80px"}} 
-          className="p-5 md:w-3/12 md:ml-14  lg:w-3/12 sm:w-full bg-[#F8F8F8]">
-            <Grid container spacing={2}>
-              <Grid item xs={12} md={12} sx={{ marginLeft: "1em" }}>
-                <p
-                  className="invisible md:visible"
-                  style={{
-                    fontSize: "16px",
-                    fontWeight: "bold",
-                    marginBottom: "16px",
-                  }}
+                      <OutlinedInput
+                        size="small"
+                        disabled
+                        // fullWidth
+                        // sx={{ p: "10px" }}
+                        sx={{ width: "78%" }}
+                        id="outlined-basic"
+                        name="offerTitle"
+                        value={offerFilter}
+                        onChange={handleSearchKeys}
+                        label="Enter publisher name"
+                        variant="outlined"
+                        endAdornment={
+                          <InputAdornment position="start">
+                            <IconButton onClick={handleSearchKeys} edge="end">
+                              <SearchIcon />
+                            </IconButton>
+                          </InputAdornment>
+                        }
+                      />
+                    </FormControl>
+                  </span>
+                  <span className="sm:visible md:invisible">
+                    <FormControl sx={{ width: "230px" }} variant="outlined">
+                      <InputLabel sx={{ marginTop: "-5px" }}>
+                        Enter publisher name
+                      </InputLabel>
+
+                      <OutlinedInput
+                        size="small"
+                        fullWidth
+                        // sx={{ p: "10px"}}
+                        id="outlined-basic"
+                        name="offerTitle"
+                        value={offerFilter}
+                        onChange={handleSearchKeys}
+                        label="Enter publisher name"
+                        variant="outlined"
+                        endAdornment={
+                          <InputAdornment position="start">
+                            <IconButton onClick={handleSearchKeys} edge="end">
+                              <SearchIcon />
+                            </IconButton>
+                          </InputAdornment>
+                        }
+                      />
+                    </FormControl>
+                  </span>
+                </Grid>
+                <Grid
+                  xs={12}
+                  md={12}
+                  sx={{ marginLeft: "2em", marginTop: "20px" }}
                 >
-                  Search offerTitle
-                </p>
-                <span  className="invisible md:visible">
+                  <p
+                    className="sm:invisible md:visible"
+                    style={{
+                      fontSize: "16px",
+                      fontWeight: "bold",
+                      marginBottom: "16px",
+                    }}
+                  >
+                    Choose Category
+                  </p>
 
-                <FormControl sx={{ width: "95%" }} variant="outlined">
-                  <InputLabel sx={{marginTop:"-5px"}}>
-                    Enter publisher name
-                  </InputLabel>
-
-                  <OutlinedInput
-                    size="small"
-                    fullWidth
-                    // sx={{ p: "10px" }}
-                    id="outlined-basic"
-                    name="offerTitle"
-                    value={offerFilter}
-                    onChange={handleSearchKeys}
-                    label="Enter publisher name"
-                    variant="outlined"
-                    endAdornment={
-                      <InputAdornment position="start">
-                        <IconButton onClick={handleSearchKeys} edge="end">
-                          <SearchIcon />
-                        </IconButton>
-                      </InputAdornment>
-                    }
-                  />
-                </FormControl>
-                </span>
-                <span  className="sm:visible md:invisible">
-
-                <FormControl sx={{ width: "230px", }} variant="outlined">
-                  <InputLabel sx={{marginTop:"-5px"}}>
-                    Enter publisher name
-                  </InputLabel>
-
-                  <OutlinedInput
-                    size="small"
-                    fullWidth
-                    // sx={{ p: "10px"}}
-                    id="outlined-basic"
-                    name="offerTitle"
-                    value={offerFilter}
-                    onChange={handleSearchKeys}
-                    label="Enter publisher name"
-                    variant="outlined"
-                    endAdornment={
-                      <InputAdornment position="start">
-                        <IconButton onClick={handleSearchKeys} edge="end">
-                          <SearchIcon />
-                        </IconButton>
-                      </InputAdornment>
-                    }
-                  />
-                </FormControl>
-                </span>
-              </Grid>
-              <Grid
-                xs={12}
-                md={12}
-                sx={{ marginLeft: "2em", marginTop: "20px" }}
-              >
-                <p
-                  className="sm:invisible md:visible"
-                  style={{
-                    fontSize: "16px",
-                    fontWeight: "bold",
-                    marginBottom: "16px",
-                  }}
-                >
-                  Choose Category
-                </p>
-
-                {/* <Box sx={{ minWidth: 220 }}>
+                  {/* <Box sx={{ minWidth: 220 }}>
                   <FormControl sx={{ width: "98%" }} size="small">
                     <InputLabel id="demo-simple-select-label">
                       Listing Category
@@ -482,55 +479,71 @@ const searchQuery=(searchQuery)=>{
                     </Select>
                   </FormControl>
                 </Box> */}
-                 <div className='marketplace'>
-            <div className='panels'>
-                <div className='mpLeft'>
-                  <div className='publishers'>
-                        {/* <span>Choose Category</span> */}
-                        <div className='option'>
-                            <label htmlFor='pressRelease'>Press Release</label>
-                            <input type='radio' name='category' id='pressRelease' value='pressRelease' 
-                checked={listingFilter === "pressRelease"}
-                      onChange={handleSearchKeys}
-                            
+                  <div className="marketplace">
+                    <div className="panels">
+                      <div className="mpLeft">
+                        <div className="publishers">
+                          {/* <span>Choose Category</span> */}
+                          <div className="option">
+                            <label htmlFor="pressRelease">Press Release</label>
+                            <input
+                              type="radio"
+                              name="category"
+                              id="pressRelease"
+                              value="pressRelease"
+                              checked={listingFilter === "pressRelease"}
+                              onChange={handleSearchKeys}
                             />
-                        </div>
-                        <div className='option'>
-                            <label htmlFor='sponsoredArticles'>Sponsored Articles</label>
-                            <input type='radio' name='category' id='sponsoredArticle' 
-                checked={listingFilter === "sponsoredArticle"}
-                      onChange={handleSearchKeys}
-                            
-                            value='sponsoredArticle' />
-                        </div>
-                        <div className='option'>
-                            <label htmlFor='button'>Button Ads</label>
-                            <input type='radio'
-                                            checked={listingFilter === "buttonAds"}
-                                            onChange={handleSearchKeys}
-                            name='category' id='button' value='buttonAds' />
-                        </div>
-                        <div className='option'>
-                            <label htmlFor='banner'>Banner Ads</label>
-                            <input type='radio' name='category'
-                                            checked={listingFilter === "bannerAds"}
-                                            onChange={handleSearchKeys}
-                            id='banner' value='bannerAds' />
-                        </div>
-                        {/* <div className='option'>
+                          </div>
+                          <div className="option">
+                            <label htmlFor="sponsoredArticles">
+                              Sponsored Articles
+                            </label>
+                            <input
+                              type="radio"
+                              name="category"
+                              id="sponsoredArticle"
+                              checked={listingFilter === "sponsoredArticle"}
+                              onChange={handleSearchKeys}
+                              value="sponsoredArticle"
+                            />
+                          </div>
+                          <div className="option">
+                            <label htmlFor="button">Button Ads</label>
+                            <input
+                              type="radio"
+                              checked={listingFilter === "buttonAds"}
+                              onChange={handleSearchKeys}
+                              name="category"
+                              id="button"
+                              value="buttonAds"
+                            />
+                          </div>
+                          <div className="option">
+                            <label htmlFor="banner">Banner Ads</label>
+                            <input
+                              type="radio"
+                              name="category"
+                              checked={listingFilter === "bannerAds"}
+                              onChange={handleSearchKeys}
+                              id="banner"
+                              value="bannerAds"
+                            />
+                          </div>
+                          {/* <div className='option'>
                             {/* <label htmlFor='bannerAds'>Banner Ads</label> */}
-                            {/* <input type='radio' name='category' id='bannerAds' value='bannerAds' /> */}
-                        {/* </div> */}
+                          {/* <input type='radio' name='category' id='bannerAds' value='bannerAds' /> */}
+                          {/* </div> */}
+                        </div>
+                      </div>
                     </div>
-                    </div>
-                    </div>
-                    </div>
+                  </div>
+                </Grid>
               </Grid>
-            </Grid>
-          </div>
-          <div className="p-3 md:w-8/12 lg:w-8/12 sm:w-full place-content-center md:mx-10 ">
-            <Grid container spacing={2}>
-              {/* <Grid sx={{textAlign:"center"}} item xs={12} md={12}>
+            </div>
+            <div className="p-3 md:w-8/12 lg:w-8/12 sm:w-full place-content-center md:mx-10 ">
+              <Grid container spacing={2}>
+                {/* <Grid sx={{textAlign:"center"}} item xs={12} md={12}>
                 <Link to="/add-listing">
                 
               <Button  variant="contained">
@@ -539,52 +552,51 @@ ADD
                 </Link>
               </Grid> */}
 
-
-              {marketList
-                ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                ?.map((el) => (
-                  <Grid item xs={12} md={4}>
-                    <MarketPlaceCards
-                    isLoading={isLoading}
-                      data={el}
-                      name={el?.user?.fullName}
-                      details={"View Details"}
-                      price={el?.price}
-                      user={user}
-                    />
-                  </Grid>
-                ))}
-              {marketList?.length === 0 ? (
-                // <div
-                //   style={{
-                //     cursor: "pointer",
-                //   }}
-                //   onClick={handleReset}
-                // >
+                {marketList
+                  ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  ?.map((el) => (
+                    <Grid item xs={12} md={4}>
+                      <MarketPlaceCards
+                        isLoading={isLoading}
+                        data={el}
+                        name={el?.user?.fullName}
+                        details={"View Details"}
+                        price={el?.price}
+                        user={user}
+                      />
+                    </Grid>
+                  ))}
+                {marketList?.length === 0 ? (
+                  // <div
+                  //   style={{
+                  //     cursor: "pointer",
+                  //   }}
+                  //   onClick={handleReset}
+                  // >
                   <h1>No Data Found</h1>
-                //   <ProgressWithLabel />
+                ) : //   <ProgressWithLabel />
                 //   <CachedIcon />
                 // </div>
-              ) : null}
-              {marketList.length > 9 ? (
-                <Grid item xs={12} md={12}>
-                  <TablePagination
-                    rowsPerPageOptions={[9, 18, 27, 36]}
-                    component="div"
-                    count={marketList?.length}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    rowsPerPage={rowsPerPage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                  />
-                </Grid>
-              ) : null}
-            </Grid>
+                null}
+                {marketList.length > 9 ? (
+                  <Grid item xs={12} md={12}>
+                    <TablePagination
+                      rowsPerPageOptions={[9, 18, 27, 36]}
+                      component="div"
+                      count={marketList?.length}
+                      page={page}
+                      onPageChange={handleChangePage}
+                      rowsPerPage={rowsPerPage}
+                      onRowsPerPageChange={handleChangeRowsPerPage}
+                    />
+                  </Grid>
+                ) : null}
+              </Grid>
+            </div>
           </div>
+          {/* <ChangeEmailPopup oldEmail={user}/> */}
         </div>
-        {/* <ChangeEmailPopup oldEmail={user}/> */}
-      </div>
-    }
+      )}
     </>
   );
 }
