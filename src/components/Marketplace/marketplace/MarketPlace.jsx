@@ -103,7 +103,9 @@ function MarketPlace(props) {
         })
         .then((res) => {
           if (res.data.success) {
-            setMarketList(res.data.data);
+            const verifiedListing= res?.data?.data.filter((el)=>el?.verifiedByAdmin===true)
+            
+            setMarketList(verifiedListing);
             setIsLoading(false);
             setIsLoadings(false);
           }
@@ -122,7 +124,10 @@ function MarketPlace(props) {
         })
         .then((res) => {
           if (res.data.success) {
-            setMarketList(res.data.data);
+            const verifiedListing= res?.data?.data.filter((el)=>el?.verifiedByAdmin===true)
+           
+            setMarketList(verifiedListing);
+           
             setIsLoading(false);
             setIsLoadings(false);
           }
@@ -140,7 +145,10 @@ function MarketPlace(props) {
         })
         .then((res) => {
           if (res.data.success) {
-            setMarketList(res.data.data);
+            const verifiedListing= res?.data?.data.filter((el)=>el?.verifiedByAdmin===true)
+            console.log(verifiedListing,"data")
+            setMarketList(verifiedListing);
+            
             setIsLoading(false);
             setIsLoadings(false);
           }
