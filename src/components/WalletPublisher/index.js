@@ -130,7 +130,7 @@ const WalletPublisher = () => {
           <div className="subHeading">Please enter the amount</div>
           <input
             className="wInput"
-            type="text"
+            type="number"
             placeholder="Enter Withdrawl Amount"
             name="amount"
             value={input?.amount}
