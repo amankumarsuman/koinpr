@@ -18,6 +18,7 @@ const WalletPublisher = () => {
   };
   const [input, setInput] = useState(init);
   const [withdrawAmount, setWithdrawAmount] = useState();
+  const [currentBalance, setCurrentBalance] = useState(100);
   const [userId, setUserId] = useState();
   const [userData, setUserData] = useState();
   const cookies = new Cookies();
@@ -26,10 +27,13 @@ const WalletPublisher = () => {
     const { name, value } = e.target;
     setInput({ ...input, [name]: value });
   };
+
   const dispatch = useDispatch();
   const handleClick = () => {
     const { method, amount } = input;
-
+    if (currentBalance == 0) {
+      alert("Insufficient Current Balance");
+    }
     axios
       .post("https://koinprapi.onrender.com/api/withdraw/addWithdrawRequest", {
         method,
@@ -41,6 +45,7 @@ const WalletPublisher = () => {
       })
       .then((res) => {
         setWithdrawAmount(res?.data?.withdrawRequestData);
+        setCurrentBalance(currentBalance - amount);
         const data = {
           notificationType: "success",
           notificationMessage: res?.data?.message,
@@ -108,7 +113,7 @@ const WalletPublisher = () => {
     <div className="WalletPublisher">
       <div className="head">
         <div className="left">
-          Current Wallet Balance :{" "}
+          Current Wallet Balance :${currentBalance}
           {orderHistory?.map((el) =>
             el.desc == "Added Wallet Balance"
               ? `${el.amount - Number(withdrawAmount?.amount)}`
@@ -152,13 +157,28 @@ const WalletPublisher = () => {
               onChange={handleChange}
             ></input>
           </div>
-          <button
-            onClick={handleClick}
-            style={{ borderRadius: "5px" }}
-            className="proceed"
-          >
-            {"Proceed ->"}
-          </button>
+
+          {currentBalance != 0 &&
+          currentBalance >= input?.amount &&
+          (input?.method === "bankTransfer" || input?.method === "crypto") &&
+          input?.amount > 0 ? (
+            <button
+              // disabled={currentBalance == 0}
+              onClick={handleClick}
+              style={{ borderRadius: "5px" }}
+              className="proceed"
+            >
+              {"Proceed ->"}
+            </button>
+          ) : (
+            <p style={{ color: "red", marginTop: "10px" }}>
+              Your Current Balance is low
+              <br />
+              Or
+              <br />
+              your amount is less than 0
+            </p>
+          )}
         </div>
         <div className="cRight">
           <div className="mainHeading">Wallet History</div>
