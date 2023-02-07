@@ -398,7 +398,7 @@ function MarketPlace(props) {
                         disabled
                         // fullWidth
                         // sx={{ p: "10px" }}
-                        sx={{ width: "78%" }}
+                        // sx={{ width: "78%" }}
                         id="outlined-basic"
                         name="offerTitle"
                         value={offerFilter}
