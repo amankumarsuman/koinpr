@@ -638,6 +638,22 @@ const ProfileAdvertiser = () => {
                       disabled={userData?.bankName}
                     />
                   </div>
+
+                  {input?.swiftCode?.length > 0 &&
+                  input?.bankName?.length > 0 &&
+                  input?.accountNo?.length > 0 &&
+                  input?.fullName?.length > 0 ? (
+                    <button
+                      style={{ borderRadius: "5px" }}
+                      onClick={handleSubmit}
+                      type="button"
+                      className="pButton mt40"
+                    >
+                      {"Proceed ->"}
+                    </button>
+                  ) : (
+                    <p style={{ color: "red" }}>All fields are Mandatory</p>
+                  )}
                 </>
               ) : input?.cryptoCurrency ? (
                 <>
@@ -661,25 +677,22 @@ const ProfileAdvertiser = () => {
                       onChange={handleChange}
                     />
                   </div>
+                  {input?.tokenType?.length > 0 &&
+                  input?.walletAddress?.length > 0 ? (
+                    <button
+                      style={{ borderRadius: "5px" }}
+                      onClick={handleSubmit}
+                      type="button"
+                      className="pButton mt40"
+                    >
+                      {"Proceed ->"}
+                    </button>
+                  ) : (
+                    <p style={{ color: "red" }}>All fields are Mandatory</p>
+                  )}
                 </>
               ) : null}
 
-              {/* <button
-                onClick={handleSubmit}
-                type="button"
-                className="pButton mt40"
-              >
-                Proceed
-                <ArrowForwardIcon />
-              </button> */}
-              <button
-                style={{ borderRadius: "5px" }}
-                onClick={handleSubmit}
-                type="button"
-                className="pButton mt40"
-              >
-                {"Proceed ->"}
-              </button>
               <p className="pBottom">
                 We will automatically generate a withdrawal request at the end
                 of every month depending on your selected preference.{" "}
