@@ -5,7 +5,18 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Avatar, Badge, Dialog, DialogContent, DialogTitle, Divider, Menu, MenuItem, Slide, Tooltip } from "@mui/material";
+import {
+  Avatar,
+  Badge,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  Menu,
+  MenuItem,
+  Slide,
+  Tooltip,
+} from "@mui/material";
 import Cookies from "universal-cookie";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "../../../axios";
@@ -16,16 +27,16 @@ import { is } from "immutable";
 import { useState } from "react";
 import { snackbarNotification } from "../../../redux/snackbar.action";
 import "../Header.scss";
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function MobileHeader({handleTelegram}) {
+export default function MobileHeader({ handleTelegram }) {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const cookies = new Cookies();
   const [userData, setUserData] = useState();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const location = window.location.href;
   const [userId, setUserId] = useState();
   const navigate = useNavigate();
@@ -33,7 +44,7 @@ export default function MobileHeader({handleTelegram}) {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const authNew = cookies.get("auth-token");
-console.log(isLoggedIn,"isLoggedIn")
+  console.log(isLoggedIn, "isLoggedIn");
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -61,18 +72,16 @@ console.log(isLoggedIn,"isLoggedIn")
   //   setOpen(true);
   // };
 
-
   const handleUserTypeOrderHistory = (userType) => {
     // console.log(userType,"userType")
     setAnchorElUser(null);
     if (userType === "PUBLISHER") {
-      navigate("/wallet-publisher")
+      navigate("/wallet-publisher");
     } else if (userType === "ADVERTISER") {
       //navigate to order history
-      navigate("/wallet-advertiser")
-
+      navigate("/wallet-advertiser");
     }
-  }
+  };
 
   const signOutHandler = () => {
     cookies.remove("auth-token");
@@ -80,7 +89,7 @@ console.log(isLoggedIn,"isLoggedIn")
     const data = {
       notificationType: "success",
       notificationMessage: "Logged Out Successfully",
-    }
+    };
     dispatch(snackbarNotification(data));
     setIsLoggedIn(false);
 
@@ -90,14 +99,11 @@ console.log(isLoggedIn,"isLoggedIn")
   };
 
   const handleSignout = (event) => {
-    
     // setOpen(true);
   };
   // const handleTelegram = () => {
   //   setAnchorElUser(null);
   //   setOpen(true);
-
-
 
   // }
   // const authNew = cookies.get("auth-token");
@@ -107,49 +113,47 @@ console.log(isLoggedIn,"isLoggedIn")
     const auth = cookies.get("auth-token");
     // console.log(auth);
     // if (!auth) {
-      //   navigate("/sign-in");
-      // }
-      // if(!isCancelled){
-      axios
-        .post(
-          "api/user/get-user-by-token",
-          {},
-          {
-            headers: {
-              Authorization: "Bearer " + auth,
-            },
-          }
-        )
-        .then((res) => {
-          // if (!res.data.success) {
-          
-          //     const data={
-          //       notificationType: "error",
-          //   notificationMessage: "User is not Verified By Token",
-          //     }
-          //     dispatch(snackbarNotification(data));
+    //   navigate("/sign-in");
+    // }
+    // if(!isCancelled){
+    axios
+      .post(
+        "api/user/get-user-by-token",
+        {},
+        {
+          headers: {
+            Authorization: "Bearer " + auth,
+          },
+        }
+      )
+      .then((res) => {
+        // if (!res.data.success) {
 
-            
-          //   navigate("/sign-in");
-          // }
-          const data={
-            notificationType: "success",
-        notificationMessage: "User is Verified By Token",
-          }
-          dispatch(snackbarNotification(data));
-          console.log("first",res)
-          setUserId(res.data.user._id);
-          setUserData(res?.data?.user)
+        //     const data={
+        //       notificationType: "error",
+        //   notificationMessage: "User is not Verified By Token",
+        //     }
+        //     dispatch(snackbarNotification(data));
+
+        //   navigate("/sign-in");
+        // }
+        const data = {
+          notificationType: "success",
+          notificationMessage: "User is Verified By Token",
+        };
+        dispatch(snackbarNotification(data));
+        console.log("first", res);
+        setUserId(res.data.user._id);
+        setUserData(res?.data?.user);
         setIsLoggedIn(true);
         if (!res?.data?.success) {
           setIsLoggedIn(false);
-
         }
-        })
-        // .catch((err) => {
-        //   console.log(err, "err");
-        //   navigate("/sign-in");
-        // });
+      });
+    // .catch((err) => {
+    //   console.log(err, "err");
+    //   navigate("/sign-in");
+    // });
     // }
     // UserAuthentication();
 
@@ -158,7 +162,6 @@ console.log(isLoggedIn,"isLoggedIn")
     // }
     // getUsetByToken()
   }, [authNew]);
-
 
   React.useEffect(() => {
     const auth = cookies.get("auth-token");
@@ -183,7 +186,7 @@ console.log(isLoggedIn,"isLoggedIn")
         }
         setIsLoggedIn(true);
         setUserId(res.data.user._id);
-        setUserData(res?.data?.user)
+        setUserData(res?.data?.user);
       })
       .catch((err) => {
         console.log(err, "err");
@@ -202,7 +205,7 @@ console.log(isLoggedIn,"isLoggedIn")
   const cartNumber = useSelector((state) => state?.cart?.total);
 
   return (
-    <Box sx={{  marginBottom: "6em" }}>
+    <Box sx={{ marginBottom: "6em" }}>
       <AppBar sx={{ background: "black" }} position="fixed">
         <Toolbar sx={{ padding: "0.6em" }} variant="dense">
           {/* <IconButton
@@ -213,10 +216,10 @@ console.log(isLoggedIn,"isLoggedIn")
           >
             <MenuIcon />
           </IconButton> */}
-          
+
           <Typography
             // component="a"
-            
+
             // onClick={() => navigate("/")}
             sx={{ fontSize: "1rem", paddingLeft: "2%" }}
           >
@@ -225,13 +228,13 @@ console.log(isLoggedIn,"isLoggedIn")
               A <span style={{ fontWeight: "bold" }}>Todayq</span> Product
             </p>
           </Typography>
-          {isLoggedIn ?
-
-            <Box sx={{  marginLeft: "15px" }}>
+          {isLoggedIn ? (
+            <Box sx={{ marginLeft: "15px" }}>
               <Tooltip title="Open Accout">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Typography sx={{ color: "white", fontWeight: 500, fontSize: "14px" }}>
-
+                  <Typography
+                    sx={{ color: "white", fontWeight: 500, fontSize: "14px" }}
+                  >
                     My Account
                   </Typography>
                 </IconButton>
@@ -252,12 +255,24 @@ console.log(isLoggedIn,"isLoggedIn")
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-
                 <MenuItem onClick={handleCloseUserMenu}>
-                  <Typography onClick={() => navigate("/profile")} textAlign="center">My Profile</Typography>
+                  <Typography
+                    onClick={() => navigate("/profile")}
+                    textAlign="center"
+                  >
+                    My Profile
+                  </Typography>
                 </MenuItem>
-                <MenuItem onClick={() => handleUserTypeOrderHistory(userData?.userType)}>
-                  <Typography textAlign="center">{userData?.userType === "ADVERTISER" ? "Order History" : userData?.userType === "PUBLISHER" ? "Wallet History" : null}</Typography>
+                <MenuItem
+                  onClick={() => handleUserTypeOrderHistory(userData?.userType)}
+                >
+                  <Typography textAlign="center">
+                    {userData?.userType === "ADVERTISER"
+                      ? "Order History"
+                      : userData?.userType === "PUBLISHER"
+                      ? "Wallet History"
+                      : null}
+                  </Typography>
                 </MenuItem>
                 <MenuItem onClick={handleTelegram}>
                   <Typography textAlign="center">Telegram</Typography>
@@ -265,61 +280,66 @@ console.log(isLoggedIn,"isLoggedIn")
                 <MenuItem onClick={handleCloseUserMenu}>
                   <Typography textAlign="center">
                     <Link to="/add-listing">
-                      {userData?.userType === "PUBLISHER" ? "Add Listing" : null}
-
+                      {userData?.userType === "PUBLISHER"
+                        ? "Add Listing"
+                        : null}
                     </Link>
                   </Typography>
                 </MenuItem>
                 <MenuItem onClick={signOutHandler}>
                   <Typography textAlign="center">
-                    {isLoggedIn ?
+                    {isLoggedIn ? (
                       <span onClick={handleSignout}>Sign Out</span>
-                      :
-                      <span style={{border:"1px solid red"}}>
-
-                        location === "http://localhost:3000/#/sign-up" ? "Sign In" : "Sign Up"
+                    ) : (
+                      <span style={{ border: "1px solid red" }}>
+                        location === "http://localhost:3000/#/sign-up" ? "Sign
+                        In" : "Sign Up"
                       </span>
-                    }
+                    )}
                   </Typography>
                 </MenuItem>
               </Menu>
-            </Box> :
-            <span >
+            </Box>
+          ) : (
+            <span>
               {/* Login */}
-              <Link style={{marginLeft:"60px"}}  to={location==="https://koinpr-x2nc.vercel.app/#/sign-up"? "/sign-in":"/sign-up"} >
-              {isLoggedIn ? 
-                     <span onClick={handleSignout}>Sign Out</span>
-                 : 
-
-                   location==="https://koinpr-x2nc.vercel.app/#/sign-up"?  <span style={{marginLeft:"70px"}}>
-                   <Link to="/sign-in">
-                   
-                   Sign in
-                   </Link>
-                </span>:
-                 <span style={{marginLeft:"70px"}}>
-                   <Link to="/sign-up">
-                   
-                    Sign Up
-                   </Link>
-                </span>
-                   }
+              <Link
+                style={{ marginLeft: "60px" }}
+                to={
+                  location === "https://koinpr-x2nc.vercel.app/#/sign-up"
+                    ? "/sign-in"
+                    : "/sign-up"
+                }
+              >
+                {isLoggedIn ? (
+                  <span onClick={handleSignout}>Sign Out</span>
+                ) : location === "https://koinpr-x2nc.vercel.app/#/sign-up" ? (
+                  <span style={{ marginLeft: "70px" }}>
+                    <Link to="/sign-in">Sign in</Link>
+                  </span>
+                ) : (
+                  <span style={{ marginLeft: "70px" }}>
+                    <Link to="/sign-up">Sign Up</Link>
+                  </span>
+                )}
               </Link>
             </span>
-          }
-          {isLoggedIn ?
-
-            <IconButton sx={{marginLeft:"80px"}} onClick={() => navigate("/cart")} aria-label="cart">
+          )}
+          {isLoggedIn && userData?.userType === "ADVERTISER" ? (
+            <IconButton
+              sx={{ marginLeft: "80px" }}
+              onClick={() => navigate("/cart")}
+              aria-label="cart"
+            >
               <StyledBadge badgeContent={cartNumber} color="primary">
                 <ShoppingCartIcon sx={{ color: "white" }} />
               </StyledBadge>
-            </IconButton> : null
-          }
-
+            </IconButton>
+          ) : null}
         </Toolbar>
       </AppBar>
 
-      <div >
+      <div>
         {/* <Button variant="outlined" onClick={handleClickOpen}>
           Slide in alert dialog
         </Button> */}
@@ -328,7 +348,7 @@ console.log(isLoggedIn,"isLoggedIn")
           TransitionComponent={Transition}
           keepMounted
           onClose={handleClose}
-          sx={{backgroundImage:"#F9F9F9 !important"}}
+          sx={{ backgroundImage: "#F9F9F9 !important" }}
           aria-describedby="alert-dialog-slide-description"
         >
           {/* <div style={{ textAlign: "center" }}>
@@ -348,22 +368,39 @@ console.log(isLoggedIn,"isLoggedIn")
             </Button>
           </DialogActions> */}
           <DialogContent>
- <div className='popups'>
+            <div className="popups">
+              <div className="contents">
+                <DialogTitle className="titles">Add Your Telegram</DialogTitle>
+                <div className="inputs">
+                  <input
+                    className="ips"
+                    type="texts"
+                    placeholder={"Your telegram @username"}
+                  />
+                </div>
+                <button type="submit" className="submits">
+                  Submit <ArrowForwardIcon />
+                </button>
 
-
-        <div className='contents'>
-            <DialogTitle className='titles'>Add Your Telegram</DialogTitle>
-            <div className='inputs'>
-                <input className='ips' type='texts' placeholder={"Your telegram @username"} />
+                <div
+                  style={{
+                    width: "200px",
+                    margin: "auto",
+                    border: "1px solid red",
+                  }}
+                >
+                  This will help your account manager to commute with you
+                  faster.
+                </div>
+              </div>
+              <Divider
+                sx={{
+                  border: "3px solid black",
+                  background: "black",
+                  marginTop: "33px",
+                }}
+              />
             </div>
-            <button  type='submit' className='submits'>Submit <ArrowForwardIcon/></button>
-
-            <div  style={{width:"200px",margin:"auto",border:"1px solid red"}}>
-            This will help your account manager to commute with you faster.  
-            </div>
-        </div>
-          <Divider  sx={{border:"3px solid black",background:"black",marginTop:"33px"}}/>
-    </div>
           </DialogContent>
         </Dialog>
       </div>

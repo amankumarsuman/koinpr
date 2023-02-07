@@ -532,7 +532,7 @@ const Header = () => {
                 )}
               </span>
             )}
-            {isLoggedIn ? (
+            {isLoggedIn && userData?.userType === "ADVERTISER" ? (
               <IconButton onClick={() => navigate("/cart")} aria-label="cart">
                 <StyledBadge badgeContent={cartNumber} color="primary">
                   <ShoppingCartIcon sx={{ color: "white" }} />
