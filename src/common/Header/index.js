@@ -29,7 +29,7 @@ import {
 } from "@mui/material";
 import { AlertDialog } from "../alertDialogue/AlertDialog";
 // import Cookies from "universal-cookie";
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { memo } from "react";
 import { snackbarNotification } from "../../redux/snackbar.action";
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -38,37 +38,22 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const Header = () => {
   const cookies = new Cookies();
-  const location = window.location.href
+  const location = window.location.href;
   // console.log("params",location)
   const navigate = useNavigate();
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [open, setOpen] = React.useState(false);
 
-  console.log(isLoggedIn, "check login")
+  console.log(isLoggedIn, "check login");
   const [userData, setUserData] = useState();
   const [userId, setUserId] = useState();
   const [anchorElUser, setAnchorElUser] = useState(null);
-const [telegram,setTelegram]=useState("")
-  var token = useSelector((state) => state.cart)
+  const [telegram, setTelegram] = useState("");
+  var token = useSelector((state) => state.cart);
   const cartNumber = useSelector((state) => state?.cart?.total);
   // console.log(userData,"userData")
-  console.log(token, "token")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  console.log(token, "token");
 
   const getUsetByToken = () => {
     axios
@@ -90,7 +75,6 @@ const [telegram,setTelegram]=useState("")
         //     }
         //     dispatch(snackbarNotification(data));
 
-
         //   navigate("/sign-in");
         // }
         //   const data={
@@ -98,11 +82,11 @@ const [telegram,setTelegram]=useState("")
         // notificationMessage: "User is Verified By Token",
         //   }
         //   dispatch(snackbarNotification(data));
-        console.log("first", res)
+        console.log("first", res);
         setUserId(res.data.user._id);
-        setUserData(res?.data?.user)
-      })
-  }
+        setUserData(res?.data?.user);
+      });
+  };
   const authNew = cookies.get("auth-token");
 
   useEffect(() => {
@@ -125,32 +109,28 @@ const [telegram,setTelegram]=useState("")
       )
       .then((res) => {
         if (!res.data.success) {
-
           //     const data={
           //       notificationType: "error",
           //   notificationMessage: "User is not Verified By Token",
           //     }
           //     dispatch(snackbarNotification(data));
 
-
           //   navigate("/sign-in");
           // }
           const data = {
             notificationType: "success",
             notificationMessage: "User is Verified By Token",
-          }
+          };
           dispatch(snackbarNotification(data));
-          console.log("first", res)
+          console.log("first", res);
           setUserId(res.data.user._id);
-          setUserData(res?.data?.user)
+          setUserData(res?.data?.user);
           setIsLoggedIn(true);
-
         }
         if (!res?.data?.success) {
           setIsLoggedIn(false);
-
         }
-      })
+      });
     // .catch((err) => {
     //   console.log(err, "err");
     //   navigate("/sign-in");
@@ -163,10 +143,6 @@ const [telegram,setTelegram]=useState("")
     // }
     // getUsetByToken()
   }, [authNew]);
-
-
-
-
 
   useEffect(() => {
     const auth = cookies.get("auth-token");
@@ -191,18 +167,12 @@ const [telegram,setTelegram]=useState("")
         }
         setIsLoggedIn(true);
         setUserId(res.data.user._id);
-        setUserData(res?.data?.user)
+        setUserData(res?.data?.user);
       })
       .catch((err) => {
         console.log(err, "err");
       });
   }, [authNew]);
-
-
-
-
-
-
 
   // const getUsetByToken=()=>{
   //   axios
@@ -224,7 +194,6 @@ const [telegram,setTelegram]=useState("")
   //       notificationMessage: "User is not Verified By Token",
   //         }
   //         dispatch(snackbarNotification(data));
-
 
   //       navigate("/sign-in");
   //     }
@@ -268,7 +237,6 @@ const [telegram,setTelegram]=useState("")
   //         //     }
   //         //     dispatch(snackbarNotification(data));
 
-
   //         //   navigate("/sign-in");
   //         // }
   //         const data={
@@ -295,8 +263,6 @@ const [telegram,setTelegram]=useState("")
   //   // getUsetByToken()
   // }, [userId]);
 
-
-
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -306,7 +272,7 @@ const [telegram,setTelegram]=useState("")
   };
   const [isOpenAcc, setIsOpenAcc] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   // const getUserByToken=()=>{
   //   const auth = cookies.get("auth-token");
@@ -386,27 +352,23 @@ const [telegram,setTelegram]=useState("")
     },
   }));
 
-
-
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
 
   const handleCloseUserMenu = (userType) => {
     setAnchorElUser(null);
-
   };
   const handleUserTypeOrderHistory = (userType) => {
     // console.log(userType,"userType")
     setAnchorElUser(null);
     if (userType === "PUBLISHER") {
-      navigate("/wallet-publisher")
+      navigate("/wallet-publisher");
     } else if (userType === "ADVERTISER") {
       //navigate to order history
-      navigate("/wallet-advertiser")
-
+      navigate("/wallet-advertiser");
     }
-  }
+  };
 
   const signOutHandler = () => {
     cookies.remove("auth-token");
@@ -414,7 +376,7 @@ const [telegram,setTelegram]=useState("")
     const data = {
       notificationType: "success",
       notificationMessage: "Logged Out Successfully",
-    }
+    };
     dispatch(snackbarNotification(data));
     setIsLoggedIn(false);
 
@@ -429,18 +391,34 @@ const [telegram,setTelegram]=useState("")
   const handleTelegram = () => {
     setAnchorElUser(null);
     setOpen(true);
-    navigate("/")
+    navigate("/");
+  };
 
-
-  }
-
-  const handleSubmit=()=>{
-    axios.patch(`https://koinprapi.onrender.com/api/user/update/${userId}`,{
-      telegram:telegram
-    }).then((res)=>{
-      console.log(res)
-    })
-  }
+  const handleSubmit = () => {
+    axios
+      .patch(`https://koinprapi.onrender.com/api/user/update/${userId}`, {
+        telegram: telegram,
+      })
+      .then((res) => {
+        if (res?.data?.success) {
+          const data = {
+            notificationType: "success",
+            notificationMessage: "Your Telegram Id Added Successfully",
+          };
+          dispatch(snackbarNotification(data));
+        }
+      })
+      .catch((err) => {
+        const data = {
+          notificationType: "error",
+          notificationMessage: "Something went wrong",
+        };
+        dispatch(snackbarNotification(data));
+        console.log(err);
+      });
+    navigate("/");
+    setOpen(false);
+  };
   return (
     <>
       <div className="hidden md:block lg:block">
@@ -452,9 +430,9 @@ const [telegram,setTelegram]=useState("")
             </span>
           </div>
           <div className="right">
-            {isLoggedIn ?
-              <span onClick={() => navigate("/")}>Publishers</span> : null
-            }
+            {isLoggedIn ? (
+              <span onClick={() => navigate("/")}>Publishers</span>
+            ) : null}
             {/* <span
               className="myAccount"
               onClick={(e) => {
@@ -471,12 +449,13 @@ const [telegram,setTelegram]=useState("")
                 </div>
               )}
             </span> */}
-            {isLoggedIn ?
-
+            {isLoggedIn ? (
               <Box sx={{ flexGrow: 0 }}>
                 <Tooltip title="Open Account">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Typography sx={{ color: "white", fontWeight: 600, fontSize: "16px" }}>
+                    <Typography
+                      sx={{ color: "white", fontWeight: 600, fontSize: "16px" }}
+                    >
                       My Account
                     </Typography>
                   </IconButton>
@@ -498,10 +477,25 @@ const [telegram,setTelegram]=useState("")
                   onClose={handleCloseUserMenu}
                 >
                   <MenuItem onClick={handleCloseUserMenu}>
-                    <Typography onClick={() => navigate("/profile")} textAlign="center">My Profile</Typography>
+                    <Typography
+                      onClick={() => navigate("/profile")}
+                      textAlign="center"
+                    >
+                      My Profile
+                    </Typography>
                   </MenuItem>
-                  <MenuItem onClick={() => handleUserTypeOrderHistory(userData?.userType)}>
-                    <Typography textAlign="center">{userData?.userType === "ADVERTISER" ? "Order History" : userData?.userType === "PUBLISHER" ? "Wallet History" : null}</Typography>
+                  <MenuItem
+                    onClick={() =>
+                      handleUserTypeOrderHistory(userData?.userType)
+                    }
+                  >
+                    <Typography textAlign="center">
+                      {userData?.userType === "ADVERTISER"
+                        ? "Order History"
+                        : userData?.userType === "PUBLISHER"
+                        ? "Wallet History"
+                        : null}
+                    </Typography>
                   </MenuItem>
                   <MenuItem onClick={handleTelegram}>
                     <Typography textAlign="center">Telegram</Typography>
@@ -509,51 +503,49 @@ const [telegram,setTelegram]=useState("")
                   <MenuItem onClick={handleCloseUserMenu}>
                     <Typography textAlign="center">
                       <Link to="/add-listing">
-                        {userData?.userType === "PUBLISHER" ? "Add Listing" : null}
-
+                        {userData?.userType === "PUBLISHER"
+                          ? "Add Listing"
+                          : null}
                       </Link>
                     </Typography>
                   </MenuItem>
                   <MenuItem onClick={signOutHandler}>
                     <Typography textAlign="center">
-                      {isLoggedIn ?
+                      {isLoggedIn ? (
                         <span onClick={handleSignout}>Sign Out</span>
-                        :
-                        location === "https://koinpr-x2nc.vercel.app/#/sign-up" ? "Sign In" : "Sign Up"
-                      }
+                      ) : location ===
+                        "https://koinpr-x2nc.vercel.app/#/sign-up" ? (
+                        "Sign In"
+                      ) : (
+                        "Sign Up"
+                      )}
                     </Typography>
                   </MenuItem>
                 </Menu>
-              </Box> :
+              </Box>
+            ) : (
               <span>
-                {location === "https://koinpr-x2nc.vercel.app/#/sign-up" ? <Link to="/sign-in">
-                  Log In
-
-                </Link> : <Link to="/sign-up">
-                  Sign Up
-
-                </Link>}
-
-
+                {location === "https://koinpr-x2nc.vercel.app/#/sign-up" ? (
+                  <Link to="/sign-in">Log In</Link>
+                ) : (
+                  <Link to="/sign-up">Sign Up</Link>
+                )}
               </span>
-            }
-            {isLoggedIn ?
+            )}
+            {isLoggedIn ? (
               <IconButton onClick={() => navigate("/cart")} aria-label="cart">
                 <StyledBadge badgeContent={cartNumber} color="primary">
                   <ShoppingCartIcon sx={{ color: "white" }} />
                 </StyledBadge>
-              </IconButton> : null
-
-            }
+              </IconButton>
+            ) : null}
             {/* <span onClick={signOutHandler}>
               {isLoggedIn ? "Sign Out" : "Sign-In"}
             </span> */}
-
-
           </div>
         </div>
       </div>
-      <div >
+      <div>
         {/* <Button variant="outlined" onClick={handleClickOpen}>
           Slide in alert dialog
         </Button> */}
@@ -582,26 +574,45 @@ const [telegram,setTelegram]=useState("")
             </Button>
           </DialogActions> */}
           <DialogContent>
-            <div className='popups'>
-
-
-              <div className='contents'>
-                <DialogTitle className='titles'>Add Your Telegram</DialogTitle>
-                <div className='inputs'>
-                  <input className='ips' name="telegram" value={telegram} onChange={(e)=>setTelegram(e.target.value)} type='texts' placeholder={"Your telegram @username"} />
+            <div className="popups">
+              <div className="contents">
+                <DialogTitle className="titles">Add Your Telegram</DialogTitle>
+                <div className="inputs">
+                  <input
+                    className="ips"
+                    name="telegram"
+                    value={telegram}
+                    onChange={(e) => setTelegram(e.target.value)}
+                    type="texts"
+                    placeholder={"Your telegram @username"}
+                  />
                 </div>
-                <button type='submit' onClick={handleSubmit} style={{borderRadius:"5px"}} className='submits'>Submit <ArrowForwardIcon /></button>
+                <button
+                  type="submit"
+                  onClick={handleSubmit}
+                  style={{ borderRadius: "5px" }}
+                  className="submits"
+                >
+                  Submit <ArrowForwardIcon />
+                </button>
 
-                <div style={{ width: "90%",  }}>
-                  This will help your account manager to commute with you faster.
+                <div style={{ width: "90%" }}>
+                  This will help your account manager to commute with you
+                  faster.
                 </div>
               </div>
-              <Divider  sx={{ border: "3px solid black", background: "black", marginTop: "33px" }} />
+              <Divider
+                sx={{
+                  border: "3px solid black",
+                  background: "black",
+                  marginTop: "33px",
+                }}
+              />
             </div>
           </DialogContent>
         </Dialog>
       </div>
-      <div style={{width:"100%"}} className="md:hidden lg:hidden sm:block">
+      <div style={{ width: "100%" }} className="md:hidden lg:hidden sm:block">
         <MobileHeader handleTelegram={handleTelegram} />
       </div>
     </>
