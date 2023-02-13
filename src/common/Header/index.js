@@ -109,20 +109,7 @@ const Header = () => {
       )
       .then((res) => {
         if (!res.data.success) {
-          //     const data={
-          //       notificationType: "error",
-          //   notificationMessage: "User is not Verified By Token",
-          //     }
-          //     dispatch(snackbarNotification(data));
-
-          //   navigate("/sign-in");
-          // }
-          const data = {
-            notificationType: "success",
-            notificationMessage: "User is Verified By Token",
-          };
-          dispatch(snackbarNotification(data));
-          console.log("first", res);
+        
           setUserId(res.data.user._id);
           setUserData(res?.data?.user);
           setIsLoggedIn(true);
