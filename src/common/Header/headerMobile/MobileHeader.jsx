@@ -137,11 +137,11 @@ export default function MobileHeader({ handleTelegram }) {
 
         //   navigate("/sign-in");
         // }
-        const data = {
-          notificationType: "success",
-          notificationMessage: "User is Verified By Token",
-        };
-        dispatch(snackbarNotification(data));
+        // const data = {
+        //   notificationType: "success",
+        //   notificationMessage: "User is Verified By Token",
+        // };
+        // dispatch(snackbarNotification(data));
         console.log("first", res);
         setUserId(res.data.user._id);
         setUserData(res?.data?.user);
