@@ -448,13 +448,13 @@ function MarketPlace(props) {
                         // sx={{ p: "10px"}}
                         id="outlined-basic"
                         name="offerTitle"
-                        value={offerFilter}
+                        value={input}
                         onChange={handleSearchKeys}
                         label="Enter publisher name"
                         variant="outlined"
                         endAdornment={
                           <InputAdornment position="start">
-                            <IconButton onClick={handleSearchKeys} edge="end">
+                            <IconButton onClick={handleOfferTitle} edge="end">
                               <SearchIcon />
                             </IconButton>
                           </InputAdornment>
