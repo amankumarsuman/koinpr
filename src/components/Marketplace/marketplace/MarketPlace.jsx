@@ -51,7 +51,8 @@ function MarketPlace(props) {
   // console.log(param1);
   // console.log(params, "param");
   // const [category, setCategory] = React.useState('press');
-  // const [input, setInput] = useState(init);
+
+  const [input, setInput] = useState("");
   // const [categoryParam, setCategoryParam] = useQueryParam(
   //   'filterByCategory',
   //   StringParam
@@ -103,8 +104,10 @@ function MarketPlace(props) {
         })
         .then((res) => {
           if (res.data.success) {
-            const verifiedListing= res?.data?.data.filter((el)=>el?.verifiedByAdmin===true)
-            
+            const verifiedListing = res?.data?.data.filter(
+              (el) => el?.verifiedByAdmin === true
+            );
+
             setMarketList(verifiedListing);
             setIsLoading(false);
             setIsLoadings(false);
@@ -114,7 +117,7 @@ function MarketPlace(props) {
         .catch((err) => {
           console.log(err, "err");
         });
-    } else if (offerFilter) {
+    } else if (oc) {
       // searchQuery += `&offerTitle=${oc}`;
       axios
         .get(`api/listing/get-all?offerTitle=${oc}`, {
@@ -124,10 +127,12 @@ function MarketPlace(props) {
         })
         .then((res) => {
           if (res.data.success) {
-            const verifiedListing= res?.data?.data.filter((el)=>el?.verifiedByAdmin===true)
-           
+            const verifiedListing = res?.data?.data.filter(
+              (el) => el?.verifiedByAdmin === true
+            );
+
             setMarketList(verifiedListing);
-           
+
             setIsLoading(false);
             setIsLoadings(false);
           }
@@ -145,10 +150,12 @@ function MarketPlace(props) {
         })
         .then((res) => {
           if (res.data.success) {
-            const verifiedListing= res?.data?.data.filter((el)=>el?.verifiedByAdmin===true)
-            console.log(verifiedListing,"data")
+            const verifiedListing = res?.data?.data.filter(
+              (el) => el?.verifiedByAdmin === true
+            );
+            console.log(verifiedListing, "data");
             setMarketList(verifiedListing);
-            
+
             setIsLoading(false);
             setIsLoadings(false);
           }
@@ -293,13 +300,15 @@ function MarketPlace(props) {
   const handleSearchKeys = (e) => {
     const { name, value } = e.target;
 
-    // if (name === "offerTitle") {
-    //   setInput({ offerTitle: value, listingCategory: "" });
-    //   // setCategoryParam(e.target.value)
-    // } else if (name === "listingCategory") {
-    //   setInput({ listingCategory: value, offerTitle: "" });
-    // }
-    window.location.search = `listingCategory=${e.target.value}`;
+    if (name === "offerTitle") {
+      setInput(e.target.value);
+      // setCategoryParam(e.target.value)
+    } else if (name === "category") {
+      // setInput({ listingCategory: value, offerTitle: "" });
+      window.location.search = `listingCategory=${e.target.value}`;
+    }
+    // window.location.search = `offerTitle=${input}`;
+
     // axios
     //   .get(`/api/listing/get-all?${name}=${value}&userId=${userId}`)
     //   .then((res) => {
@@ -372,6 +381,10 @@ function MarketPlace(props) {
     setPage(0);
   };
 
+  const handleOfferTitle = () => {
+    window.location.search = `offerTitle=${input}`;
+  };
+
   return (
     <>
       {isLoadings ? (
@@ -403,19 +416,19 @@ function MarketPlace(props) {
 
                       <OutlinedInput
                         size="small"
-                        disabled
+                        // disabled
                         // fullWidth
                         // sx={{ p: "10px" }}
                         // sx={{ width: "78%" }}
                         id="outlined-basic"
                         name="offerTitle"
-                        value={offerFilter}
+                        value={input}
                         onChange={handleSearchKeys}
                         label="Enter publisher name"
                         variant="outlined"
                         endAdornment={
                           <InputAdornment position="start">
-                            <IconButton onClick={handleSearchKeys} edge="end">
+                            <IconButton onClick={handleOfferTitle} edge="end">
                               <SearchIcon />
                             </IconButton>
                           </InputAdornment>
