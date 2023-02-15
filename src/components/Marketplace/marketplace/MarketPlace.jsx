@@ -57,6 +57,7 @@ function MarketPlace(props) {
   //   'filterByCategory',
   //   StringParam
   // )
+  const inputData = input;
   const cookies = new Cookies();
   const navigate = useNavigate();
 
@@ -302,6 +303,7 @@ function MarketPlace(props) {
 
     if (name === "offerTitle") {
       setInput(e.target.value);
+      window.localStorage.setItem("publisher_search", e.target.value);
       // setCategoryParam(e.target.value)
     } else if (name === "category") {
       // setInput({ listingCategory: value, offerTitle: "" });
@@ -385,6 +387,12 @@ function MarketPlace(props) {
     window.location.search = `offerTitle=${input}`;
   };
 
+  useEffect(() => {
+    const data = window.localStorage.getItem("publisher_search");
+    if (data !== null) {
+      setInput(data);
+    }
+  }, []);
   return (
     <>
       {isLoadings ? (
@@ -406,7 +414,7 @@ function MarketPlace(props) {
                       marginBottom: "16px",
                     }}
                   >
-                    Search offerTitle
+                    Search Publisher
                   </p>
                   <span className="invisible md:visible">
                     <FormControl sx={{ width: "95%" }} variant="outlined">
