@@ -16,11 +16,14 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 function VerifyEmailPopup() {
   const data = useSelector((state) => state?.cart?.authenticatedUserDetails);
+
+  const userEmail = useSelector((state) => state?.cart?.userData?.user?.email);
+  const resendUserId = useSelector((state) => state?.cart?.userData?.user?._id);
   const cookies = new Cookies();
 
   const [emailOtp, setEmailOtp] = useState();
   const [open, setOpen] = React.useState(true);
-  const [email, setEmail] = useState(data?.email);
+  const [email, setEmail] = useState(data?.email || userEmail);
   const [isEmailEdit, setIsEmailEdit] = useState(false);
   const [resendOtp, setResendOtp] = useState(false);
   const navigate = useNavigate();
@@ -69,7 +72,7 @@ function VerifyEmailPopup() {
   const submitOtp = () => {
     axios
       .post("api/user/verifyOtp", {
-        userId: data?._id,
+        userId: data?._id || resendUserId,
         otp: emailOtp,
       })
       .then((res) => {
@@ -123,8 +126,8 @@ function VerifyEmailPopup() {
   const handleResendOtp = () => {
     axios
       .post("https://koinprapi.onrender.com/api/user/resendOtpVerification", {
-        userId: data?._id,
-        email: data?.email,
+        userId: data?._id || resendUserId,
+        email: data?.email || userEmail,
       })
       .then((res) => {
         if (res?.data?.status) {

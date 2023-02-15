@@ -44,7 +44,7 @@ export default function MobileHeader({ handleTelegram }) {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const authNew = cookies.get("auth-token");
-  console.log(isLoggedIn, "isLoggedIn");
+  // console.log(isLoggedIn, "isLoggedIn");
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -142,7 +142,7 @@ export default function MobileHeader({ handleTelegram }) {
         //   notificationMessage: "User is Verified By Token",
         // };
         // dispatch(snackbarNotification(data));
-        console.log("first", res);
+        // console.log("first", res);
         setUserId(res.data.user._id);
         setUserData(res?.data?.user);
         setIsLoggedIn(true);

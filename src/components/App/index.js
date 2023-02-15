@@ -37,13 +37,15 @@ import { Box } from "@mui/material";
 import TabLevelLoader from "../loader/Loader";
 import Footer from "../footer/Footer";
 import VerifyEmailPopup from "../popups/VerifyEmailPopup";
+import { useSelector } from "react-redux";
 
 // import Cart from "../Cart/cart/Cart";
 
 function App(props) {
+  // const userEmail = useSelector((state) => state?.cart?.userData?.user?.email);
+  // const userId = useSelector((state) => state?.cart?.userData?.user?._id);
   return (
     <div className="App">
-
       {/* <NewsPopup/> */}
       <HashRouter>
         <Header />
@@ -62,8 +64,7 @@ function App(props) {
             
             </Box> */}
 
-
-          {/* <SettingsComponent /> */}
+        {/* <SettingsComponent /> */}
         {/* <NewsOpen /> */}
         {/* <Update /> */}
         {/* <Home /> */}
@@ -113,17 +114,21 @@ function App(props) {
               //   title="Verify Email"
               //   name1="otp"
               //   label1="Enter Otp"
-               
+
               //   buttonText="Submit"
               // />
-              <VerifyEmailPopup/>
+              <VerifyEmailPopup
+              //  userId={userId} email={userEmail}
+              />
             }
           />
           <Route path="/cart" exact element={<Cart />} />
           <Route path="/order-details" exact element={<OrderDetails />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
-			<Route path="/password-reset/:id/:token" element={<PasswordReset />} />
-         
+          <Route
+            path="/password-reset/:id/:token"
+            element={<PasswordReset />}
+          />
         </Routes>
       </HashRouter>
       {/* <Footer/> */}

@@ -9,53 +9,51 @@ import "./SignIn.scss";
 import { Usekey } from "../../common/keyboardInteraction/KeyboardPress";
 import CustomizedSnackbars from "../../common/snackbar/SnackBar";
 import { useDispatch } from "react-redux";
-import { SetTokenToRedux } from "../../redux/actions";
+import { SetTokenToRedux, SetUserDataToRedux } from "../../redux/actions";
 import { useEffect } from "react";
 import { gapi } from "gapi-script";
 import { snackbarNotification } from "../../redux/snackbar.action";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Visibility from "@mui/icons-material/Visibility";
 import { IconButton, InputAdornment, OutlinedInput } from "@mui/material";
-import { alpha, styled } from '@mui/material/styles';
-import InputBase from '@mui/material/InputBase';
-import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import TextField from '@mui/material/TextField';
-import FormControl from '@mui/material/FormControl';
+import { alpha, styled } from "@mui/material/styles";
+import InputBase from "@mui/material/InputBase";
+import Box from "@mui/material/Box";
+import InputLabel from "@mui/material/InputLabel";
+import TextField from "@mui/material/TextField";
+import FormControl from "@mui/material/FormControl";
 const SignIn = () => {
-
-
   const CustomInput = styled(InputBase)(({ theme }) => ({
-    'label + &': {
+    "label + &": {
       marginTop: theme.spacing(3),
     },
-    '& .MuiInputBase-input': {
+    "& .MuiInputBase-input": {
       borderRadius: 4,
-      position: 'relative',
-      backgroundColor: theme.palette.mode === 'light' ? '#fcfcfb' : '#2b2b2b',
-      border: '1px solid #ced4da',
+      position: "relative",
+      backgroundColor: theme.palette.mode === "light" ? "#fcfcfb" : "#2b2b2b",
+      border: "1px solid #ced4da",
       fontSize: 16,
-      width: 'auto',
-      padding: '10px 12px',
+      width: "auto",
+      padding: "10px 12px",
       transition: theme.transitions.create([
-        'border-color',
-        'background-color',
-        'box-shadow',
+        "border-color",
+        "background-color",
+        "box-shadow",
       ]),
       // Use the system font instead of the default Roboto font.
       fontFamily: [
-        '-apple-system',
-        'BlinkMacSystemFont',
+        "-apple-system",
+        "BlinkMacSystemFont",
         '"Segoe UI"',
-        'Roboto',
+        "Roboto",
         '"Helvetica Neue"',
-        'Arial',
-        'sans-serif',
+        "Arial",
+        "sans-serif",
         '"Apple Color Emoji"',
         '"Segoe UI Emoji"',
         '"Segoe UI Symbol"',
-      ].join(','),
-      '&:focus': {
+      ].join(","),
+      "&:focus": {
         boxShadow: `${alpha(theme.palette.primary.main, 0.25)} 0 0 0 0.2rem`,
         borderColor: theme.palette.primary.main,
       },
@@ -66,11 +64,11 @@ const SignIn = () => {
 
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = React.useState(false);
-  const [isLoadings,setIsLoadings]=useState(true)
+  const [isLoadings, setIsLoadings] = useState(true);
 
   const cookies = new Cookies();
   const navigate = useNavigate();
-const dispatch=useDispatch();
+  const dispatch = useDispatch();
   const validateInput = () => {
     let error = {};
     let formIsValid = true;
@@ -127,73 +125,83 @@ const dispatch=useDispatch();
     axios
       .post("api/user/login", data)
       .then((res) => {
+        console.log(res, "response");
         if (res?.data?.success) {
-          cookies.set("auth-token", res?.data?.user?.token, { path: "/" });
-          const payload={
-            token:res?.data?.user?.token
-          }
-          dispatch(SetTokenToRedux(payload))
-          const data={
-            notificationType: "success",
-        notificationMessage: "You Logged In Successfully",
-          }
-        dispatch(snackbarNotification(data));
-          navigate("/");
-          setOpen(true);
-        } 
-      else{
-        const data={
-          notificationType: "error",
-      notificationMessage: "Something went wrong",
-        }
-        dispatch(snackbarNotification(data));
+          if (res?.data?.user?.emailVerified) {
+            cookies.set("auth-token", res?.data?.user?.token, { path: "/" });
+            const payload = {
+              token: res?.data?.user?.token,
+            };
+            dispatch(SetTokenToRedux(payload));
 
-      }
+            const data = {
+              notificationType: "success",
+              notificationMessage: "You Logged In Successfully",
+            };
+            dispatch(snackbarNotification(data));
+            navigate("/");
+            setOpen(true);
+          } else if (!res?.data?.user?.emailVerified) {
+            const data = {
+              notificationType: "error",
+              notificationMessage: "You Email is not verified Yet",
+            };
+            dispatch(snackbarNotification(data));
+            dispatch(SetUserDataToRedux({ data: res?.data }));
+
+            navigate("/VerifyEmail");
+            setOpen(true);
+          }
+        } else {
+          const data = {
+            notificationType: "error",
+            notificationMessage: "Something went wrong",
+          };
+          dispatch(snackbarNotification(data));
+        }
       })
       .catch((err) => {
         console.log("err", err?.response?.data?.message);
-        const data={
+        const data = {
           notificationType: "error",
-      notificationMessage: err?.response?.data?.message,
-        }
+          notificationMessage: err?.response?.data?.message,
+        };
         dispatch(snackbarNotification(data));
-
       });
   };
 
   // const clientId="990734078330-qteq6i15s9cni5apfkt9qv2okudhqk93.apps.googleusercontent.com"
 
-
-// useEffect(()=>{
-// function start(){
-//   gapi.client.init({
-//     clientId:clientId,
-//     scope:""
-//   })
-// };
-// gapi.load("client:auth2",start)
-// })
-
-const handleLogin = async googleData => {
-  
-  const res = await axios.post("/api/google/auth",{
-      token: googleData.tokenId
-
-  }).then((res)=>console.log(res,"response"))
-  //  fetch("/api/v1/auth/google", {
-  //     method: "POST",
-  //     body: JSON.stringify({
-  //     token: googleData.tokenId
-  //   }),
-  //   headers: {
-  //     "Content-Type": "application/json"
-  //   }
+  // useEffect(()=>{
+  // function start(){
+  //   gapi.client.init({
+  //     clientId:clientId,
+  //     scope:""
+  //   })
+  // };
+  // gapi.load("client:auth2",start)
   // })
-  const data = await res.json()
-  // console.log(data,"data")
-  navigate("/")
-  // store returned user in a context?
-}
+
+  const handleLogin = async (googleData) => {
+    const res = await axios
+      .post("/api/google/auth", {
+        token: googleData.tokenId,
+      })
+      .then((res) => console.log(res, "response"));
+    //  fetch("/api/v1/auth/google", {
+    //     method: "POST",
+    //     body: JSON.stringify({
+    //     token: googleData.tokenId
+    //   }),
+    //   headers: {
+    //     "Content-Type": "application/json"
+    //   }
+    // })
+    const data = await res.json();
+    // console.log(data,"data")
+    navigate("/");
+    // store returned user in a context?
+  };
 
   //keyboard interaction
   Usekey("Enter", submitHandler);
@@ -208,7 +216,7 @@ const handleLogin = async googleData => {
             Don't have an account? <Link to="/sign-up">Sign up</Link>
           </p>
           <input
-          style={{border:"1px solid black",borderRadius:"4px"}}
+            style={{ border: "1px solid black", borderRadius: "4px" }}
             type="email"
             placeholder="Email Id"
             value={email}
@@ -216,29 +224,24 @@ const handleLogin = async googleData => {
             className={`email ${errors.email && "err"}`}
           />
           <span className="error">{errors.email}</span>
-          <div 
-          style={{display:"flex"}}
-          >
-
-
-          <input
-            // type="password"
-            type={showPassword ? "text" : "password"}
-            style={{border:"1px solid black",borderRadius:"4px"}}
-
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="password"
-         
-          />
-          <span style={{marginTop:"27px",marginLeft:"-30px"}} onClick={() => setShowPassword(!showPassword)}>
-
-                            {showPassword ? <VisibilityOff /> : <Visibility />}
-          </span>
-
+          <div style={{ display: "flex" }}>
+            <input
+              // type="password"
+              type={showPassword ? "text" : "password"}
+              style={{ border: "1px solid black", borderRadius: "4px" }}
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="password"
+            />
+            <span
+              style={{ marginTop: "27px", marginLeft: "-30px" }}
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <VisibilityOff /> : <Visibility />}
+            </span>
           </div>
-           {/* <CustomInput
+          {/* <CustomInput
                       id="outlined-adornment-password"
                       type={showPassword ? "text" : "password"}
                       value={password}
@@ -258,9 +261,9 @@ const handleLogin = async googleData => {
                       }
                       label="Password"
                     /> */}
-          <button className="submitButton"type="submit">
+          <button className="submitButton" type="submit">
             Sign In
-            <ArrowForwardIcon sx={{fontSize:"20px",marginLeft:"5px"}} />
+            <ArrowForwardIcon sx={{ fontSize: "20px", marginLeft: "5px" }} />
           </button>
         </form>
         {/* <GoogleLogin

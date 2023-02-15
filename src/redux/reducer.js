@@ -3,9 +3,10 @@ import { actionType } from "./type";
 const initialState = {
   products: [],
   authenticatedUserDetails: {},
-  token:{},
+  token: {},
+  userData: {},
   total: 0,
-  orderDetailsData:[]
+  orderDetailsData: [],
 };
 export const CartReducers = (state = initialState, action) => {
   const { type, payload } = action;
@@ -39,53 +40,51 @@ export const CartReducers = (state = initialState, action) => {
       //   products: products,
       //   total: state.total + payload.quantity,
       // };
-      const {id} = payload;
+      const { id } = payload;
 
-// const data=state.products.map((el)=>el?.id===payload?.id)
-const doesItemExist = state?.products?.find((item) => item.id === id);
+      // const data=state.products.map((el)=>el?.id===payload?.id)
+      const doesItemExist = state?.products?.find((item) => item.id === id);
 
-if(doesItemExist){
-  // return state?.products.map((item) => {
-  //  if(item.id === id){
-    
-    return {
-      ...state
-    };
-  //  }
-  // })                    
-} else {
-  // state?.products?.push({
-  //   ...payload, quantity: 1
-  // })
-  
-return{
-  ...state,
-  products:[...state.products,payload],
-  total:state.total+1
-}
- 
+      if (doesItemExist) {
+        // return state?.products.map((item) => {
+        //  if(item.id === id){
 
-}
-// const products=data?[
-//   ...state.products
-// ]:[
-//   ...state.products,payload
-// ]
-//here data is coming true
-// if(!data) {
-//   return {
+        return {
+          ...state,
+        };
+        //  }
+        // })
+      } else {
+        // state?.products?.push({
+        //   ...payload, quantity: 1
+        // })
 
-//     ...state
-//   }
-// }
-// console.log(data,"reducer")
-      // return{
-      //   ...state,
-      //   products:[
-      //       ...state.products,payload
-      //     ],
-      //   total:state.total+1
-      // }
+        return {
+          ...state,
+          products: [...state.products, payload],
+          total: state.total + 1,
+        };
+      }
+    // const products=data?[
+    //   ...state.products
+    // ]:[
+    //   ...state.products,payload
+    // ]
+    //here data is coming true
+    // if(!data) {
+    //   return {
+
+    //     ...state
+    //   }
+    // }
+    // console.log(data,"reducer")
+    // return{
+    //   ...state,
+    //   products:[
+    //       ...state.products,payload
+    //     ],
+    //   total:state.total+1
+    // }
 
     // total: state?.products?.total + payload?.quantity,
 
@@ -160,16 +159,14 @@ return{
       //       : (state.total = 0),
       // };
 
-
       // let quantity_ = state.products[action.payload].quantity;
-      return{
-          ...state,
-          total:state.total - 1,
-          products:state.products.filter(item=>{
-              return item.id!=payload.id
-          })
-         
-      }
+      return {
+        ...state,
+        total: state.total - 1,
+        products: state.products.filter((item) => {
+          return item.id != payload.id;
+        }),
+      };
     case actionType.EMPTY_CART:
       return {
         ...state,
@@ -185,18 +182,23 @@ return{
         authenticatedUserDetails: payload,
       };
     case actionType.ORDER_DETAILS:
-      
       return {
         ...state,
-        orderDetailsData: [...state.orderDetailsData,payload],
+        orderDetailsData: [...state.orderDetailsData, payload],
       };
     case actionType.SET_TOKEN_TO_REDUX:
-     
       return {
         ...state,
         token: payload.token,
-        authenticatedUserDetails:payload?.data
+        authenticatedUserDetails: payload?.data,
       };
+    case actionType.SET_USER_DATA_TO_REDUX:
+      return {
+        ...state,
+        userData: payload.data,
+        authenticatedUserDetails: payload?.data,
+      };
+
     default:
       return state;
   }

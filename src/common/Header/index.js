@@ -45,7 +45,7 @@ const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [open, setOpen] = React.useState(false);
 
-  console.log(isLoggedIn, "check login");
+  // console.log(isLoggedIn, "check login");
   const [userData, setUserData] = useState();
   const [userId, setUserId] = useState();
   const [anchorElUser, setAnchorElUser] = useState(null);
@@ -53,7 +53,7 @@ const Header = () => {
   var token = useSelector((state) => state.cart);
   const cartNumber = useSelector((state) => state?.cart?.total);
   // console.log(userData,"userData")
-  console.log(token, "token");
+  // console.log(token, "token");
 
   const getUsetByToken = () => {
     axios
@@ -82,7 +82,7 @@ const Header = () => {
         // notificationMessage: "User is Verified By Token",
         //   }
         //   dispatch(snackbarNotification(data));
-        console.log("first", res);
+        // console.log("first", res);
         setUserId(res.data.user._id);
         setUserData(res?.data?.user);
       });
@@ -109,7 +109,6 @@ const Header = () => {
       )
       .then((res) => {
         if (!res.data.success) {
-        
           setUserId(res.data.user._id);
           setUserData(res?.data?.user);
           setIsLoggedIn(true);
