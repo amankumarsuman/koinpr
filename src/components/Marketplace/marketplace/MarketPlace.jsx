@@ -304,6 +304,10 @@ function MarketPlace(props) {
     if (name === "offerTitle") {
       setInput(e.target.value);
       window.localStorage.setItem("publisher_search", e.target.value);
+      // const filteredData = marketList?.filter((item) =>
+      //   item.offerTitle.includes(e.target.value)
+      // );
+      // setMarketList(filteredData);
       // setCategoryParam(e.target.value)
     } else if (name === "category") {
       // setInput({ listingCategory: value, offerTitle: "" });
