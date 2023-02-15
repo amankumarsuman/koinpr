@@ -37,22 +37,27 @@ const ProfileAdvertiser = () => {
     accountNo: null,
     swiftCode: null,
     bankName: "",
-    doc: "",
+    doc: null,
   };
 
   const cookies = new Cookies();
   const navigate = useNavigate();
   const [input, setInput] = useState(init);
-
+  const [document, setDocument] = useState(null);
   const [step, setStep] = useState(1);
 
   const [userId, setUserId] = useState();
   const [userData, setUserData] = useState();
   const [emailOtp, setEmailOtp] = useState();
+  const [preview, setPreview] = useState(false);
   const [selectedFile, setSelectedFile] = useState();
   const [isFilePicked, setIsFilePicked] = useState(false);
   const handleEmailOtp = (e) => {
     setEmailOtp(e.target.value);
+  };
+
+  const handlePreview = () => {
+    setPreview(true);
   };
 
   console.log(input, "input");
@@ -165,6 +170,10 @@ const ProfileAdvertiser = () => {
     } else {
       setInput({ ...input, [name]: value });
     }
+  };
+
+  const handleDocument = (e) => {
+    setDocument(e.target.files[0]);
   };
   // console.log(input, "input");
 
@@ -363,6 +372,10 @@ const ProfileAdvertiser = () => {
                 <div className="wInput mt40">
                   <label htmlFor="represent">I represent a company</label>
                   <input
+                    disabled={
+                      userData?.firstName?.length > 0 &&
+                      userData?.lastName?.length > 0
+                    }
                     className=".chHeight"
                     id="represent"
                     type="checkbox"
@@ -371,7 +384,7 @@ const ProfileAdvertiser = () => {
                     value={input?.representCompany}
                     // onChange={companyCheckboxHandler}
                     onChange={handleChange}
-                  ></input>
+                  />
                 </div>
               </div>
               <p className="cStatus mt40">Enter your details</p>
@@ -501,11 +514,30 @@ const ProfileAdvertiser = () => {
               </p>
               <div className="inputs">
                 <div className="wInput mt40">
-                  <label>Choose Document Type</label>
+                  <label>
+                    {!document ? (
+                      "Choose Document Type"
+                    ) : !preview ? (
+                      <span
+                        style={{ cursor: "pointer" }}
+                        onClick={handlePreview}
+                      >
+                        Preview
+                      </span>
+                    ) : null}
+                  </label>
+                  {preview ? (
+                    <img
+                      // style={{
+                      //   height: "300px",
+                      //   width: "300px",
+                      //   // borderRadius: "50%",
+                      // }}
+                      src={URL.createObjectURL(document)}
+                      alt="Uploaded Image"
+                    />
+                  ) : null}
                 </div>
-                {/* <div className="wInput mt40">
-                  <input type="file" name="doc" value={input?.doc} />
-                </div> */}
                 <Button
                   variant="outlined"
                   sx={{
@@ -516,8 +548,14 @@ const ProfileAdvertiser = () => {
                   }}
                   component="label"
                 >
-                  Upload File +
-                  <input hidden accept="image/*" multiple type="file" />
+                  {!document ? " Upload File +" : " Change File +"}
+                  <input
+                    onChange={handleDocument}
+                    hidden
+                    accept="image/*"
+                    multiple
+                    type="file"
+                  />
                 </Button>
               </div>
               <p className="pBottom">

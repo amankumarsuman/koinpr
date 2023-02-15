@@ -184,10 +184,18 @@ const WalletPublisher = () => {
           <div className="mainHeading">Wallet History</div>
           <div className="walletTableComponent">
             <div className="hidden md:block">
-              <WalletPublisherTable data={orderHistory} />
+              {orderHistory?.length > 0 ? (
+                <WalletPublisherTable data={orderHistory} />
+              ) : (
+                "No Data Available"
+              )}
             </div>
             <div className="md:hidden sm:block">
-              <WalletPublisherTableVertical data={orderHistory} />
+              {orderHistory?.length > 0 ? (
+                <WalletPublisherTableVertical data={orderHistory} />
+              ) : (
+                "No Data Available"
+              )}
             </div>
           </div>
         </div>
