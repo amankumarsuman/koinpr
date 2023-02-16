@@ -171,7 +171,9 @@ const Expanded = () => {
   const data = [
     {
       header: "Website",
-      value: displayData?.website ? displayData?.website : "Data Not Available",
+      value: displayData?.websiteLink
+        ? displayData?.websiteLink
+        : "Data Not Available",
     },
     {
       header: "Visitors",
@@ -334,11 +336,17 @@ const Expanded = () => {
             <table
               style={{
                 border: "1px solid black",
-                borderRadius: "15px !important",
+                borderRadius: "15px",
                 width: "100%",
               }}
             >
-              <tbody>
+              <tbody
+                style={{
+                  border: "1px solid black",
+
+                  borderRadius: "10px",
+                }}
+              >
                 {data.map((item, index) => (
                   <tr key={index}>
                     <th
