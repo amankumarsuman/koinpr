@@ -342,7 +342,7 @@ const Expanded = () => {
             >
               <tbody
                 style={{
-                  border: "1px solid black",
+                  // border: "1px solid black",
 
                   borderRadius: "10px",
                 }}
@@ -361,7 +361,11 @@ const Expanded = () => {
                       {item.header}
                     </th>
                     <td
-                      style={{ border: "1px solid black", paddingLeft: "30px" }}
+                      style={{
+                        border: "1px solid black",
+                        paddingLeft: "30px",
+                        width: "70%",
+                      }}
                     >
                       {item.value}
                     </td>
