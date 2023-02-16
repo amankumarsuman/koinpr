@@ -63,7 +63,7 @@
         }
 
         .right {
-            border: 1px solid black;
+            // border: 1px solid black;
             border-radius: 3px;
             font-size: 18px;
             width: 98%;
@@ -121,8 +121,14 @@
                 box-sizing: border-box;
                 // border: 1px solid red;
             }
+                        
         }
     }
+    // .vertical-header {
+    //     writing-mode: vertical-lr;
+    //     transform: rotate(180deg);
+    //     border: 1px solid green;
+    // }
 }
 @media screen and (max-width: 540px) {
 
